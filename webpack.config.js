@@ -48,7 +48,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:5000',
     'webpack/hot/dev-server',
-    './scripts/index'
+    './app/index'
   ],
   output: {
     path: __dirname,
@@ -66,10 +66,21 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'scripts')
+        loader: "babel-loader",
+
+      // Only run `.js` and `.jsx` files through Babel
+      test: /\.jsx?$/,
+
+      // Skip any files outside of your project's `src` directory
+      include: [
+        path.resolve(__dirname, "app"),
+      ],
+      // Options to configure babel with
+      query: {
+        plugins: ['transform-runtime'],
+        presets: ['es2015', 'stage-0', 'react'],
       }
+    },
     ]
   }
 };
