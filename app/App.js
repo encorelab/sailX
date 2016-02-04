@@ -1,22 +1,11 @@
-import React, {Component} from 'react';
-import websocket from 'websocket-stream';
-import PouchDB from 'PouchDB';
-import PouchSync from 'pouch-websocket-sync';
+import React from 'react';
+import { render } from 'react-dom'
+import VisibleTodoList from './components/VisibleTodoList'
 
-var db = new PouchDB('todos');
-var client = PouchSync.createClient();
-var sync = client.sync(db, {
-  remoteName: 'todos-server', // name remote db is known for
-  credentials: { token: 'some token'} // arbitrary
-});
+const App = () => (
+  <div>
+  <VisibleTodoList/>
+  </div>
+)
 
-client.connect('ws://localhost:3001');
-export default class App extends Component {
-  render() {
-    return (
-      // Add your component markup and other subcomponent references here.
-      <h1>Hello, Peter!</h1>
-    );
-  }
-}
-
+export default App
