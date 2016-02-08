@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom'
 import { Flex, Block} from 'jsxstyle';
+import { connect } from 'react-redux'
 
 export const Boxes = ( { boxes } ) => { 
   return(
     <div>
-    { boxes.map(e => <BoxContainer key={e.id} {...e}/> ) } 
+    { boxes.map(e => <BoxContainer key={e._id} {...e}/> ) } 
     </div>
   )}
 
@@ -33,3 +34,6 @@ export const Box = ( { title } ) => {
     </Block>
   )}
     
+export const BoxWrapper = connect(
+  e => ({boxes: e.boxes}))(Boxes)
+
