@@ -66,7 +66,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        loader: "babel-loader",
+        loader: "babel",
 
       // Only run `.js` and `.jsx` files through Babel
       test: /\.jsx?$/,
@@ -75,10 +75,23 @@ module.exports = {
       include: [
         path.resolve(__dirname, "app"),
       ],
+      exclude: /node_modules/,
       // Options to configure babel with
       query: {
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'stage-0', 'react'],
+        "presets": ["es2015", "stage-0", "react"],
+        "env": {
+          "development": {
+            "plugins": [
+              ["react-transform", {
+                "transforms": [{
+                  "transform": "react-transform-hmr",
+                  "imports": ["react"],
+                  "locals": ["module"]
+                }]
+              }]
+            ]
+          }
+        }
       }
     },
     ]
