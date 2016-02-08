@@ -24,12 +24,12 @@ function boxes(state = [], action) {
 
     case 'DELETE_BOX':
       return state.filter(box =>
-        box._id !== box._id
+        box._id !== action._id
       )
 
     case 'EDIT_BOX':
       return state.map(box =>
-        box._id === action._id ?
+        box._id === action.box._id ?
           {...box, ...action.box} : 
           box
       )

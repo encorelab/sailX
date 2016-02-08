@@ -3,14 +3,18 @@ import { render } from 'react-dom'
 import { Flex, Block} from 'jsxstyle';
 import { connect } from 'react-redux'
 
-export const Boxes = ( { boxes } ) => { 
+const Boxes = ( { boxes, dispatch } ) => { 
+  const boxlist = boxes.map(e => { 
+      const clickFn = () => { dispatch({type: 'DELETE_BOX', _id: e._id}) }
+      return( <BoxContainer key={e._id} clickFn={clickFn} {...e}/> ) 
+    }) 
   return(
     <div>
-    { boxes.map(e => <BoxContainer key={e._id} {...e}/> ) } 
+    {boxlist}
     </div>
   )}
 
-export const BoxContainer = ( { x, y, ...other} ) => {
+const BoxContainer = ( { x, y, ...other} ) => {
   return(
     <Flex>
     <Block position='absolute'
@@ -21,7 +25,7 @@ export const BoxContainer = ( { x, y, ...other} ) => {
     </Flex>
   )}
 
-export const Box = ( { title } ) => {
+const Box = ( { title, clickFn } ) => {
   return(
     <Block border='1px solid'
       backgroundColor='#FEEFB3'
@@ -30,10 +34,14 @@ export const Box = ( { title } ) => {
       fontSize='25px'
       textOverflow='ellipsis'
       overflow='hidden'>
+      <div onClick={clickFn}>
     {title}
+    </div>
     </Block>
   )}
     
+// --------------------------------------
+
 export const BoxWrapper = connect(
   e => ({boxes: e.boxes}))(Boxes)
 
