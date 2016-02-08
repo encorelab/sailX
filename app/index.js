@@ -8,6 +8,7 @@ import { IndexRoute, browserHistory, Router, Route, Link } from 'react-router'
 import VisibleTodoList from './components/VisibleTodoList'
 import Footer from './components/Footer'
 import { BoxWrapper } from './components/Boxes'
+import Drag from './components/Drag'
 
 const boxlist = []
 // [{_id: "1", title:"Hi", x:30, y:40},
@@ -34,8 +35,8 @@ render(
   <Router history={browserHistory}>
     <Route path="/" component={Hi}>
     <IndexRoute component='Footer'/>
-      <Route path="/test" component={Test} />
-      <Route path="/inbox" component={Footer} />
+      <Route path="/test" component={Drag} />
+      <Route path="/inbox" component={Test} />
     </Route>
   </Router>
 

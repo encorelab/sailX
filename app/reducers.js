@@ -34,6 +34,12 @@ function boxes(state = [], action) {
           box
       )
 
+    case 'MOVE_BOX':
+      return state.map(box =>
+        box._id === action._id ?
+          {...box, x: box.x + action.delta_x, y: box.y + action.delta_y} : 
+          box
+      )
     case 'UPDATE_BOX':
       return state.map(box =>
         box._id === action.box._id ?
@@ -48,11 +54,8 @@ function boxes(state = [], action) {
           box
       )
 
-    case 'COMPLETE_ALL':
-      const areAllMarked = state.every(box => box.completed)
-      return state.map(box => ({...box, 
-        completed: !areAllMarked})
-      )
+    case 'DELETE_ALL':
+      return([])
 
     case 'CLEAR_COMPLETED':
       return state.filter(box => box.completed === false)

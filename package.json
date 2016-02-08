@@ -37,6 +37,7 @@
     "pouchdb": "^5.0.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-draggable": "houshuang/react-draggable",
     "react-redux": "^4.2.1",
     "react-router": "^2.0.0-rc6",
     "redux": "^3.2.1",
