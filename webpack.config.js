@@ -43,6 +43,7 @@
 /* eslint-disable no-var */
 var webpack = require('webpack');
 var path = require('path');
+var styleFileLoader = 'file?name=assets/styles/[name]-[hash].css';
 
 module.exports = {
   entry: [
@@ -55,8 +56,9 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.jsx', '.js']
   },
   devtool: 'eval-source-map',
   plugins: [
@@ -65,12 +67,28 @@ module.exports = {
   ],
   module: {
     loaders: [
-    { test: require.resolve("jquery"), loader: "expose?jQuery" },
-     {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
+  { test: /\.css$/, loader: "style-loader!css-loader" },
+
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url?limit=8192&name=[name]-[hash].[ext]'
+      },
+
+      {
+        test: /\.scss$/,
+        loaders: [
+          // styleFileLoader,
+          // 'resolve-url',
+          // 'style',
+          'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'sass?sourceMap'
+        ]
+      },
+      {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
-       {
+      {
         loader: "babel",
 
       // Only run `.js` and `.jsx` files through Babel
@@ -100,5 +118,5 @@ module.exports = {
       }
     },
     ]
-  }
+  },
 };

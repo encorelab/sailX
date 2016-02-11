@@ -16,9 +16,12 @@ function boxes(state = [], action) {
         } 
       ]
 
+  case 'INITSTATE_BOX':
+    return action.docs
+
     case 'INSERT_BOX':
       return [
-        action.box, 
+        action.doc, 
         ...state
       ]
 
@@ -42,8 +45,8 @@ function boxes(state = [], action) {
       )
     case 'UPDATE_BOX':
       return state.map(box =>
-        box._id === action.box._id ?
-          action.box :
+        box._id === action.doc._id ?
+          action.doc :
           box
       )
       

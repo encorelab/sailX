@@ -1,18 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom'
-import { Flex, Block} from 'jsxstyle';
-import { connect } from 'react-redux'
 
 import Formsy from 'formsy-react'
 import FRC from 'formsy-react-components'
-
-const Log = (e) => console.log(e)
-
-const formData = [
-  {id: 'name', type: 'INPUT', label: "Name", required: true, placeholder: "Name"},
-  {id: 'age', type: 'INPUT', label: "Age", obligatory: false, valueType: "number"},
-  {id: 'desc', type: 'TEXTAREA', label: 'Description'}
-]
 
 const formField = (e) => {
   switch (e.type) {
@@ -40,24 +30,24 @@ const formField = (e) => {
           required={ e.required} />)
   }
 }
-const fields = formData.map( e => formField(e) )
-
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {valid: false};
     Form.context = this;
+    console.log(this.props)
   }
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
+  fields = () => this.props.fields.map( e => formField(e) );
 
   render() {
   return(
-    <Formsy.Form onSubmit={Log} onValid={this.valid} onInvalid={this.invalid}>
+    <Formsy.Form onSubmit={this.props.onSubmit} onValid={this.valid} onInvalid={this.invalid}>
       <fieldset>
-        {fields}
+        {this.fields()}
       </fieldset>
-        <input className="btn btn-primary" type="submit" defaultValue="Submit" disabled={!this.state.valid}/>
+        <input className="btn btn-primary" type="submit" defaultValue="Submit" disabled={!this.state.valid} {...this.props.submitButton}/>
     </Formsy.Form>
   )}}
 
