@@ -26,11 +26,11 @@ export default (kind, restfn, initstate = [], deffields) => {
         doc._id !== action._id
       )
 
-    case 'DBEDIT':
-      return state.map(doc =>
-        doc._id === action.doc._id ?
-          {...doc, ...action.doc} : 
-          doc
+    case 'DBUPDATE':
+      return state.map(box =>
+        box._id === action.doc._id ?
+          action.doc :
+          box
       )
 
       // crud
@@ -44,12 +44,18 @@ export default (kind, restfn, initstate = [], deffields) => {
         } 
       ]
 
-    case 'UPDATE':
-      return state.map(box =>
-        box._id === action.doc._id ?
-          action.doc :
-          box
+    case 'EDIT':
+      return state.map(doc =>
+        doc._id === action.doc._id ?
+          {...doc, ...action.doc} : 
+          doc
       )
+      
+    case 'DELETE':
+      return state.filter(doc =>
+        doc._id !== action._id
+      )
+
       
     case 'DELETEALL':
       return([])

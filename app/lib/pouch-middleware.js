@@ -82,17 +82,17 @@ function processNewState(path, state) {
 
   function propagateDelete(path, doc) {
     console.log("removing", doc)
-    path.store.dispatch({type: "DELETE_" + path.actionPrefix, _id: doc._id})
+    path.store.dispatch({type: "DBDELETE_" + path.actionPrefix, _id: doc._id})
   }
 
   function propagateInsert(path, doc) {
     console.log("inserting", doc)
-    path.store.dispatch({type: "INSERT_" + path.actionPrefix, doc: doc})
+    path.store.dispatch({type: "DBINSERT_" + path.actionPrefix, doc: doc})
   }
 
   function propagateUpdate(path, doc) {
     console.log("updating", doc)
-    path.store.dispatch({type: "UPDATE_" + path.actionPrefix, doc: doc})
+    path.store.dispatch({type: "DBUPDATE_" + path.actionPrefix, doc: doc})
   }
 
 function differences(oldDocs, newDocs) {
