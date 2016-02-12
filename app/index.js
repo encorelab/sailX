@@ -11,10 +11,13 @@ import Drag from './components/Drag'
 import AddBox from './components/AddBox'
 import State from './components/State'
 import PouchSync from './lib/pouch-middleware'
+import AppBar from './components/AppBar'
+import Groups from './components/GroupList'
 
 const boxlist = []
+const groups = [{name: "Group 1"}, {name: "Group 2"}]
 
-const store = configStore({ boxes: boxlist })
+const store = configStore({ boxes: boxlist, groups: groups })
 window.store = store
 window.pouchsync = PouchSync
 
@@ -25,6 +28,7 @@ const App = (props) => {
       </div>
   )}
 
+    //{ //<AppBar /> }
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -34,6 +38,7 @@ render(
         <Route path="/inbox" component={BoxWrapper} />
         <Route path="/forms" component={AddBox} />
         <Route path="/state" component={State} />
+        <Route path="/groups" component={Groups} />
       </Route>
     </Router>
   </Provider>,
