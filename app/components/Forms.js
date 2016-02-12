@@ -6,7 +6,6 @@ import FRC from 'formsy-react-components'
 
 const formField = (e) => {
   let { id, ...rest } = e
-  console.log(e)
   switch (e.kind) {
     case 'INPUT': 
       return(<FRC.Input
@@ -36,7 +35,6 @@ class Form extends React.Component {
   fields = () => this.props.fields.map( e => formField(e) );
 
   render() {
-  console.log(this.fields())
   return(
     <Formsy.Form onSubmit={this.props.onSubmit} onValid={this.valid} onInvalid={this.invalid}>
       <fieldset>

@@ -2,9 +2,12 @@ import jPath from 'json-path'
 import Queue from 'async-function-queue'
 import equal from 'deep-equal'
 import PouchDB from 'pouchdb'
-
+import websocket from 'websocket-stream';		
+import PouchSync from 'pouch-websocket-sync';		
+  
+// const PouchClient = PouchSync.createClient();		
+// PouchClient.connect('ws://localhost:3001');		
 // async queue, shared among path objects
-const MyQueue = Queue(1)
 
 // begins listening to specific db, returns path object.
 // path object should be passed to all functions
@@ -16,6 +19,7 @@ export default (store, pathStr, dbname, actionPrefix = 'ENTRY') => {
   const pathObj = {
     path: pathStr,
     dbname: dbname,
+    queue: Queue(1),
     actionPrefix: actionPrefix,
     docs: {},
     db: PouchDB(dbname),
@@ -41,8 +45,14 @@ export default (store, pathStr, dbname, actionPrefix = 'ENTRY') => {
 
 // begins listening to a specific database, returns object with cancel function
 const listenPouch = (path) => {
+  console.log(path)
   const changes = path.db.changes({live: true, include_docs: true})
   const listening = changes.on('change', change => onDbChange(path, change))
+  // const remotedb = new PouchDB('http://localhost:5984/' + path.dbname)
+  // path.db.sync(remotedb, {
+  // live: true,
+  // retry: true
+  // })
   return listening.cancel
 }
 
@@ -65,8 +75,9 @@ function processNewState(path, state) {
   }
 
   function scheduleInsert(path, doc) {
+    console.log('Schedule insert', path, doc)
     path.docs[doc._id] = doc;
-    MyQueue.push(function(cb) {
+    path.queue.push(function(cb) {
       console.log("put que", doc)
       path.db.put(doc, cb);
     });
@@ -75,7 +86,7 @@ function processNewState(path, state) {
   function scheduleRemove(path, doc) {
     delete path.docs[doc._id];
     var db = path.db;
-    MyQueue.push(function(cb) {
+    path.queue.push(function(cb) {
       path.db.remove(doc, cb);
     });
   }

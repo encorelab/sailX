@@ -3,7 +3,6 @@ export const uuid = () =>
 
 export const shorten = (text, length) => {
   let t = text || ''
-  console.log(t)
   if (t.length < length) { return t } else { return t.slice(0, length-3)+'...' }
 }
 

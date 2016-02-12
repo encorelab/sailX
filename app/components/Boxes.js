@@ -12,7 +12,20 @@ import AddBox from './AddBox'
 
 import Draggable from 'react-draggable'
 
-const BoxDetail = ( { open, onClose, title, text } ) => { 
+const format = (box) => {
+  console.log("BOX", box)
+  let c = []
+  for(var key in box) {
+    if(box.hasOwnProperty(key)) {
+      c.push([key, box[key]])
+    }
+  }
+  console.log(c)
+  return c.map( k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
+}
+
+
+const BoxDetail = ( { open, onClose, title, box } ) => { 
   const actions = [<FlatButton
     label="X"
     secondary={true}
@@ -27,7 +40,7 @@ const BoxDetail = ( { open, onClose, title, text } ) => {
           open={open}
           onRequestClose={onClose}
         >
-        {text}
+        {format(box)}
         </Dialog>
 )}
 
@@ -50,14 +63,14 @@ const Boxes = ( { boxes, ui, dispatch } ) => {
         }) }
       return( <div><BoxContainer key={e._id} clickFn={clickFn} setXY={setXY} 
              infoFn={infoFn} {...e}/>
-            <BoxDetail key={e._id+'info'} onClose={closeInfoFn} title={e.title} text={e.content} open={ui.infoOpen == e._id} />
+            <BoxDetail box={e} key={e._id+'info'} onClose={closeInfoFn} title={e.title} text={e.content} open={ui.infoOpen == e._id} />
             </div>
             )}) 
 
   return(
     <div>
     {boxlist}
-    <AddBox isOpen={ui.addOpen} openFn={addFn} closeFn={closeAddFn} submitFn={submitAdd}/>
+    <AddBox isOpen={ui.addOpen} openFn={addFn} closeFn={closeAddFn} submitFn={submitAdd} fields={ui.fields}/>
     </div>
   )}
 

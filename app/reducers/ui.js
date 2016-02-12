@@ -11,6 +11,8 @@ export default (state, action) => {
       return {...state, addOpen: false}
     case 'CHANGEROUTE':
       return {...state, route: action.route}
+    case 'SETGROUP':
+      return {...state, fields: action.fields}
     default:
       return state
   }

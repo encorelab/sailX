@@ -4,16 +4,6 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import Forms from './Forms'
 
-const fields = [
-  {id: 'title',
-    label: 'Title',
-    kind: 'INPUT',
-    required: true},
-    {id: 'content',
-      label: 'Your idea',
-      kind: 'TEXTAREA',
-    required: true}]
-
 const CreateButton = ({ onClick} ) => {
  const style={ 
     position: 'fixed',
@@ -26,7 +16,7 @@ const CreateButton = ({ onClick} ) => {
   return(
     <Create style={style} onClick={onClick} size='4em'/>
 )}
-const AddBoxDialog = ( { open, onClose, onSubmit } ) => { 
+const AddBoxDialog = ( { fields, open, onClose, onSubmit } ) => { 
   console.log(open)
   const actions = [<FlatButton
     label="Cancel"
@@ -38,9 +28,6 @@ const AddBoxDialog = ( { open, onClose, onSubmit } ) => {
     primary={true}
     onClick={onSubmit}
     />]
-console.log(        <Forms fields={fields} onSubmit={onSubmit} />
-           )
-  
   return(
         <Dialog
           title='Add a new idea'
@@ -52,10 +39,10 @@ console.log(        <Forms fields={fields} onSubmit={onSubmit} />
         </Dialog>
 )}
 
-export default ( {isOpen, openFn, closeFn, submitFn} ) => {
+export default ( {isOpen, openFn, closeFn, submitFn, fields} ) => {
   return(<div>
          <CreateButton onClick={openFn} />
-         <AddBoxDialog open={isOpen} onClose={closeFn} onSubmit={submitFn} />
+         <AddBoxDialog open={isOpen} onClose={closeFn} onSubmit={submitFn} fields={fields} />
          </div>
         )}
 
