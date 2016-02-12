@@ -9,6 +9,8 @@ export default (state, action) => {
       if(!state.infoOpen) { return {...state, addOpen: true} } else { return state }
     case 'CLOSEADD':
       return {...state, addOpen: false}
+    case 'CHANGEROUTE':
+      return {...state, route: action.route}
     default:
       return state
   }

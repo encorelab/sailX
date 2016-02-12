@@ -12,7 +12,7 @@ const MyQueue = Queue(1)
 // pathStr: string, like "/users" to sync (JPath)
 // dbname: pouchDb name to sync with (local and external)
 // actionPrefix: will emit redux actions INSERT_ENTRY, UPDATE_ENTRY, DELETE_ENTRY and INITIALIZE_ENTRY
-const syncPath = (store, pathStr, dbname, actionPrefix = 'ENTRY') => {
+export default (store, pathStr, dbname, actionPrefix = 'ENTRY') => {
   const pathObj = {
     path: pathStr,
     dbname: dbname,
@@ -138,4 +138,3 @@ function onDbChange(path, change) {
   }
 }
 
-export default syncPath

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import Forms from './Forms'
+import PouchSync from '../lib/pouch-middleware'
 
 const defPrompt = `{"prompt": [
   {"label": "Title",
@@ -47,20 +48,24 @@ const newfields = (group) => {
     rows: 20,
     cols: 80,
     required: true,
-    defaultValue: prompt,
+    value: prompt,
     validations: {myCustom: (e, p) => validPrompt(p)},
     validationErrors: {myCustom: "Not valid prompt"}}
 ])
 }
-const Group = (props) => <li>{props.name}</li>
+const Group = ({onClick, title}) => <li><a href='#' onClick={onClick}> {title}</a></li>
 
 const Groups = (props) => {
+  const chooseGroup = (id) =>{ return( () => {
+   PouchSync(store, "/boxes", id, "BOXES")
+   store.dispatch({type: "SETGROUP_UI", group: id})
+   store.dispatch({type: "CHANGEROUTE_UI", route: 'boxes'})
+  })}
   return(
-    <div>
-    <ul>
-    {props.groups.map(e => <Group name={e.name} key={e.name}/>)}
+    <div> <ul>
+    {props.groups.map(e => <Group title={e.title} key={e.title} onClick={chooseGroup(e.id)}/>)}
     </ul>
-    <Forms fields={newfields()} onSubmit={(e) => console.log(e)} />
+    <Forms fields={newfields()} onSubmit={(e) => store.dispatch({type: 'ADD_GROUP', doc: e})} />
     </div>
   )}
 
