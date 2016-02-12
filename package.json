@@ -57,6 +57,7 @@
     "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-draggable": "houshuang/react-draggable",
+    "react-icons": "^1.0.3",
     "react-json-inspector": "^6.1.2",
     "react-modal": "^0.6.1",
     "react-redux": "^4.2.1",
@@ -64,6 +65,7 @@
     "react-tap-event-plugin": "^0.2.2",
     "react-toolbox": "^0.14.1",
     "redux": "^3.2.1",
+    "redux-form": "^4.1.10",
     "url-loader": "^0.5.7",
     "websocket-stream": "^3.1.0",
     "xtend": "^4.0.1"

@@ -17,10 +17,10 @@ import Groups from './components/GroupList'
 const boxlist = []
 const groups = [{name: "Group 1"}, {name: "Group 2"}]
 
-const store = configStore({ boxes: boxlist, groups: groups })
+const store = configStore({ boxes: boxlist, groups: groups, ui: {infoOpen: false, addOpen: false }})
 window.store = store
 window.pouchsync = PouchSync
-
+PouchSync(store, "/boxes", "A", "BOX")
 const App = (props) => {
   return(
     <div>
@@ -35,7 +35,7 @@ render(
       <Route path="/" component={App}>
       <IndexRoute component='Footer'/>
         <Route path="/test" component={Drag} />
-        <Route path="/inbox" component={BoxWrapper} />
+        <Route path="/boxes" component={BoxWrapper} />
         <Route path="/forms" component={AddBox} />
         <Route path="/state" component={State} />
         <Route path="/groups" component={Groups} />

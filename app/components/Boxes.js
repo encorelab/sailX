@@ -1,49 +1,96 @@
 import React from 'react';
-import { render } from 'react-dom'
 import { Flex, Block} from 'jsxstyle';
 import { connect } from 'react-redux'
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+import IconButton from 'material-ui/lib/icon-button';
+import Paper from 'material-ui/lib/paper';
+import AspectRatio from 'react-icons/lib/md/aspect-ratio'
+import Delete from 'react-icons/lib/md/delete'
+import { shorten } from '../lib/utils'
+import AddBox from './AddBox'
 
 import Draggable from 'react-draggable'
 
-const handleStop = (event, ui) => {
-  console.log('Event: ', event);
-  console.log('Position: ', ui);
-}
+const BoxDetail = ( { open, onClose, title, text } ) => { 
+  const actions = [<FlatButton
+    label="X"
+    secondary={true}
+    onClick={onClose}
+    />]
+  
+  return(
+        <Dialog
+          title={title}
+          modal={false}
+          actions={actions}
+          open={open}
+          onRequestClose={onClose}
+        >
+        {text}
+        </Dialog>
+)}
 
-const Boxes = ( { boxes, dispatch } ) => { 
+const Boxes = ( { boxes, ui, dispatch } ) => { 
+  const addFn = () => { dispatch({type: 'OPENADD_UI'}) }
+  const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
+  const submitAdd = (e) => { 
+    closeAddFn()
+    dispatch({type: 'ADD_BOX', doc: e})
+  }
+
   const boxlist = boxes.map(e => { 
       const clickFn = () => { dispatch({type: 'DELETE_BOX', _id: e._id}) }
+      const infoFn = () => { dispatch({type: 'OPENINFO_UI', _id: e._id}) }
+      const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', _id: e._id}) }
+
       const setXY = (a, ui) => { 
-        console.log(ui.position)
         dispatch({type: 'MOVE_BOX', 
                  _id: e._id, delta_x: ui.position.left, delta_y: ui.position.top
         }) }
-      return( <BoxContainer key={e._id} clickFn={clickFn} setXY={setXY} {...e}/> ) 
-    }) 
+      return( <div><BoxContainer key={e._id} clickFn={clickFn} setXY={setXY} 
+             infoFn={infoFn} {...e}/>
+            <BoxDetail key={e._id+'info'} onClose={closeInfoFn} title={e.title} text={e.content} open={ui.infoOpen == e._id} />
+            </div>
+            )}) 
 
   return(
     <div>
     {boxlist}
+    <AddBox isOpen={ui.addOpen} openFn={addFn} closeFn={closeAddFn} submitFn={submitAdd}/>
     </div>
   )}
 
-  const BoxContainer = ( { x, y, setXY, title, ...other} ) => {
+  const BoxContainer = ( { x, y, setXY, title, infoFn, clickFn, ...box} ) => {
+    const style = {
+      height: 100,
+      width: 300,
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
     return(
       <Draggable
         onStart={() => true}
-        onDrag={(e, ui) => console.log("Position", ui.position) }
-        onStop={setXY}>
+        onStop={setXY}
+        onTouchTap={() => console.log("Tap")}
+        cancel='.nodrag'>
       <div style={{position: 'absolute',
-        border:'1px solid',
-        backgroundColor:'#FEEFB3',
-        width:'150px',
-        height:'30px',
-        fontSize:'25px',
+        fontSize:'20px',
         textOverflow:'ellipsis',
         overflow:'hidden',
         top:y,
         left:x}}>
-      {title}
+        <Paper zDepth={3} style={style}>
+   <div>   {shorten(title, 20)}
+      <span style={{float:'right'}}>
+<Delete onClick={clickFn}/>
+<AspectRatio onClick={infoFn}/>
+</span>
+</div>
+    
+    <div style={{fontSize: '15px', float: 'left', marginTop: '15px', marginLeft: '5px'}}>{shorten(box.content, 100)}</div>
+      </Paper>
       </div>
       </Draggable>
     )}
@@ -51,5 +98,5 @@ const Boxes = ( { boxes, dispatch } ) => {
 // --------------------------------------
 
 export const BoxWrapper = connect(
-  e => ({boxes: e.boxes}))(Boxes)
+  e => ({boxes: e.boxes, ui: e.ui}))(Boxes)
 

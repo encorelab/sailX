@@ -5,29 +5,24 @@ import Formsy from 'formsy-react'
 import FRC from 'formsy-react-components'
 
 const formField = (e) => {
-  switch (e.type) {
+  let { id, ...rest } = e
+  console.log(e)
+  switch (e.kind) {
     case 'INPUT': 
       return(<FRC.Input
-          name={e.id}
-          id={e.id}
-          key={e.id}
-          value={ e.defaultValue }
-          label={ e.label }
-          type={ e.valueType }
-          placeholder= { e.placeholder }
-          help= { e.help }
-          required={ e.required} />)
+          name={id}
+          id={id}
+          key={id}
+          type='text'
+          value=''
+          {...rest} />)
     case 'TEXTAREA':
       return(<FRC.Textarea   
-          name={e.id}
-          id={e.id}
-          key={e.id}
-          value={ e.defaultValue }
-          label={ e.label }
-          type={ e.valueType }
-          placeholder= { e.placeholder }
-          help= { e.help }
-          required={ e.required} />)
+          name={id}
+          id={id}
+          key={id}
+          value={e.value || ''}
+          {...rest} />)
   }
 }
 class Form extends React.Component {
@@ -35,13 +30,13 @@ class Form extends React.Component {
     super();
     this.state = {valid: false};
     Form.context = this;
-    console.log(this.props)
   }
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
   fields = () => this.props.fields.map( e => formField(e) );
 
   render() {
+  console.log(this.fields())
   return(
     <Formsy.Form onSubmit={this.props.onSubmit} onValid={this.valid} onInvalid={this.invalid}>
       <fieldset>

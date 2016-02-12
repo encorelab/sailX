@@ -1,63 +1,61 @@
 import React from 'react';
-import AutoComplete from 'material-ui/lib/auto-complete';
+import Create from 'react-icons/lib/md/create'
+import FlatButton from 'material-ui/lib/flat-button';
+import Dialog from 'material-ui/lib/dialog';
+import Forms from './Forms'
 
-export default class AutoCompleteExampleSimple extends React.Component {
+const fields = [
+  {id: 'title',
+    label: 'Title',
+    kind: 'INPUT',
+    required: true},
+    {id: 'content',
+      label: 'Your idea',
+      kind: 'TEXTAREA',
+    required: true}]
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dataSource: [],
-    };
+const CreateButton = ({ onClick} ) => {
+ const style={ 
+    position: 'fixed',
+    left: '50%',
+    bottom: '20px',
+    transform: 'translate(-50%, -50%)',
+    margin: '0 auto'
   }
 
-  handleUpdateInput = (t) => {
-    this.setState({
-      dataSource: [t, t + t, t + t + t],
-    });
-  };
+  return(
+    <Create style={style} onClick={onClick} size='4em'/>
+)}
+const AddBoxDialog = ( { open, onClose, onSubmit } ) => { 
+  console.log(open)
+  const actions = [<FlatButton
+    label="Cancel"
+    secondary={true}
+    onClick={onClose}
+    />,
+  <FlatButton
+    label="Create"
+    primary={true}
+    onClick={onSubmit}
+    />]
+console.log(        <Forms fields={fields} onSubmit={onSubmit} />
+           )
+  
+  return(
+        <Dialog
+          title='Add a new idea'
+          modal={false}
+          open={open}
+          onRequestClose={onClose}
+        >
+        <Forms fields={fields} onSubmit={onSubmit} />
+        </Dialog>
+)}
 
-  render() {
-    return (
-      <AutoComplete
-        hintText="Type c"
-        dataSource={this.state.dataSource}
-        onUpdateInput={this.handleUpdateInput}
-      />
-    );
-  }
-}
+export default ( {isOpen, openFn, closeFn, submitFn} ) => {
+  return(<div>
+         <CreateButton onClick={openFn} />
+         <AddBoxDialog open={isOpen} onClose={closeFn} onSubmit={submitFn} />
+         </div>
+        )}
 
-
-
-// const fields = [
-//   {id: 'title',
-//     label: 'Title',
-//     type: 'INPUT',
-//     required: true},
-//     {id: 'content',
-//       label: 'Your idea',
-//       type: 'TEXTAREA',
-//     required: true}
-// ]
-
-// const onSubmit = (e) => console.log("Submitted", e)
-// const AddBox = () => {
-//   return(
-//     <div>
-// <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addBoxModal">Open Modal</button>
-// <div id='addBoxModal' className='modal fade' role='dialog'>
-//     <div className='modal-dialog'>
-//     <div className='modal-header'>
-//     <h4 className='modal-title'>Add new idea</h4>
-//     </div>
-//     <div className='modal-body'>
-//     <Forms fields={fields} onSubmit={onSubmit} submitButton={{"data-dismiss": "modal"}}/>
-//     </div>
-//     </div>
-//     </div>
-//     </div>
-//   )}
-
-
-    
