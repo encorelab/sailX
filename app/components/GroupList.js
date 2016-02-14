@@ -79,7 +79,7 @@ const chooseGroup = (group) =>{ return( () => {
 })}
 
 // Group list and header
-const Groups = (props) => {
+export const Groups = (props) => {
   return(
     <div> <h1>Welcome to CKX</h1><p>Please choose a group board, or create a new one</p><ul>
     {props.groups.map(e => <Group title={e.title} key={e.title} onClick={chooseGroup(e)}/>)}

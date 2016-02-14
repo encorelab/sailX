@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 // route components
 import { BoxWrapper } from './components/Boxes'
 import State from './components/State'
-import Groups from './components/GroupList'
+import GroupsWrapper from './components/GroupList'
+import { Groups } from './components/GroupList'
 
 const navigated = () => {
   const newroute = window.location.hash.slice(2)
@@ -28,13 +29,15 @@ export const changeRoute = (route) => {
 const Route = ({ route }) => {
   switch (route) {
     case 'login': 
-      return <Groups />
+      return <GroupsWrapper />
     case 'boxes':
       return <BoxWrapper />
     case 'state':
       return <State />
+    case 'example':
+      return <Groups groups={[{title: 'aa'}, {title: 'bb'}]} />
     default:
-      return <Groups />
+      return <GroupsWrapper />
   }
 }
 
