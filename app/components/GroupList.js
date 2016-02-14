@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux'
 import Forms from './Forms'
 import PouchSync from '../lib/pouch-middleware'
+import { changeRoute } from '../router'
 
+// suggestion for prompt for new groups
 const defPrompt = `{"prompt": [
   {"id": "title", 
    "label": "Title",
@@ -15,26 +17,9 @@ const defPrompt = `{"prompt": [
     "required": true}
 ]}`
 
-const validPrompt = (prompt) => {
-  try {
-    let p = JSON.parse(prompt)
-    let fields = p.prompt.map(e => e.label)
-    const valid = fields.indexOf('Title') 
-    return valid > -1
-  } catch(err) {
-    return false
-  }
-}
-
-const newfields = (group) => {
-  if (group) {
-    var { title, id, prompt} = group
-  } else {
-    var title = undefined, id = undefined, prompt = defPrompt
-  }
-  return (
-  [
-  {id: 'title',
+// form to add new groups
+const newGroupPrompt = (title, id, prompt) =>
+[{id: 'title',
     label: 'Title',
     kind: 'INPUT',
     required: true,
@@ -53,24 +38,55 @@ const newfields = (group) => {
     value: prompt,
     validations: {myCustom: (e, p) => validPrompt(p)},
     validationErrors: {myCustom: "Not valid prompt"}}
-])
-}
-const Group = ({onClick, title}) => <li><a href='#' onClick={onClick}> {title}</a></li>
+]
 
+// check if an entered prompt is valid
+const validPrompt = (prompt) => {
+  try {
+    const p = JSON.parse(prompt)
+    const fields = p.prompt.map(e => e.label)
+    const valid = fields.indexOf('Title') 
+    return valid > -1
+  } catch(err) {
+    return false
+  }
+}
+
+const newfields = (group) => {
+  if (group) {
+    var { title, id, prompt} = group
+  } else {
+    var title = undefined, id = undefined, prompt = defPrompt
+  }
+
+  return newGroupPrompt(title, id, prompt)
+}
+
+// single group component
+const Group = ({onClick, title}) => 
+  <li><a href='#' onClick={onClick}> {title}</a></li>
+
+// returns a function that connects the db to the 
+// group chosen, and emits to the redux store
+const chooseGroup = (group) =>{ return( () => {
+  PouchSync(store, "/boxes", group.id, "BOXES")
+  store.dispatch({
+    type: "SETGROUP_UI", 
+    group: group.id, 
+    fields: JSON.parse(group.prompts).prompt
+  })
+  changeRoute('boxes')
+})}
+
+// Group list and header
 const Groups = (props) => {
-  const chooseGroup = (group) =>{ return( () => {
-   PouchSync(store, "/boxes", group.id, "BOXES")
-   store.dispatch({type: "SETGROUP_UI", group: group.id, fields: JSON.parse(group.prompts).prompt})
-   store.dispatch({type: "CHANGEROUTE_UI", route: 'boxes'})
-  })}
   return(
-    <div> <ul>
+    <div> <h1>Welcome to CKX</h1><p>Please choose a group board, or create a new one</p><ul>
     {props.groups.map(e => <Group title={e.title} key={e.title} onClick={chooseGroup(e)}/>)}
     </ul>
     <Forms fields={newfields()} onSubmit={(e) => store.dispatch({type: 'ADD_GROUP', doc: e})} />
     </div>
   )}
-
 
 const GroupWrapper = connect(
   e => ({groups: e.groups}))(Groups)

@@ -45,7 +45,6 @@ export default (store, pathStr, dbname, actionPrefix = 'ENTRY') => {
 
 // begins listening to a specific database, returns object with cancel function
 const listenPouch = (path) => {
-  console.log(path)
   const changes = path.db.changes({live: true, include_docs: true})
   const listening = changes.on('change', change => onDbChange(path, change))
   // const remotedb = new PouchDB('http://localhost:5984/' + path.dbname)
