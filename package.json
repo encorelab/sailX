@@ -4,9 +4,11 @@
   "description": "Boilerplate for kick starting a React Project with ES6 (Babel) and Hot reloader using Webpack.",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js & npm run hz",
+    "onlyweb": "node server.js",
     "build": "./node_modules/.bin/webpack --config webpack.config.production.js",
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint .",
+    "hz": "./node_modules/.bin/hz serve"
   },
   "repository": {
     "type": "git",
@@ -49,10 +51,6 @@
     "lodash": "^4.2.1",
     "material-ui": "^0.14.4",
     "normalize.css": "^3.0.3",
-    "pouch-redux-middleware": "^0.1.0",
-    "pouch-remote-stream": "KlausTrainer/pouch-remote-stream#db75293fcac1cbb7bf96022e941552ed550b7f5f",
-    "pouch-websocket-sync": "^0.1.7",
-    "pouchdb": "^5.0.1",
     "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
@@ -67,8 +65,8 @@
     "redux": "^3.2.1",
     "redux-form": "^4.1.10",
     "url-loader": "^0.5.7",
-    "websocket-stream": "^3.1.0",
-    "xtend": "^4.0.1"
+    "xtend": "^4.0.1",
+    "horizon": "^0.3.1"
   },
   "devDependencies": {
     "babel-core": "^6.3.19",
