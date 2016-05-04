@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import Forms from './Forms'
-import PouchSync from '../lib/pouch-middleware'
 import { changeRoute } from '../router'
+import { horizon } from '../index'
+import horizonSync from '../lib/horizon-connect'
 
 // suggestion for prompt for new groups
 const defPrompt = `{"prompt": [
@@ -69,7 +70,7 @@ const Group = ({onClick, title}) =>
 // returns a function that connects the db to the 
 // group chosen, and emits to the redux store
 const chooseGroup = (group) =>{ return( () => {
-  PouchSync(store, "/boxes", group.id, "BOXES")
+  horizonSync(horizon, store, '/boxes', group.id, 'BOXES')
   store.dispatch({
     type: "SETGROUP_UI", 
     group: group.id, 
@@ -82,7 +83,7 @@ const chooseGroup = (group) =>{ return( () => {
 export const Groups = (props) => {
   return(
     <div> <h1>Welcome to CKX</h1><p>Please choose a group board, or create a new one</p><ul>
-    {props.groups.map(e => <Group title={e.title} key={e.title} onClick={chooseGroup(e)}/>)}
+    {props.groups.map(e => <Group title={e.title} key={e.id} onClick={chooseGroup(e)}/>)}
     </ul>
     <Forms fields={newfields()} onSubmit={(e) => store.dispatch({type: 'ADD_GROUP', doc: e})} />
     </div>

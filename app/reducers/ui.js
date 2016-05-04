@@ -1,8 +1,7 @@
 export default (state, action) => {
-  console.log(action)
   switch (action.type) {
     case 'OPENINFO':
-      return {...state, infoOpen: action._id}
+      return {...state, infoOpen: action.id}
     case 'CLOSEINFO':
       return {...state, infoOpen: false}
     case 'OPENADD':

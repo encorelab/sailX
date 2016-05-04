@@ -13,14 +13,12 @@ import AddBox from './AddBox'
 import Draggable from 'react-draggable'
 
 const format = (box) => {
-  console.log("BOX", box)
   let c = []
   for(var key in box) {
     if(box.hasOwnProperty(key)) {
       c.push([key, box[key]])
     }
   }
-  console.log(c)
   return c.map( k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
 }
 
@@ -53,17 +51,17 @@ const Boxes = ( { boxes, ui, dispatch } ) => {
   }
 
   const boxlist = boxes.map(e => { 
-      const clickFn = () => { dispatch({type: 'DELETE_BOX', _id: e._id}) }
-      const infoFn = () => { dispatch({type: 'OPENINFO_UI', _id: e._id}) }
-      const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', _id: e._id}) }
+      const clickFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
+      const infoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
+      const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
 
       const setXY = (a, ui) => { 
         dispatch({type: 'MOVE_BOX', 
-                 _id: e._id, delta_x: ui.position.left, delta_y: ui.position.top
+                 id: e.id, delta_x: ui.position.left, delta_y: ui.position.top
         }) }
-      return( <div><BoxContainer key={e._id} clickFn={clickFn} setXY={setXY} 
+      return( <div><BoxContainer key={e.id} clickFn={clickFn} setXY={setXY} 
              infoFn={infoFn} {...e}/>
-            <BoxDetail box={e} key={e._id+'info'} onClose={closeInfoFn} title={e.title} text={e.content} open={ui.infoOpen == e._id} />
+            <BoxDetail box={e} key={e.id+'info'} onClose={closeInfoFn} title={e.title} text={e.content} open={ui.infoOpen == e.id} />
             </div>
             )}) 
 
@@ -86,7 +84,6 @@ const Boxes = ( { boxes, ui, dispatch } ) => {
       <Draggable
         onStart={() => true}
         onStop={setXY}
-        onTouchTap={() => console.log("Tap")}
         cancel='.nodrag'>
       <div style={{position: 'absolute',
         fontSize:'20px',

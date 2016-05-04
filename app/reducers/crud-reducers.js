@@ -18,17 +18,17 @@ export default (kind, restfn, initstate = [], deffields) => {
     case 'DBINSERT':
       return [
         action.doc, 
-        ...state
+        ...state.filter(doc => doc.id != action.doc.id)
       ]
 
     case 'DBDELETE':
       return state.filter(doc =>
-        doc._id !== action._id
+        doc.id !== action.id
       )
 
     case 'DBUPDATE':
       return state.map(box =>
-        box._id === action.doc._id ?
+        box.id === action.doc.id ?
           action.doc :
           box
       )
@@ -38,7 +38,7 @@ export default (kind, restfn, initstate = [], deffields) => {
       return [
         ...state,
         {
-            _id: uuid(),
+            id: uuid(),
             ...deffields,
           ...action.doc
         } 
@@ -46,14 +46,14 @@ export default (kind, restfn, initstate = [], deffields) => {
 
     case 'EDIT':
       return state.map(doc =>
-        doc._id === action.doc._id ?
+        doc.id === action.doc.id ?
           {...doc, ...action.doc} : 
           doc
       )
       
     case 'DELETE':
       return state.filter(doc =>
-        doc._id !== action._id
+        doc.id !== action.id
       )
 
       

@@ -17,7 +17,6 @@ const CreateButton = ({ onClick} ) => {
     <Create style={style} onClick={onClick} size='4em'/>
 )}
 const AddBoxDialog = ( { fields, open, onClose, onSubmit } ) => { 
-  console.log(open)
   const actions = [<FlatButton
     label="Cancel"
     secondary={true}

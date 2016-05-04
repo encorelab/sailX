@@ -18,6 +18,7 @@ const navigated = () => {
 
 export const initialize = () => {
   window.addEventListener('hashchange', navigated, false)
+  window.location.hash = '/'
   navigated()
 }
 
