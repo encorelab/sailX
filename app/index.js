@@ -10,7 +10,9 @@ import horizonSync from 'horizon-redux-sync'
 const boxlist = []
 const groups = []
 // horizon server, on same domain as HTML/JS, different port. insecure should be changed before production.
-export const horizon = Horizon({host: window.location.hostname + ':8181', insecure: true})
+let horizon_port
+if(process.env.NODE_ENV == 'production') { horizon_port = '80' } else { horizon_port = '8181' }
+export const horizon = Horizon({host: window.location.hostname + ':' + horizon_port, insecure: true})
 
 const store = configStore({ boxes: boxlist, groups: groups, ui: {infoOpen: false, addOpen: false, route: 'login' }})
 window.store = store
