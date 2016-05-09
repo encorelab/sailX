@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Forms from './Forms'
 import { changeRoute } from '../router'
 import { horizon } from '../index'
-import horizonSync from '../lib/horizon-connect'
+import horizonSync from 'horizon-redux-sync'
 
 // suggestion for prompt for new groups
 const defPrompt = `{"prompt": [

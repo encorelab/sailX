@@ -36,6 +36,7 @@
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "deep-equal": "^1.0.1",
+    "horizon-redux-sync": "^1.0.0",
     "exports-loader": "^0.6.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",

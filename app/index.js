@@ -5,7 +5,7 @@ import { Provider, connect } from 'react-redux'
 
 import configStore from './store';
 import { CurrentRoute, initialize, changeRoute } from './router'
-import horizonSync from './lib/horizon-connect'
+import horizonSync from 'horizon-redux-sync'
 
 const boxlist = []
 const groups = []
