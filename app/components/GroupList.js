@@ -82,14 +82,16 @@ const chooseGroup = (group) =>{ return( () => {
 // Group list and header
 export const Groups = (props) => {
   return(
-    <div> <h1>Welcome to CKX</h1><p>Please choose a group board, or create a new one</p><ul>
+    <div> {props.ui.loggedIn ? <div><h1>Welcome to CKX, {props.ui.name}</h1><p>Please choose a group board, or create a new one</p><ul>
     {props.groups.map(e => <Group title={e.title} key={e.id} onClick={chooseGroup(e)}/>)}
     </ul>
-    <Forms fields={newfields()} onSubmit={(e) => store.dispatch({type: 'ADD_GROUP', doc: e})} />
+    <Forms fields={newfields()} onSubmit={(e) => store.dispatch({type: 'ADD_GROUP', doc: e})} /></div>
+    :
+      <a href="#/login">Click here to log in</a>}
     </div>
   )}
 
 const GroupWrapper = connect(
-  e => ({groups: e.groups}))(Groups)
+  e => ({groups: e.groups, ui: e.ui}))(Groups)
 
 export default GroupWrapper
