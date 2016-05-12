@@ -12,9 +12,12 @@ const groups = []
 // horizon server, on same domain as HTML/JS, different port. insecure should be changed before production.
 let horizon_port
 if(process.env.NODE_ENV == 'production') { horizon_port = '80' } else { horizon_port = '8181' }
-export const horizon = Horizon({host: window.location.hostname + ':' + horizon_port, insecure: true})
+export const horizon = Horizon({host: window.location.hostname + ':' + horizon_port, insecure: true, authType: 'unauthenticated'})
 
-const store = configStore({ boxes: boxlist, groups: groups, ui: {infoOpen: false, addOpen: false, route: 'login' }})
+// hack until this works without problems in horizon
+localStorage.removeItem('horizon-jwt');
+
+const store = configStore({ boxes: boxlist, groups: groups, ui: {infoOpen: false, addOpen:false, route: 'login' }})
 window.store = store
 horizonSync(horizon, store, '/groups', 'groups', 'GROUP')
 window.changeRoute = changeRoute
