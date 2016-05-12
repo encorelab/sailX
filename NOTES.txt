@@ -1,0 +1,5 @@
+Right now Rethink stuff seems to work just fine. Needs to have a running Rethink server on the standard port. 
+
+upsert.forEach with error reporting always reports errors, but seems to work.
+
+Need to investigate hosting on production server, CORS issues etc. There might be too many events triggered by a Redux store update, maybe ways of making it more rational.
