@@ -71,4 +71,3 @@ export default (kind, restfn, initstate = [], deffields) => {
     }
   )
 }
-

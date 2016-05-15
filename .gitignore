@@ -34,3 +34,6 @@ node_modules
 
 # Database
 rethinkdb_data
+
+# Output
+dist

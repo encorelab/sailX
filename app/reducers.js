@@ -7,5 +7,5 @@ import factory from './reducers/factory'
 export default combineReducers({
   boxes: crud('BOX', boxes, [], {x: 0, y: 0}),
   groups: crud('GROUP', (e) => e),
-  ui: factory('UI', {infoOpen: false, addOpen: false}, ui)
+  ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false}, ui)
 })

@@ -54,7 +54,7 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
 
   resolve: {
@@ -63,9 +63,14 @@ module.exports = {
   devtool: 'eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
-  module: {
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('dev')
+      }
+    })
+  
+  ], module: {
     loaders: [
   { test: /\.css$/, loader: "style-loader!css-loader" },
 

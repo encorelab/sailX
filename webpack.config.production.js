@@ -41,20 +41,18 @@
 /* eslint-disable no-var */
 var webpack = require('webpack');
 var path = require('path');
-
+//occurence plugin removed 
 module.exports = {
-  entry: './scripts/index',
+  entry: './app/index',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js', 'jsx']
   },
-  devtool: 'source-map',
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -68,11 +66,39 @@ module.exports = {
   ],
   module: {
     loaders: [
+  { test: /\.css$/, loader: "style-loader!css-loader" },
+
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url?limit=8192&name=[name]-[hash].[ext]'
+      },
+
+      {
+        test: /\.scss$/,
+        loaders: [
+          // styleFileLoader,
+          // 'resolve-url',
+          // 'style',
+          'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'sass?sourceMap'
+        ]
+      },
+      {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
+      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
+      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
+      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
       {
         test: /\.jsx?$/,
         loaders: ['babel'],
-        include: path.join(__dirname, 'scripts')
+      include: [ path.resolve(__dirname, "app"), ],
+      
+      exclude: /node_modules/,
+      // Options to configure babel with
+      query: {
+        "presets": ["es2015", "stage-0", "react"],
+        }
       }
+      
     ]
   }
 };

@@ -16,6 +16,10 @@ export default (state, action) => {
       return {...state, route: action.route}
     case 'SETGROUP':
       return {...state, fields: action.fields}
+    case 'SETNAME':
+      return {...state, name: action.name}
+    case 'LOGGEDIN':
+      return {...state, loggedIn: true}
     default:
       return state
   }

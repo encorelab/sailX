@@ -2,16 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 // route components
-import { BoxWrapper } from './components/Boxes.jsx'
-import State from './components/State.jsx'
-import GroupsWrapper from './components/GroupList.jsx'
-import { Groups } from './components/GroupList.jsx'
+import { BoxWrapper } from './components/Boxes'
+import State from './components/State'
+import GroupsWrapper from './components/GroupList'
+import { Groups } from './components/GroupList'
+import EncoreLogin from 'encore_login'
 
 const navigated = () => {
   const newroute = window.location.hash.slice(2)
   //  dispatch: is not used anywhere just for debug
   window.store.dispatch({
-    type: 'CHANGEROUTE_UI',
+    type: 'CHANGEROUTE_UI', 
     route: newroute,
     dispatch: "hashchange"})
 }
@@ -32,23 +33,25 @@ const selectFn = (user) => {
     name: user })
   window.store.dispatch({
     type: 'LOGGEDIN_UI'})
+
   window.store.dispatch({
     type: 'CHANGEROUTE_UI', 
     route: 'boxes',
     dispatch: "after_login"})
 }
 
+
 // --------------------------------------
 const Route = ({ route }) => {
   switch (route) {
-    case 'login':
-      return <EncoreLogin onSelect={selectFn} />
     case 'boxes':
       return <BoxWrapper />
     case 'state':
       return <State />
     case 'example':
       return <Groups groups={[{title: 'aa'}, {title: 'bb'}]} />
+    case 'login':
+      return <EncoreLogin onSelect={selectFn} />
     default:
       return <GroupsWrapper />
   }
