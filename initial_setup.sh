@@ -1,7 +1,9 @@
 #/bin/bash
 cd encore_login
+npm install
 npm link
 cd ../horizon-redux-sync
+npm install
 npm link
 cd ../ckx
 npm install
