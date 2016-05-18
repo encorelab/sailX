@@ -1,6 +1,7 @@
 import jPath from 'json-path'
 import equal from 'deep-equal'
-  
+import { omit, sortBy, difference, intersection } from 'lodash'
+
 // begins listening to specific db, returns path object.
 // path object should be passed to all functions
 // store: redux store object
@@ -12,93 +13,117 @@ export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY') => {
     path: pathStr,
     dbname: dbname,
     actionPrefix: actionPrefix,
-    docs: {},
+    docs: [],
     db: horizon(dbname),
     store: store
   }
 
   listenHorizon(pathObj)
-  store.subscribe(e => processNewState(pathObj, store.getState()))
+  store.subscribe(e => reduxChange(pathObj, store.getState()))
   return pathObj
 }
 
+// ---------------------------
+
 // begins listening to a specific database, returns object with cancel function
 const listenHorizon = (path) => {
-  path.db.watch({ rawChanges: true }).forEach( (e) => { onDbChange(path, e) } )
+  path.db.watch().subscribe( (e) => { dbChange(path, e) } )
 }
 
-function processNewState(path, state) {
-  var docs = jPath.resolve(state, path.path)[0];
+// take a full state, extract subtree and sort
+const proc_redux_state = (path, state) => {
+  const x0 = jPath.resolve(state, path.path)[0]
+  return idsort(x0)
+}
 
-  if (docs) {
-    var diffs = differences(path.docs, docs);
-    if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deleted.length == 0)) {
+// take horizon store object, remove version keys and sort
+const proc_horizon_docs = (docs) => {
+  const sorted = docs.map(e => omit(e, '$hz_v$'))
+  return idsort(sorted)
+}
 
-      const updated = diffs.new.concat(diffs.updated)
-      if (updated.length > 0) {
-        path.db.upsert(updated)
-      }
+// sort array of objects by id key
+const idsort = (ary) => sortBy(ary, 'id')
 
-      diffs.deleted.forEach(doc => path.db.remove(doc))
-    };
 
-  path.docs = docs
+// ---------------------------
+
+// processes updates from Redux store
+function reduxChange(path, state) {
+  var docs = proc_redux_state(path, state)
+  if (equal(idsort(path.docs), docs) || state.length == 0) { // nothing to do
+    return 
+  }
+
+  const diffs = differences(path.docs, docs);
+  if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
+
+    const updated = diffs.new.concat(diffs.updated)
+    if (updated.length > 0) {
+      path.db.upsert(updated)
+    }
+
+    diffs.deletedIds.forEach(id => path.db.remove({id: id}))
   }
 }
 
-  function propagateDelete(path, doc) {
-    path.store.dispatch({type: "DBDELETE_" + path.actionPrefix, id: doc.id})
+// processes updates from Horizon
+function dbChange(path, rawdocs) {
+  const horizon_docs = proc_horizon_docs(rawdocs)
+  const redux_docs = proc_redux_state(path, path.store.getState())
+
+  if (equal(redux_docs, horizon_docs)) {  // nothing to do
+    return
   }
 
-  function propagateInsert(path, doc) {
-    path.store.dispatch({type: "DBINSERT_" + path.actionPrefix, doc: doc})
-  }
+  var diffs = differences(redux_docs, horizon_docs)
+  if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
 
-  function propagateUpdate(path, doc) {
-    path.store.dispatch({type: "DBUPDATE_" + path.actionPrefix, doc: doc})
+    const updated = diffs.new.concat(diffs.updated)
+
+    updated.forEach(doc => {
+      path.docs = path.docs.filter(e => e.id != doc.id)
+      path.docs = [...path.docs, doc]
+      propagateInsert(path, doc)
+    })
+
+    diffs.deletedIds.forEach(doc => {
+      path.docs = path.docs.filter(e => e.id != doc.id)
+      propagateDelete(path, doc);
+    })
   }
+}
+
+function propagateDelete(path, id) {
+  path.store.dispatch({type: "DBDELETE_" + path.actionPrefix, id: id})
+}
+
+function propagateInsert(path, doc) {
+  path.store.dispatch({type: "DBINSERT_" + path.actionPrefix, doc: doc})
+}
+
+function propagateUpdate(path, doc) {
+  path.store.dispatch({type: "DBUPDATE_" + path.actionPrefix, doc: doc})
+}
 
 function differences(oldDocs, newDocs) {
-  var result = {
-    new: [],
-    updated: [],
-    deleted: Object.keys(oldDocs).map(oldDocId => oldDocs[oldDocId]),
-  };
+  const oldDocsidx = oldDocs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc }), {});
+  const newDocsidx = newDocs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc }), {});
+  const deletedIds = difference(Object.keys(oldDocsidx), Object.keys(newDocsidx))
 
-  newDocs.forEach(function(newDoc) {
-    var id = newDoc.id;
+  const newIds = difference(Object.keys(newDocsidx), Object.keys(oldDocsidx)) 
+  const newD = newIds.map(e => newDocsidx[e])
 
-    if (! id) {
-      console.warn('doc with no id');
-    }
-    result.deleted = result.deleted.filter(doc => doc.id !== id);
-    var oldDoc = oldDocs[id];
-    if (! oldDoc) {
-      result.new.push(newDoc);
-    } else if (!equal(oldDoc, newDoc)) {
-      result.updated.push(newDoc);
-    }
-  });
+  const existingIds = intersection(Object.keys(newDocsidx), Object.keys(oldDocsidx))
+  const common = existingIds.map(e => newDocsidx[e])
+  const updated = common.filter(e => !equal(e, oldDocsidx[e.id]))
+
+  const result = {
+    new: newD,
+    updated: updated,
+    deletedIds: deletedIds
+  }
 
   return result;
-}
-
-function onDbChange(path, change) {
-  switch(change.type) {
-    case 'initial':
-    case 'add':
-      path.docs[change.new_val.id] = change.new_val
-      propagateInsert(path, change.new_val)
-      break
-    case 'remove':
-      delete path.docs[change.old_val.id];
-      propagateDelete(path, change.old_val);
-      break
-    case 'change':
-      path.docs[change.new_val.id] = change.new_val
-      propagateUpdate(path, change.new_val)
-      break
-    default:
-  }
 }
 
