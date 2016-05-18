@@ -1,0 +1,5 @@
+[groups.default.rules.read]
+template = "collection(any()).anyRead()"
+
+[groups.default.rules.write]
+template = "collection(any()).anyWrite()"

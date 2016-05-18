@@ -6,6 +6,7 @@ import { BoxWrapper } from './components/Boxes.jsx'
 import State from './components/State.jsx'
 import GroupsWrapper from './components/GroupList.jsx'
 import { Groups } from './components/GroupList.jsx'
+import EncoreLogin from 'encore_login'
 
 const navigated = () => {
   const newroute = window.location.hash.slice(2)

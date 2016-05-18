@@ -83,6 +83,7 @@ const Boxes = ( { boxes, ui, dispatch } ) => {
 
   return (
     <div>
+      <h1>{ui.name}</h1>
       {boxlist}
       <AddBox
         isOpen={ui.addOpen}
