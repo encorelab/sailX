@@ -8,4 +8,4 @@ docker run -p 8181:8181 -v /Users/stian/src/wallcology/ckx/rethinkdb_data:/rethi
 
 This exposes the website on port 8181, and shared the rethinkdb_data in the local directory. If you don't share the data with a local directory, it will be wiped on each docker restart.
 
-Make sure that the versions of Horizon, rethinkdb js library, and RethinkDB match up.
+Make sure that the versions of Horizon, rethinkdb js library, and RethinkDB match up, newish version of npm (3.8.6)
