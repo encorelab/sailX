@@ -9,4 +9,4 @@ cd ../ckx
 npm install
 npm link encore_login
 npm link horizon-redux-sync
-./node_modules/.bin/hz set-schema .hz/schema.toml
+./node_modules/.bin/hz set-schema .hz/schema.toml --update
