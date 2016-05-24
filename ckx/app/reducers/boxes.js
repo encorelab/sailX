@@ -6,7 +6,7 @@ export default (state, action) => {
           {...box, x: box.x + action.delta_x, y: box.y + action.delta_y} :
           box
       )
-    default: 
+    default:
       return state
     }
 }

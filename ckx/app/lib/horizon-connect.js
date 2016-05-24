@@ -1,7 +1,7 @@
 import jPath from 'json-path'
 import Queue from 'async-function-queue'
 import equal from 'deep-equal'
-  
+
 // begins listening to specific db, returns path object.
 // path object should be passed to all functions
 // store: redux store object
@@ -43,8 +43,8 @@ function processNewState(path, state) {
       const updated = diffs.new.concat(diffs.updated)
       if (updated.length > 0) {
         path.db.upsert(updated).forEach(
-          (doc) => { console.log("Horizon stored doc", doc) }, 
-            (error) => { console.log("Error storing doc",error) } 
+          (doc) => { console.log("Horizon stored doc", doc); },
+          (error) => { console.log("Error storing doc", error); }
         )
       }
 
@@ -56,7 +56,11 @@ function processNewState(path, state) {
   function scheduleInsert(path, doc) {
     console.log('redux->horizon insert', path, doc)
     path.docs[doc.id] = doc;
-    path.db.store(doc).forEach((doc) => {console.log("Horizon stored doc", doc)}, (error) => {console.error("Error storing doc",doc,error)} )
+    path.db.store(doc).forEach((doc) => {
+      console.log("Horizon stored doc", doc);
+    }, (error) => {
+      console.error("Error storing doc", doc, error);
+    })
   }
 
   function scheduleRemove(path, doc) {
@@ -67,17 +71,17 @@ function processNewState(path, state) {
   }
 
   function propagateDelete(path, doc) {
-    console.log("horizon->redux remove", doc)
+    console.log("horizon->redux remove", doc);
     path.store.dispatch({type: "DBDELETE_" + path.actionPrefix, id: doc.id})
   }
 
   function propagateInsert(path, doc) {
-    console.log("horizon->redux inserting", doc)
+    console.log("horizon->redux inserting", doc);
     path.store.dispatch({type: "DBINSERT_" + path.actionPrefix, doc: doc})
   }
 
   function propagateUpdate(path, doc) {
-    console.log("horizon->redux updating", doc)
+    console.log("horizon->redux updating", doc);
     path.store.dispatch({type: "DBUPDATE_" + path.actionPrefix, doc: doc})
   }
 
@@ -91,12 +95,12 @@ function differences(oldDocs, newDocs) {
   newDocs.forEach(function(newDoc) {
     var id = newDoc.id;
 
-    if (! id) {
-      console.warn('doc with no id');
+    if (!id) {
+      console.warn("doc with no id");
     }
     result.deleted = result.deleted.filter(doc => doc.id !== id);
     var oldDoc = oldDocs[id];
-    if (! oldDoc) {
+    if (!oldDoc) {
       result.new.push(newDoc);
     } else if (!equal(oldDoc, newDoc)) {
       result.updated.push(newDoc);
