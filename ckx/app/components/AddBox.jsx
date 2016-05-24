@@ -22,6 +22,8 @@ const CreateButton = ( { onClick } ) => {
   )
 }
 
+CreateButton.propTypes = {}
+
 const AddBoxDialog = ( { fields, open, onClose, onSubmit } ) => {
   const actions = [
     <FlatButton

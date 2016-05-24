@@ -7,6 +7,7 @@ import State from './components/State.jsx'
 import GroupsWrapper from './components/GroupList.jsx'
 import { Groups } from './components/GroupList.jsx'
 import EncoreLogin from 'encore_login'
+import { BoxList } from './components/BoxList.jsx'
 
 const navigated = () => {
   const newroute = window.location.hash.slice(2)
@@ -34,7 +35,7 @@ const selectFn = (user) => {
   window.store.dispatch({
     type: 'LOGGEDIN_UI'})
   window.store.dispatch({
-    type: 'CHANGEROUTE_UI', 
+    type: 'CHANGEROUTE_UI',
     route: 'boxes',
     dispatch: "after_login"})
 }
@@ -46,6 +47,8 @@ const Route = ({ route }) => {
       return <EncoreLogin onSelect={selectFn} />
     case 'boxes':
       return <BoxWrapper />
+    case 'boxlist':
+      return <BoxList />
     case 'state':
       return <State />
     case 'example':
