@@ -11,6 +11,9 @@ const groups = []
 // horizon server, on same domain as HTML/JS, different port. 'insecure' should be changed before production.
 export const horizon = Horizon({ host: window.location.hostname + ':8181', insecure: true })
 
+// hack until this works without problems in horizon
+localStorage.removeItem('horizon-jwt');
+
 const store = configStore({
   boxes: boxlist,
   groups: groups,
