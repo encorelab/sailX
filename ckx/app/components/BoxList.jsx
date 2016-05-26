@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Block } from 'jsxstyle';
 import { connect } from 'react-redux';
-import { BoxDetail } from './BoxDetail';
+import { ObservationDetails } from './ObservationElements';
 import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio';
 import Delete from 'react-icons/lib/md/delete';
@@ -124,7 +124,7 @@ const List = ( { boxes, ui, dispatch } ) => {
               infoFn={infoFn}
               {...e}
             />
-            <BoxDetail
+            <ObservationDetails
               box={e}
               key={e.id+'info'}
               onClose={closeInfoFn}

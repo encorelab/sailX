@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 // route components
-import { BoxWrapper } from './components/Boxes.jsx'
+//import { BoxWrapper } from './components/Boxes.jsx'
 import State from './components/State.jsx'
 import GroupsWrapper from './components/GroupList.jsx'
 import { Groups } from './components/GroupList.jsx'

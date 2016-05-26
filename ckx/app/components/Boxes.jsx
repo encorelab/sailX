@@ -8,7 +8,7 @@ import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio'
 import Delete from 'react-icons/lib/md/delete'
 import { shorten } from '../lib/utils'
-import AddBox from './AddBox'
+import AddObservation from './AddObservation'
 import Draggable from 'react-draggable'
 
 const format = (box) => {
