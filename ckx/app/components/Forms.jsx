@@ -42,22 +42,27 @@ class Form extends React.Component {
 
   render() {
     return (
-      <Formsy.Form
-        onSubmit = {this.props.onSubmit}
-        onValid = {this.valid}
-        onInvalid = {this.invalid}
-      >
-        <fieldset>
-          {this.fields()}
-        </fieldset>
-        <input
-          className = "btn btn-primary"
-          type = "submit"
-          defaultValue = "Submit"
-          disabled = {!this.state.valid}
-          {...this.props.submitButton}
-        />
-      </Formsy.Form>
+      <div>
+        <Formsy.Form
+          onSubmit = {this.props.onSubmit}
+          onValid = {this.valid}
+          onInvalid = {this.invalid}
+        >
+          <fieldset>
+            {this.fields()}
+          </fieldset>
+          <input
+            className = "btn btn-primary"
+            type = "submit"
+            defaultValue = "Submit"
+            disabled = {!this.state.valid}
+            {...this.props.submitButton}
+          />
+
+        </Formsy.Form>
+        {/* Formsy doesn't seem to have a native cancel... lame */}
+        <button onClick = {this.props.onClose} >Cancel</button>
+      </div>
     )
   }
 }
