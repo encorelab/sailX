@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Block} from 'jsxstyle';
+import { Flex, Block } from 'jsxstyle';
 import { connect } from 'react-redux'
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';

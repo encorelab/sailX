@@ -79,6 +79,18 @@ const Group = ( {onClick, title} ) => {
 
 // returns a function that connects the db to the
 // group chosen, and emits to the redux store
+// const chooseGroup = (group) => {
+//   return ( () => {
+//     // params: (x, y, redux subtree, rethink collection, suffix of the action)
+//     horizonSync(horizon, store, '/boxes', group.id, 'BOXES')
+//     store.dispatch({
+//       type: "SETGROUP_UI",
+//       group: group.id,
+//       fields: JSON.parse(group.prompts).prompt
+//     })
+//     changeRoute('boxes')
+//   })
+// }
 const chooseGroup = (group) => {
   return ( () => {
     // params: (x, y, redux subtree, rethink collection, suffix of the action)
@@ -88,7 +100,7 @@ const chooseGroup = (group) => {
       group: group.id,
       fields: JSON.parse(group.prompts).prompt
     })
-    changeRoute('boxes')
+    changeRoute('student')
   })
 }
 

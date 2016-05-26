@@ -9,6 +9,8 @@ import { Groups } from './components/GroupList.jsx'
 import EncoreLogin from 'encore_login'
 import { BoxList } from './components/BoxList.jsx'
 
+import { StudentReadView } from './components/StudentReadView.jsx'
+
 const navigated = () => {
   const newroute = window.location.hash.slice(2)
   //  dispatch: is not used anywhere just for debug
@@ -53,6 +55,10 @@ const Route = ({ route }) => {
       return <State />
     case 'example':
       return <Groups groups={[{title: 'aa'}, {title: 'bb'}]} />
+    case 'student':
+      return <StudentReadView />
+    case 'teacher':
+      return <div>Hello Teacher</div>
     default:
       return <GroupsWrapper />
   }
