@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 // route components
 import { BoxWrapper } from './components/Boxes.jsx'
 import State from './components/State.jsx'
-import GroupsWrapper from './components/GroupList.jsx'
-import { Groups } from './components/GroupList.jsx'
+// import GroupsWrapper from './components/GroupList.jsx'
+// import { Groups } from './components/GroupList.jsx'
 import EncoreLogin from 'encore_login'
 import { BoxList } from './components/BoxList.jsx'
 import { horizon } from './index'
@@ -50,7 +50,7 @@ const selectFn = (callback) => {
 // --------------------------------------
 const Route = ({ route }) => {
   // force login if not yet logged in
-  if (!window.store.getState().ui.loggedIn) { 
+  if (!window.store.getState().ui.loggedIn) {
     route = 'login'
   }
   switch (route) {
