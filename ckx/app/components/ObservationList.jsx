@@ -6,6 +6,7 @@ import { shorten } from '../lib/utils';
 import { ObservationContainer, ObservationDetails } from './ObservationElements';
 
 export default ( { boxes, ui, dispatch } ) => {
+
   const observationList = boxes.map(e => {
     const clickFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
     const infoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }

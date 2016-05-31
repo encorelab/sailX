@@ -26,6 +26,7 @@ export const ObservationContainer = ( { title, infoFn, clickFn, ...box } ) => {
     display: 'inline-block'
   };
 
+  // we need to have a convo about the concept of a 'style variable' (some of this wants to overlap btw the boxes?)
   return (
     <div style =
       {
