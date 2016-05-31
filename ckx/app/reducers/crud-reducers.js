@@ -44,6 +44,7 @@ export default (kind, restfn, initstate = [], deffields) => {
               ...state,
               {
                 id: uuid(),
+                created_at: new Date(),
                 ...deffields,
                 ...action.doc
               }

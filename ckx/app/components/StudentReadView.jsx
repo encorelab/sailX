@@ -17,7 +17,7 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
     <div>
       <ObservationList
         ui = {ui}
-        boxes = {_.orderBy(boxes, ['id'], ['asc'])}
+        boxes = {_.orderBy(boxes, ['created_at'], ['desc'])}
         dispatch = {dispatch}
       />
       <AddObservation
