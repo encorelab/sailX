@@ -1,10 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { BoxDetail } from './BoxDetail';
-// import Paper from 'material-ui/lib/paper';
-// import AspectRatio from 'react-icons/lib/md/aspect-ratio';
-// import Delete from 'react-icons/lib/md/delete';
-// import { shorten } from '../lib/utils';
 import ObservationList from './ObservationList'
 import AddObservation from './AddObservation'
 

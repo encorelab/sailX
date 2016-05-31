@@ -100,7 +100,7 @@ const chooseGroup = (group) => {
       group: group.id,
       fields: JSON.parse(group.prompts).prompt
     })
-    changeRoute('student')
+    changeRoute('board')
   })
 }
 
