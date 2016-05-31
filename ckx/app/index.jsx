@@ -9,7 +9,7 @@ import horizonSync from 'horizon-redux-sync'
 const boxlist = []
 const groups = []
 // horizon server, on same domain as HTML/JS, different port. 'insecure' should be changed before production.
-export const horizon = Horizon({ host: window.location.hostname + ':8181', insecure: true })
+export const horizon = Horizon({ host: window.location.hostname + ':8181', insecure: true, authType: 'unauthenticated' })
 
 // hack until this works without problems in horizon
 localStorage.removeItem('horizon-jwt');
@@ -25,7 +25,6 @@ const store = configStore({
 })
 
 window.store = store
-horizonSync(horizon, store, '/groups', 'groups', 'GROUP')
 window.changeRoute = changeRoute
 
 window.store.dispatch({
@@ -37,9 +36,7 @@ window.store.dispatch({
 initialize()
 
 render(
-  <Provider
-    store = {store}
-  >
+  <Provider store = {store} >
     <CurrentRoute />
   </Provider>,
   document.getElementById('root')

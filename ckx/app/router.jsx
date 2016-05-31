@@ -8,6 +8,8 @@ import GroupsWrapper from './components/GroupList.jsx'
 import { Groups } from './components/GroupList.jsx'
 import EncoreLogin from 'encore_login'
 import { BoxList } from './components/BoxList.jsx'
+import { horizon } from './index'
+import horizonSync from 'horizon-redux-sync'
 
 const navigated = () => {
   const newroute = window.location.hash.slice(2)
@@ -28,23 +30,30 @@ export const changeRoute = (route) => {
   window.setTimeout( () => window.location.hash = '/' + route, 0)
 }
 
-const selectFn = (user) => {
+const selectFn = (callback) => {
+  console.log("User selected, info passed from callback function: ", callback)
   window.store.dispatch({
     type: 'SETNAME_UI',
-    name: user })
+    name: callback.name })
   window.store.dispatch({
     type: 'LOGGEDIN_UI'})
-  window.store.dispatch({
-    type: 'CHANGEROUTE_UI',
-    route: 'boxes',
-    dispatch: "after_login"})
+
+  horizonSync(horizon, store, '/boxes', callback.CO.collection, 'BOXES')
+  store.dispatch({
+    type: "SETGROUP_UI",
+    group: callback.CO.collection,
+    fields: JSON.parse(callback.CO.prompt).prompt
+  })
+  changeRoute('boxes')
 }
 
 // --------------------------------------
 const Route = ({ route }) => {
+  // force login if not yet logged in
+  if (!window.store.getState().ui.loggedIn) { 
+    route = 'login'
+  }
   switch (route) {
-    case 'login':
-      return <EncoreLogin onSelect={selectFn} />
     case 'boxes':
       return <BoxWrapper />
     case 'boxlist':
@@ -54,7 +63,11 @@ const Route = ({ route }) => {
     case 'example':
       return <Groups groups={[{title: 'aa'}, {title: 'bb'}]} />
     default:
-      return <GroupsWrapper />
+      if (window.store.getState().ui.loggedIn) {
+        return <BoxWrapper />
+      } else {
+        return <EncoreLogin onSelect={selectFn} />
+      }
   }
 }
 

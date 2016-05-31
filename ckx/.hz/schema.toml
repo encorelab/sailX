@@ -1,3 +1,9 @@
+[collections.group1ck]
+
+[collections.group2ck]
+
+[collections.group3ck]
+
 [groups.default.rules.read]
 template = "collection(any()).anyRead()"
 
