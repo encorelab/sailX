@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 // route components
 import { BoxWrapper } from './components/Boxes.jsx'
 import State from './components/State.jsx'
-import GroupsWrapper from './components/GroupList.jsx'
-import { Groups } from './components/GroupList.jsx'
 import EncoreLogin from 'encore_login'
 import { BoxList } from './components/BoxList.jsx'
 import { horizon } from './index'
@@ -60,8 +58,6 @@ const Route = ({ route }) => {
       return <BoxList />
     case 'state':
       return <State />
-    case 'example':
-      return <Groups groups={[{title: 'aa'}, {title: 'bb'}]} />
     default:
       if (window.store.getState().ui.loggedIn) {
         return <BoxWrapper />
