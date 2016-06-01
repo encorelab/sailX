@@ -3,7 +3,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio';
-// import Delete from 'react-icons/lib/md/delete';
+import Delete from 'react-icons/lib/md/delete';
 import Draggable from 'react-draggable'
 import { shorten } from '../lib/utils';
 
