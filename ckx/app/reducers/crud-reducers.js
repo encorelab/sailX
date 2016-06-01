@@ -1,4 +1,4 @@
-import { uuid } from '../lib/utils'
+import { uuid, createdAt } from '../lib/utils'
 
 // returns a function that contains normal CRUD + DB sync reducers, with
 // kind attached to end of reducer names (like INSERT_kind). Non-matching
@@ -44,7 +44,7 @@ export default (kind, restfn, initstate = [], deffields) => {
               ...state,
               {
                 id: uuid(),
-                created_at: new Date(),
+                created_at: createdAt(),
                 ...deffields,
                 ...action.doc
               }
