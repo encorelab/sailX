@@ -15,7 +15,7 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
   // ordering by id for now, but we'll need to add a 'created_at'
   return (
     <div>
-      <h1>{ui.name}</h1>
+      <h1>{ui.user}</h1>
       <ObservationList
         ui = {ui}
         boxes = {_.orderBy(boxes, ['created_at'], ['desc'])}

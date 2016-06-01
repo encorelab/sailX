@@ -43,6 +43,7 @@ const selectFn = (callback) => {
 
   horizonSync(horizon, store, '/boxes', callback.CO.collection, 'BOXES')
 
+  // start here - reorg what goes in 'UI' vs other stuff (eg name, group don't go in UI)
   store.dispatch({
     type: 'SETGROUP_UI',
     group: callback.CO.collection,
@@ -59,10 +60,6 @@ const Route = ({ route }) => {
     route = 'login'
   }
   switch (route) {
-    // case 'boxes':
-    //   return <BoxWrapper />
-    // case 'boxlist':
-    //   return <BoxList />
     case 'state':
       return <State />
     // case 'example':

@@ -17,9 +17,9 @@ export default (state, action) => {
     case 'CHANGEROUTE':
       return {...state, route: action.route}
     case 'SETGROUP':
-      return {...state, fields: action.fields}
+      return {...state, group: action.group, fields: action.fields}
     case 'SETNAME':
-      return {...state, name: action.name}
+      return {...state, user: action.name}
     case 'LOGGEDIN':
       return {...state, loggedIn: true}
     default:
