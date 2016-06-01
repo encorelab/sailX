@@ -3,7 +3,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio';
-import Delete from 'react-icons/lib/md/delete';
+// import Delete from 'react-icons/lib/md/delete';
 import Draggable from 'react-draggable'
 import { shorten } from '../lib/utils';
 
@@ -17,7 +17,7 @@ const format = (box) => {
   return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
 }
 
-export const ObservationContainer = ( { title, infoFn, clickFn, ...box } ) => {
+export const ObservationContainer = ( { title, openInfoFn, deleteFn, ...box } ) => {
   const style = {
     height: 100,
     width: 300,
@@ -41,8 +41,8 @@ export const ObservationContainer = ( { title, infoFn, clickFn, ...box } ) => {
         <div>
           {shorten(title, 20)}
           <span style = {{float:'right'}} >
-            <Delete onClick = {clickFn} />
-            <AspectRatio onClick = {infoFn} />
+            <Delete onClick = {deleteFn} />
+            <AspectRatio onClick = {openInfoFn} />
           </span>
         </div>
         <div style =
@@ -62,7 +62,7 @@ export const ObservationContainer = ( { title, infoFn, clickFn, ...box } ) => {
   )
 }
 
-export const MovableObservationContainer = ( { x, y, setXY, title, infoFn, clickFn, ...box } ) => {
+export const MovableObservationContainer = ( { x, y, setXY, title, openInfoFn, ...box } ) => {
   const style = {
     height: 100,
     width: 300,
@@ -93,8 +93,8 @@ export const MovableObservationContainer = ( { x, y, setXY, title, infoFn, click
           <div>
             {shorten(title, 20)}
             <span style = {{float:'right'}} >
-              <Delete onClick = {clickFn} />
-              <AspectRatio onClick = {infoFn} />
+              {/* <Delete onClick = {clickFn} /> */}
+              <AspectRatio onClick = {openInfoFn} />
             </span>
           </div>
           <div style =
@@ -115,12 +115,12 @@ export const MovableObservationContainer = ( { x, y, setXY, title, infoFn, click
   )
 }
 
-export const ObservationDetails = ( { open, onClose, title, box } ) => {
+export const ObservationDetails = ( { open, closeInfoFn, title, box } ) => {
   const actions = [
     <FlatButton
       label = "X"
       secondary = {true}
-      onClick = {onClose}
+      onClick = {closeInfoFn}
     />
   ]
 
@@ -130,7 +130,7 @@ export const ObservationDetails = ( { open, onClose, title, box } ) => {
       modal = {false}
       actions = {actions}
       open = {open}
-      onRequestClose = {onClose}
+      onRequestClose = {closeInfoFn}
     >
       {format(box)}
     </Dialog>

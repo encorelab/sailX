@@ -5,7 +5,7 @@ import AddObservation from './AddObservation'
 import _ from 'lodash'
 
 const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
-  const addFn = () => { dispatch({type: 'OPENADD_UI'}) }
+  const openAddFn = () => { dispatch({type: 'OPENADD_UI'}) }
   const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
   const submitAdd = (e) => {
     closeAddFn()
@@ -23,7 +23,7 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
       />
       <AddObservation
         isOpen = {ui.addOpen}
-        openFn = {addFn}
+        openFn = {openAddFn}
         closeFn = {closeAddFn}
         submitFn = {submitAdd}
         fields = {ui.fields}

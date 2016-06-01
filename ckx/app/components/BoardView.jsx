@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import ObservationCluster from './ObservationCluster'
 
 const BoardViewEl = ({ ui, boxes, dispatch }) => {
-  const addFn = () => { dispatch({type: 'OPENADD_UI'}) }
-  const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
-
   return (
     <div>
       <ObservationCluster

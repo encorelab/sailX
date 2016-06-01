@@ -8,8 +8,8 @@ import { ObservationContainer, ObservationDetails } from './ObservationElements'
 export default ( { boxes, ui, dispatch } ) => {
 
   const observationList = boxes.map(e => {
-    const clickFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
-    const infoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
+    const deleteFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
+    const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
     const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
 
     return (
@@ -18,14 +18,14 @@ export default ( { boxes, ui, dispatch } ) => {
           <li>
             <ObservationContainer
               key = {e.id}
-              clickFn = {clickFn}
-              infoFn = {infoFn}
+              deleteFn = {deleteFn}
+              openInfoFn = {openInfoFn}
               {...e}
             />
             <ObservationDetails
               box = {e}
               key = {e.id+'info'}
-              onClose = {closeInfoFn}
+              closeInfoFn = {closeInfoFn}
               title = {e.title}
               text = {e.content}
               open = {ui.infoOpen == e.id}

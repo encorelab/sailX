@@ -9,8 +9,8 @@ import { MovableObservationContainer, ObservationDetails } from './ObservationEl
 export default ( { boxes, ui, dispatch } ) => {
   // sorting by id for now, what do we want in the long run? maybe 'date created inverse'? (will need to add date_created?)
   const observationList = boxes.map(e => {
-    const clickFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
-    const infoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
+    // const clickFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
+    const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
     const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
 
     const setXY = (a, ui) => {
@@ -21,15 +21,14 @@ export default ( { boxes, ui, dispatch } ) => {
       <div>
         <MovableObservationContainer
           key = {e.id}
-          clickFn = {clickFn}
           setXY={setXY}
-          infoFn = {infoFn}
+          openInfoFn = {openInfoFn}
           {...e}
         />
         <ObservationDetails
           box = {e}
           key = {e.id+'info'}
-          onClose = {closeInfoFn}
+          closeInfoFn = {closeInfoFn}
           title = {e.title}
           text = {e.content}
           open = {ui.infoOpen == e.id}
