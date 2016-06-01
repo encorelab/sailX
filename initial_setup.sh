@@ -10,5 +10,4 @@ npm install
 npm link encore_login
 npm link horizon-redux-sync
 cd ..
-sh reinitialize-schema.sh
-
+sh reinitialize_schema.sh

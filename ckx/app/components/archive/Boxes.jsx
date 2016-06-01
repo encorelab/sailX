@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Block} from 'jsxstyle';
+import { Flex, Block } from 'jsxstyle';
 import { connect } from 'react-redux'
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -8,7 +8,7 @@ import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio'
 import Delete from 'react-icons/lib/md/delete'
 import { shorten } from '../lib/utils'
-import AddBox from './AddBox'
+import AddObservation from './AddObservation'
 import Draggable from 'react-draggable'
 
 const format = (box) => {
@@ -85,7 +85,7 @@ const Boxes = ( { boxes, ui, dispatch } ) => {
     <div>
       <h1>{ui.name}</h1>
       {boxlist}
-      <AddBox
+      <AddObservation
         isOpen={ui.addOpen}
         openFn={addFn}
         closeFn={closeAddFn}

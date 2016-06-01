@@ -8,32 +8,40 @@ import horizonSync from 'horizon-redux-sync'
 // suggestion for prompt for new groups
 const defPrompt = `{
   "prompt": [
-    { "id": "title",
+    {
+      "id": "title",
      "label": "Title",
       "kind": "INPUT",
       "required": true
     },
-    { "id": "content",
+    {
+      "id": "content",
       "label": "Idea",
       "kind": "TEXTAREA",
-      "required": true}
+      "required": true
+    }
   ]
 }`
 
 // form to add new groups
 const newGroupPrompt = (title, id, prompt) =>
 [
-  { id: 'title',
+  {
+    id: 'title',
     label: 'Title',
     kind: 'INPUT',
     required: true,
-    defaultValue: title},
-  { id: 'id',
+    defaultValue: title
+  },
+  {
+    id: 'id',
     label: 'Unique id',
     kind: 'INPUT',
     required: true,
-    defaultValue: id},
-  { id: 'prompts',
+    defaultValue: id
+  },
+  {
+    id: 'prompts',
     label: 'Prompts',
     kind: 'TEXTAREA',
     rows: 20,
@@ -41,7 +49,8 @@ const newGroupPrompt = (title, id, prompt) =>
     required: true,
     value: prompt,
     validations: {myCustom: (e, p) => validPrompt(p)},
-    validationErrors: {myCustom: "Not valid prompt"}}
+    validationErrors: {myCustom: "Not valid prompt"}
+  }
 ]
 
 // check if an entered prompt is valid
@@ -79,6 +88,18 @@ const Group = ( {onClick, title} ) => {
 
 // returns a function that connects the db to the
 // group chosen, and emits to the redux store
+// const chooseGroup = (group) => {
+//   return ( () => {
+//     // params: (x, y, redux subtree, rethink collection, suffix of the action)
+//     horizonSync(horizon, store, '/boxes', group.id, 'BOXES')
+//     store.dispatch({
+//       type: "SETGROUP_UI",
+//       group: group.id,
+//       fields: JSON.parse(group.prompts).prompt
+//     })
+//     changeRoute('boxes')
+//   })
+// }
 const chooseGroup = (group) => {
   return ( () => {
     // params: (x, y, redux subtree, rethink collection, suffix of the action)
@@ -88,7 +109,7 @@ const chooseGroup = (group) => {
       group: group.id,
       fields: JSON.parse(group.prompts).prompt
     })
-    changeRoute('boxes')
+    changeRoute('student')
   })
 }
 

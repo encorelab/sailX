@@ -1,14 +1,17 @@
 const defPrompt = `{
   "prompt": [
-    { "id": "title",
-     "label": "Title",
+    {
+      "id": "title",
+      "label": "Title",
       "kind": "INPUT",
       "required": true
     },
-    { "id": "content",
+    {
+      "id": "content",
       "label": "Idea",
       "kind": "TEXTAREA",
-      "required": true}
+      "required": true
+    }
   ]
 }`
 
@@ -19,7 +22,7 @@ const COs = [
 ]
 
 export default [
-  {name: 'Stian', CO: COs[0]},
+  {name: 'Cole', CO: COs[0]},
   {name: 'Peter', CO: COs[0]},
   {name: 'Paul', CO: COs[0]},
   {name: 'Marianne', CO: COs[0]},
@@ -29,6 +32,3 @@ export default [
   {name: 'Andrea', CO: COs[2]},
   {name: 'Agnete', CO: COs[2]}
 ]
-
-
-

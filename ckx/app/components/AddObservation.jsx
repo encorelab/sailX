@@ -2,9 +2,10 @@ import React from 'react';
 import Create from 'react-icons/lib/md/create'
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
-import Forms from './Forms'
+import NewObservationView from './NewObservationView'
 
-const CreateButton = ( { onClick } ) => {
+// the little pencil icon used for creating a new note
+const NewObservationButton = ( { onClick } ) => {
   const style = {
     position: 'fixed',
     left: '50%',
@@ -22,22 +23,7 @@ const CreateButton = ( { onClick } ) => {
   )
 }
 
-CreateButton.propTypes = {}
-
-const AddBoxDialog = ( { fields, open, onClose, onSubmit } ) => {
-  const actions = [
-    <FlatButton
-      label = "Cancel"
-      secondary = {true}
-      onClick = {onClose}
-    />,
-    <FlatButton
-      label = "Create"
-      primary = {true}
-      onClick = {onSubmit}
-    />
-  ]
-
+const AddObservationDialog = ( { fields, open, onClose, onSubmit } ) => {
   return (
     <Dialog
       title = 'Add a new idea'
@@ -45,16 +31,20 @@ const AddBoxDialog = ( { fields, open, onClose, onSubmit } ) => {
       open = {open}
       onRequestClose = {onClose}
     >
-      <Forms fields = {fields} onSubmit = {onSubmit} />
+      <NewObservationView
+        fields = {fields}
+        onSubmit = {onSubmit}
+        onClose = {onClose}
+      />
     </Dialog>
   )
 }
 
-export default ( {isOpen, openFn, closeFn, submitFn, fields} ) => {
+export default ( { isOpen, openFn, closeFn, submitFn, fields } ) => {
   return (
     <div>
-      <CreateButton onClick = {openFn} />
-      <AddBoxDialog
+      <NewObservationButton onClick = {openFn} />
+      <AddObservationDialog
         open = {isOpen}
         onClose = {closeFn}
         onSubmit = {submitFn}

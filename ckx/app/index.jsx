@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
-import configStore from './store';
+import configStore from './store'
 import { CurrentRoute, initialize, changeRoute } from './router.jsx'
 import horizonSync from 'horizon-redux-sync'
 
@@ -19,8 +19,8 @@ const store = configStore({
   groups: groups,
   ui: {
     infoOpen: false,
-    addOpen: false, route:
-    'login'
+    addOpen: false,
+    route: 'login'
   }
 })
 
@@ -30,7 +30,7 @@ window.changeRoute = changeRoute
 window.store.dispatch({
   type: 'CHANGEROUTE_UI',
   route: 'login',
-  dispatch: "initial"
+  dispatch: 'initial'
 })
 
 initialize()

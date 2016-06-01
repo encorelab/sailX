@@ -1,3 +1,5 @@
+import React from 'react'
+
 export default (state, action) => {
   switch (action.type) {
     case 'OPENINFO':
@@ -15,12 +17,24 @@ export default (state, action) => {
     case 'CHANGEROUTE':
       return {...state, route: action.route}
     case 'SETGROUP':
-      return {...state, fields: action.fields}
+      return {...state, group: action.group, fields: action.fields}
     case 'SETNAME':
-      return {...state, name: action.name}
+      return {...state, user: action.name}
     case 'LOGGEDIN':
       return {...state, loggedIn: true}
     default:
       return state
   }
 }
+
+// sort this out at some point
+
+// const P = React.PropTypes
+// export const uiDefinition = P.shape({
+//       infoOpen: P.boolean, //oneOfType([P.number, P.boolean]), // which info box is currently open, or false if none are open
+//       addOpen: P.boolean,
+//       route: P.boolean,
+//       name: P.string,
+//       loggedIn: P.boolean
+// })
+// console.log(uiDefinition)
