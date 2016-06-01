@@ -85,7 +85,7 @@ const Boxes = ( { boxes, ui, dispatch } ) => {
     <div>
       <h1>{ui.name}</h1>
       {boxlist}
-      <AddBox
+      <AddObservation
         isOpen={ui.addOpen}
         openFn={addFn}
         closeFn={closeAddFn}

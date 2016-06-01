@@ -3,8 +3,9 @@ export const uuid = () =>
 
 export const shorten = (text, length) => {
   let t = text || ''
-  if (t.length < length) { return t } else { return t.slice(0, length-3)+'...' }
+  if (t.length < length) {
+    return t
+  } else {
+    return t.slice(0, length-3)+'...'
+  }
 }
-
-
-

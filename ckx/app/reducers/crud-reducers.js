@@ -16,9 +16,9 @@ export default (kind, restfn, initstate = [], deffields) => {
         }
 
         switch (action.type) {
-        // db sync actions
-        case 'INITSTATE':
-          return action.docs
+          // db sync actions
+          case 'INITSTATE':
+            return action.docs
 
           case 'DBINSERT':
             return [

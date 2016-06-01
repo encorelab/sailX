@@ -39,7 +39,7 @@
     "react-json-inspector": "^6.1.2",
     "react-redux": "^4.2.1",
     "redux": "^3.2.1",
-    "horizon": "^1.0.0",
+    "horizon": "^1.0.3",
     "encore_login": "0.0.1"
   },
   "devDependencies": {

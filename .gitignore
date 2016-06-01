@@ -37,3 +37,6 @@ rethinkdb_data
 
 # Output
 dist
+
+# Apple nonsense
+.DS_Store
