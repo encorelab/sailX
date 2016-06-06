@@ -79,7 +79,7 @@ export const ObservationContainer = ( { openInfoFn, deleteFn, ...box } ) => {
   )
 }
 
-export const MovableObservationContainer = ( { x, y, setXY, title, openInfoFn, ...box } ) => {
+export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...box } ) => {
   const style = {
     height: 100,
     width: 300,
@@ -108,7 +108,7 @@ export const MovableObservationContainer = ( { x, y, setXY, title, openInfoFn, .
       >
         <Paper zDepth = {3} style = {style} >
           <div>
-            {shorten(title, 20)}
+            {shorten(box.title, 20)}
             <span style = {{float:'right'}} >
               {/* <Delete onClick = {clickFn} /> */}
               <AspectRatio onClick = {openInfoFn} />

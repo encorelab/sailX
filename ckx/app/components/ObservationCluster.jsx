@@ -27,8 +27,6 @@ export default ( { boxes, ui, dispatch } ) => {
           box = {e}
           key = {e.id+'info'}
           closeInfoFn = {closeInfoFn}
-          title = {e.title}
-          text = {e.content}
           open = {ui.infoOpen == e.id}
         />
       </div>
