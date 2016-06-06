@@ -34,3 +34,4 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
 
 // connect is a curried component that maps the state from redux (first call) to a presentational component (second call, in this case List)
 export const StudentReadView = connect(e => ({ui: e.ui, boxes: e.boxes}))(StudentReadViewEl)
+// thinking about moving the orderBy to here? Need to understand/unpack this connect thing more...

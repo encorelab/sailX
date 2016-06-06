@@ -57,6 +57,18 @@ export const ObservationContainer = ( { title, openInfoFn, deleteFn, ...box } ) 
         >
           {shorten(box.content, 100)}
         </div>
+        <div style =
+          {
+            {
+              fontSize: '12px',
+              float: 'right',
+              marginTop: '50px',
+              marginRight: '5px'
+            }
+          }
+        >
+          {box.owner}
+        </div>
       </Paper>
     </div>
   )
