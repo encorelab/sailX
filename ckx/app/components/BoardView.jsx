@@ -5,6 +5,7 @@ import ObservationCluster from './ObservationCluster'
 const BoardViewEl = ({ ui, boxes, dispatch }) => {
   return (
     <div>
+      <h1>{ui.board}</h1>
       <ObservationCluster
         ui = {ui}
         boxes = {boxes}

@@ -16,8 +16,10 @@ export default (state, action) => {
       return {...state, addOpen: false}
     case 'CHANGEROUTE':
       return {...state, route: action.route}
-    case 'SETGROUP':
-      return {...state, group: action.group, fields: action.fields}
+    case 'SETBOARD':
+      return {...state, board: action.group}
+    case 'SETOBSERVATIONFIELDS':
+      return {...state, fields: action.fields}
     case 'SETNAME':
       return {...state, user: action.name}
     case 'LOGGEDIN':

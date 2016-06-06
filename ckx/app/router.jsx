@@ -44,8 +44,12 @@ const selectFn = (callback) => {
   horizonSync(horizon, store, '/boxes', callback.CO.collection, 'BOXES')
 
   store.dispatch({
-    type: 'SETGROUP_UI',
+    type: 'SETBOARD_UI',
     group: callback.CO.collection,
+  })
+
+  store.dispatch({
+    type: 'SETOBSERVATIONFIELDS_UI',
     fields: JSON.parse(callback.CO.prompt).prompt
   })
 
