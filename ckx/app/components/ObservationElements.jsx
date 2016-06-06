@@ -17,7 +17,12 @@ const format = (box) => {
   return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
 }
 
-export const ObservationContainer = ( { title, openInfoFn, deleteFn, ...box } ) => {
+export const ObservationContainer = ( { openInfoFn, deleteFn, ...box } ) => {
+  let deleteBtn;
+  if (box.owner === window.store.getState().ui.user) {
+    deleteBtn = <Delete onClick = {deleteFn} />;
+  }
+
   const style = {
     height: 100,
     width: 300,
@@ -39,9 +44,9 @@ export const ObservationContainer = ( { title, openInfoFn, deleteFn, ...box } ) 
     >
       <Paper zDepth = {3} style = {style} >
         <div>
-          {shorten(title, 20)}
+          {shorten(box.title, 20)}
           <span style = {{float:'right'}} >
-            <Delete onClick = {deleteFn} />
+            {deleteBtn}
             <AspectRatio onClick = {openInfoFn} />
           </span>
         </div>
