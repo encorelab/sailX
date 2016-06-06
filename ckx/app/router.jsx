@@ -61,8 +61,6 @@ const Route = ({ route }) => {
   switch (route) {
     case 'state':
       return <State />
-    // case 'example':
-    //   return <Groups groups={[{title: 'aa'}, {title: 'bb'}]} />
     case 'student':
       return <StudentReadView />
     case 'board':
