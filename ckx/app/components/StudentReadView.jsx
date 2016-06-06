@@ -12,7 +12,6 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
     dispatch({type: 'ADD_BOX', doc: e})
   }
 
-  // ordering by id for now, but we'll need to add a 'created_at'
   return (
     <div>
       <h1>{ui.board}</h1>

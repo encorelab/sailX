@@ -8,7 +8,13 @@ import { ObservationContainer, ObservationDetails } from './ObservationElements'
 export default ( { boxes, ui, dispatch } ) => {
 
   const observationList = boxes.map(e => {
-    const deleteFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
+    const deleteFn = () => {
+      if (e.owner === window.store.getState().ui.user) {
+        dispatch({type: 'DELETE_BOX', id: e.id})
+      } else {
+        console.log("You can only delete your own observation");
+      }
+    }
     const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
     const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
 
