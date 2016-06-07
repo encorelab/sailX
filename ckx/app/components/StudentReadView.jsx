@@ -13,25 +13,36 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   }
   const openEditFn = () => { console.log("TODO"); }
 
+  // talk to Stian about these if/elses - feel like there's a cleaner way of doing this
+  let boardEl;
+  if (ui.tabletsLocked) {
+    boardEl = <div>LOCKED</div>
+  } else {
+    boardEl = <div>UNLOCKED</div>
+    // boardEl = <div>
+    //   <h1>{ui.board}</h1>
+    //   <h1>{ui.user}</h1>
+    //   <ObservationList
+    //     key = {'something'}
+    //     ui = {ui}
+    //     observations = {_.orderBy(observations, ['created_at'], ['desc'])}
+    //     dispatch = {dispatch}
+    //     openEditFn = {openEditFn}
+    //   />
+    //   <AddObservation
+    //     dispatch = {dispatch}
+    //     ui = {ui}
+    //     isOpen = {ui.addOpen}         // wait, how is this right?
+    //     openFn = {openAddFn}
+    //     closeFn = {closeAddFn}
+    //     submitFn = {submitAdd}
+    //   />
+    // </div>
+  }
+
   return (
     <div>
-      <h1>{ui.board}</h1>
-      <h1>{ui.user}</h1>
-      <ObservationList
-        key = {'something'}
-        ui = {ui}
-        observations = {_.orderBy(observations, ['created_at'], ['desc'])}
-        dispatch = {dispatch}
-        openEditFn = {openEditFn}
-      />
-      <AddObservation
-        dispatch = {dispatch}
-        ui = {ui}
-        isOpen = {ui.addOpen}         // wait, how is this right?
-        openFn = {openAddFn}
-        closeFn = {closeAddFn}
-        submitFn = {submitAdd}
-      />
+      {boardEl}
     </div>
   )
 }

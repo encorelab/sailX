@@ -13,6 +13,14 @@ export default (state, action) => {
     case 'LOGGEDIN':
       return {...state, loggedIn: true}
 
+    /***** BOARDS *****/
+
+    case 'LOCKTABLETS':
+      return {...state, tabletsLocked: true}
+    case 'UNLOCKTABLETS':
+      return {...state, tabletsLocked: false}
+    /***** TABLETS *****/
+
     case 'OPENINFO':
       return {...state, infoOpen: action.id}
     case 'CLOSEINFO':

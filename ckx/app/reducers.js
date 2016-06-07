@@ -6,5 +6,5 @@ import factory from './reducers/factory'
 
 export default combineReducers({
   observations: crud('OBSERVATION', observations, [], {x: 0, y: 0}),
-  ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false}, ui)
+  ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false, tabletsLocked: false}, ui)
 })
