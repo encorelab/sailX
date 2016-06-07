@@ -23,10 +23,46 @@ const NewObservationButton = ( { onClick } ) => {
   )
 }
 
-const AddObservationDialog = ( { dispatch, fields, open, onClose, onSubmit } ) => {
-  // start here - we definitely need talk about backing up notes, it is only submitted on submit (what happens if tablet crashes)
+const AddObservationDialog = ( { dispatch, ui, open, onClose, onSubmit } ) => {
   const attachMediaFn = () => {
-    dispatch({type: 'ADDMEDIA_OBSERVATION', doc: 'uh-oh'})
+    const MAX_FILE_SIZE = 20971520;
+    var file = jQuery("#relationship-photo-file")[0].files.item(0);
+    var formData = new FormData();
+    formData.append('file', file);
+
+    if (file.size < MAX_FILE_SIZE) {
+      dispatch({type: 'STARTUPLOADMEDIA_UI'});
+      jQuery.ajax({
+        url: 'https://pikachu.coati.encorelab.org/',
+        type: 'POST',
+        success: success,
+        error: failure,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+    } else {
+      jQuery().toastmessage('showErrorToast', "Max file size of 20MB exceeded");
+    }
+
+    function failure(err) {
+      dispatch({type: 'ENDUPLOADMEDIA_UI'});
+      jQuery().toastmessage('showErrorToast', "Photo could not be uploaded. Please try again");
+    }
+
+    function success(data, status, xhr) {
+      dispatch({type: 'ENDUPLOADMEDIA_UI'});
+      console.log("UPLOAD SUCCEEDED!" + data);
+      console.log(xhr.getAllResponseHeaders());
+
+      // clear out the label value if they for some reason want to upload the same thing...
+      jQuery('#relationship-photo-file').val('');
+
+      // update the observation - actually, there is no observation. Maybe this should all be one level lower, as a form field
+      // dispatch({type: 'ADDMEDIA_OBSERVATION', doc: data.url});
+    }
+
   };
 
   return (
@@ -38,15 +74,16 @@ const AddObservationDialog = ( { dispatch, fields, open, onClose, onSubmit } ) =
     >
       <NewObservationView
         attachMediaFn = {attachMediaFn}
-        fields = {fields}
+        fields = {ui.fields}
         onSubmit = {onSubmit}
         onClose = {onClose}
+        isUploading = {ui.isUploading}
       />
     </Dialog>
   )
 }
 
-export default ( { dispatch, isOpen, openFn, closeFn, submitFn, fields } ) => {
+export default ( { dispatch, ui, isOpen, openFn, closeFn, submitFn } ) => {
   return (
     <div>
       <NewObservationButton onClick = {openFn} />
@@ -55,7 +92,7 @@ export default ( { dispatch, isOpen, openFn, closeFn, submitFn, fields } ) => {
         open = {isOpen}
         onClose = {closeFn}
         onSubmit = {submitFn}
-        fields = {fields}
+        ui = {ui}
       />
     </div>
   )

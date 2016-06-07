@@ -45,7 +45,7 @@ const selectFn = (callback) => {
 
   store.dispatch({
     type: 'SETBOARD_UI',
-    group: callback.CO.collection,
+    group: callback.CO.name,
   });
   store.dispatch({
     type: 'SETOBSERVATIONFIELDS_UI',
@@ -70,7 +70,7 @@ const Route = ({ route }) => {
       return <BoardView />
     default:
       if (window.store.getState().ui.loggedIn) {
-        return <BoardView />
+        return <StudentReadView />
       } else {
         return <EncoreLogin onSelect={selectFn} />
       }

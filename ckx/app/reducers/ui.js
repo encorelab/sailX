@@ -26,6 +26,11 @@ export default (state, action) => {
     case 'CLOSEADD':
       return {...state, addOpen: false}
 
+    case 'STARTUPLOADMEDIA':
+      return {...state, isUploading: true}
+    case 'ENDUPLOADMEDIA':
+      return {...state, isUploading: false}
+
     default:
       return state
   }

@@ -26,11 +26,11 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
       />
       <AddObservation
         dispatch = {dispatch}
-        isOpen = {ui.addOpen}
+        ui = {ui}
+        isOpen = {ui.addOpen}         // wait, how is this right?
         openFn = {openAddFn}
         closeFn = {closeAddFn}
         submitFn = {submitAdd}
-        fields = {ui.fields}
       />
     </div>
   )

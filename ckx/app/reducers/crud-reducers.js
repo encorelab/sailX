@@ -46,6 +46,7 @@ export default (kind, restfn, initstate = [], deffields) => {
                 id: uuid(),
                 created_at: createdAt(),
                 owner: window.store.getState().ui.user,
+                media: [],
                 ...deffields,
                 ...action.doc
               }
