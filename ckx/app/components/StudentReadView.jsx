@@ -18,6 +18,7 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
       <h1>{ui.board}</h1>
       <h1>{ui.user}</h1>
       <ObservationList
+        key = {'something'}
         ui = {ui}
         observations = {_.orderBy(observations, ['created_at'], ['desc'])}
         dispatch = {dispatch}

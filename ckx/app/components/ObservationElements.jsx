@@ -8,8 +8,6 @@ import Create from 'react-icons/lib/md/create'
 import Draggable from 'react-draggable'
 import { shorten } from '../lib/utils';
 
-import NewObservationView from './NewObservationView'
-
 
 const format = (observation) => {
   let c = []
@@ -144,9 +142,10 @@ export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...obser
   )
 }
 
-export const ObservationDetails = ( { open, closeInfoFn, title, observation } ) => {
+export const ObservationDetails = ( { key, open, closeInfoFn, observation } ) => {
   const actions = [
     <FlatButton
+      //key = {observation.id+'something'}
       label = "X"
       secondary = {true}
       onClick = {closeInfoFn}
@@ -155,7 +154,8 @@ export const ObservationDetails = ( { open, closeInfoFn, title, observation } ) 
 
   return (
     <Dialog
-      title = {title}
+      //key = {observation.id}
+      title = {observation.title}
       modal = {false}
       actions = {actions}
       open = {open}
