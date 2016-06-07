@@ -32,10 +32,10 @@ export default (kind, restfn, initstate = [], deffields) => {
             )
 
           case 'DBUPDATE':
-            return state.map(box =>
-              box.id === action.doc.id ?
+            return state.map(observation =>
+              observation.id === action.doc.id ?
                 action.doc :
-                box
+                observation
             )
 
           // CRUD

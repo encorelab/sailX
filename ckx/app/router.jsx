@@ -41,7 +41,7 @@ const selectFn = (callback) => {
     type: 'LOGGEDIN_UI'
   });
 
-  horizonSync(horizon, store, '/boxes', callback.CO.collection, 'BOXES')
+  horizonSync(horizon, store, '/observations', callback.CO.collection, 'OBSERVATIONS')
 
   store.dispatch({
     type: 'SETBOARD_UI',

@@ -4,7 +4,7 @@ import ObservationList from './ObservationList'
 import AddObservation from './AddObservation'
 import _ from 'lodash'
 
-const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
+const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   const openAddFn = () => { dispatch({type: 'OPENADD_UI'}) }
   const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
   const submitAdd = (e) => {
@@ -19,7 +19,7 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
       <h1>{ui.user}</h1>
       <ObservationList
         ui = {ui}
-        boxes = {_.orderBy(boxes, ['created_at'], ['desc'])}
+        observations = {_.orderBy(observations, ['created_at'], ['desc'])}
         dispatch = {dispatch}
         openEditFn = {openEditFn}
       />
@@ -35,5 +35,5 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
 }
 
 // connect is a curried component that maps the state from redux (first call) to a presentational component (second call, in this case List)
-export const StudentReadView = connect(e => ({ui: e.ui, boxes: e.boxes}))(StudentReadViewEl)
+export const StudentReadView = connect(e => ({ui: e.ui, observations: e.observations}))(StudentReadViewEl)
 // thinking about moving the orderBy to here? Need to understand/unpack this connect thing more...

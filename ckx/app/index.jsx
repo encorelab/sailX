@@ -6,8 +6,7 @@ import configStore from './store'
 import { CurrentRoute, initialize, changeRoute } from './router.jsx'
 import horizonSync from 'horizon-redux-sync'
 
-const boxlist = []
-const groups = []
+const observationlist = []
 // horizon server, on same domain as HTML/JS, different port. 'insecure' should be changed before production.
 export const horizon = Horizon({ host: window.location.hostname + ':8181', insecure: true, authType: 'unauthenticated' })
 
@@ -15,8 +14,7 @@ export const horizon = Horizon({ host: window.location.hostname + ':8181', insec
 localStorage.removeItem('horizon-jwt');
 
 const store = configStore({
-  boxes: boxlist,
-  groups: groups,
+  observations: observationlist,
   ui: {
     infoOpen: false,
     addOpen: false,

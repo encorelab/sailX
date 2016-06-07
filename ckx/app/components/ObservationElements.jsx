@@ -11,20 +11,20 @@ import { shorten } from '../lib/utils';
 import NewObservationView from './NewObservationView'
 
 
-const format = (box) => {
+const format = (observation) => {
   let c = []
-  for (var key in box) {
-    if (box.hasOwnProperty(key)) {
-      c.push([key, box[key]])
+  for (var key in observation) {
+    if (observation.hasOwnProperty(key)) {
+      c.push([key, observation[key]])
     }
   }
   return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
 }
 
 
-export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...box } ) => {
+export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...observation } ) => {
   let deleteBtn, editBtn, detailsBtn;
-  if (box.owner === window.store.getState().ui.user) {
+  if (observation.owner === window.store.getState().ui.user) {
     deleteBtn = <Delete onClick = {deleteFn} />;
     editBtn = <Create
       onClick = {openEditFn}
@@ -42,7 +42,7 @@ export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...box
     display: 'inline-block'
   };
 
-  // we need to have a convo about the concept of a 'style variable' (some of this wants to overlap btw the boxes?)
+  // we need to have a convo about the concept of a 'style variable' (some of this wants to overlap btw the observations?)
   return (
     <div style =
       {
@@ -55,7 +55,7 @@ export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...box
     >
       <Paper zDepth = {3} style = {style} >
         <div>
-          {shorten(box.title, 20)}
+          {shorten(observation.title, 20)}
           <span style = {{float:'right'}} >
             {deleteBtn}
             {editBtn}
@@ -72,7 +72,7 @@ export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...box
             }
           }
         >
-          {shorten(box.content, 100)}
+          {shorten(observation.content, 100)}
         </div>
         <div style =
           {
@@ -84,14 +84,14 @@ export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...box
             }
           }
         >
-          {box.owner}
+          {observation.owner}
         </div>
       </Paper>
     </div>
   )
 }
 
-export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...box } ) => {
+export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...observation } ) => {
   const style = {
     height: 100,
     width: 300,
@@ -120,7 +120,7 @@ export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...box }
       >
         <Paper zDepth = {3} style = {style} >
           <div>
-            {shorten(box.title, 20)}
+            {shorten(observation.title, 20)}
             <span style = {{float:'right'}} >
               {/* <Delete onClick = {clickFn} /> */}
               <AspectRatio onClick = {openInfoFn} />
@@ -136,7 +136,7 @@ export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...box }
               }
             }
           >
-            {shorten(box.content, 100)}
+            {shorten(observation.content, 100)}
           </div>
         </Paper>
       </div>
@@ -144,7 +144,7 @@ export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...box }
   )
 }
 
-export const ObservationDetails = ( { open, closeInfoFn, title, box } ) => {
+export const ObservationDetails = ( { open, closeInfoFn, title, observation } ) => {
   const actions = [
     <FlatButton
       label = "X"
@@ -161,7 +161,7 @@ export const ObservationDetails = ( { open, closeInfoFn, title, box } ) => {
       open = {open}
       onRequestClose = {closeInfoFn}
     >
-      {format(box)}
+      {format(observation)}
     </Dialog>
   )
 }

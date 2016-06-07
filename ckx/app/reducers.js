@@ -1,11 +1,10 @@
 import { combineReducers } from 'redux'
 import crud from './reducers/crud-reducers'
-import boxes from './reducers/boxes'
+import observations from './reducers/observations'
 import ui from './reducers/ui'
 import factory from './reducers/factory'
 
 export default combineReducers({
-  boxes: crud('BOX', boxes, [], {x: 0, y: 0}),
-  groups: crud('GROUP', (e) => e),
+  observations: crud('OBSERVATIONS', observations, [], {x: 0, y: 0}),
   ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false}, ui)
 })
