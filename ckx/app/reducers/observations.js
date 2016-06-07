@@ -6,6 +6,9 @@ export default (state, action) => {
           {...observation, x: observation.x + action.delta_x, y: observation.y + action.delta_y} :
           observation
       )
+    case 'ADDMEDIA':
+      console.log('and got there', action.doc);
+      return state
     default:
       return state
     }

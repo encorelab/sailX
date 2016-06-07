@@ -9,7 +9,7 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
   const submitAdd = (e) => {
     closeAddFn()
-    dispatch({type: 'ADD_BOX', doc: e})
+    dispatch({type: 'ADD_OBSERVATION', doc: e})
   }
   const openEditFn = () => { console.log("TODO"); }
 
@@ -25,6 +25,7 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
         openEditFn = {openEditFn}
       />
       <AddObservation
+        dispatch = {dispatch}
         isOpen = {ui.addOpen}
         openFn = {openAddFn}
         closeFn = {closeAddFn}

@@ -60,8 +60,9 @@ class NewObservationView extends React.Component {
           />
 
         </Formsy.Form>
+        <button onClick = {this.props.attachMediaFn}>Attach Media</button>
         {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
-        <button onClick = {this.props.onClose} >Cancel</button>
+        <button onClick = {this.props.onClose}>Cancel</button>
       </div>
     )
   }

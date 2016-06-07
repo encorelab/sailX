@@ -8,7 +8,7 @@ import { ObservationContainer, ObservationDetails } from './ObservationElements'
 export default ( { key, observations, ui, dispatch, openEditFn } ) => {
 
   const observationList = observations.map(e => {
-    const deleteFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
+    const deleteFn = () => { dispatch({type: 'DELETE_OBSERVATION', id: e.id}) }
     const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
     const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
 

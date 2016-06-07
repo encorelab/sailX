@@ -5,6 +5,6 @@ import ui from './reducers/ui'
 import factory from './reducers/factory'
 
 export default combineReducers({
-  observations: crud('OBSERVATIONS', observations, [], {x: 0, y: 0}),
+  observations: crud('OBSERVATION', observations, [], {x: 0, y: 0}),
   ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false}, ui)
 })

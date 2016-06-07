@@ -23,7 +23,12 @@ const NewObservationButton = ( { onClick } ) => {
   )
 }
 
-const AddObservationDialog = ( { fields, open, onClose, onSubmit } ) => {
+const AddObservationDialog = ( { dispatch, fields, open, onClose, onSubmit } ) => {
+  // start here - we definitely need talk about backing up notes, it is only submitted on submit (what happens if tablet crashes)
+  const attachMediaFn = () => {
+    dispatch({type: 'ADDMEDIA_OBSERVATION', doc: 'uh-oh'})
+  };
+
   return (
     <Dialog
       title = 'Add a new idea'
@@ -32,6 +37,7 @@ const AddObservationDialog = ( { fields, open, onClose, onSubmit } ) => {
       onRequestClose = {onClose}
     >
       <NewObservationView
+        attachMediaFn = {attachMediaFn}
         fields = {fields}
         onSubmit = {onSubmit}
         onClose = {onClose}
@@ -40,11 +46,12 @@ const AddObservationDialog = ( { fields, open, onClose, onSubmit } ) => {
   )
 }
 
-export default ( { isOpen, openFn, closeFn, submitFn, fields } ) => {
+export default ( { dispatch, isOpen, openFn, closeFn, submitFn, fields } ) => {
   return (
     <div>
       <NewObservationButton onClick = {openFn} />
       <AddObservationDialog
+        dispatch = {dispatch}
         open = {isOpen}
         onClose = {closeFn}
         onSubmit = {submitFn}
