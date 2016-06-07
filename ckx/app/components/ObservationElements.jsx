@@ -4,8 +4,12 @@ import Dialog from 'material-ui/lib/dialog';
 import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio';
 import Delete from 'react-icons/lib/md/delete';
+import Create from 'react-icons/lib/md/create'
 import Draggable from 'react-draggable'
 import { shorten } from '../lib/utils';
+
+import NewObservationView from './NewObservationView'
+
 
 const format = (box) => {
   let c = []
@@ -17,10 +21,17 @@ const format = (box) => {
   return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
 }
 
-export const ObservationContainer = ( { openInfoFn, deleteFn, ...box } ) => {
-  let deleteBtn;
+
+export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...box } ) => {
+  let deleteBtn, editBtn, detailsBtn;
   if (box.owner === window.store.getState().ui.user) {
     deleteBtn = <Delete onClick = {deleteFn} />;
+    editBtn = <Create
+      onClick = {openEditFn}
+      size = '1em'
+    />;
+  } else {
+    detailsBtn = <AspectRatio onClick = {openInfoFn} />;
   }
 
   const style = {
@@ -47,7 +58,8 @@ export const ObservationContainer = ( { openInfoFn, deleteFn, ...box } ) => {
           {shorten(box.title, 20)}
           <span style = {{float:'right'}} >
             {deleteBtn}
-            <AspectRatio onClick = {openInfoFn} />
+            {editBtn}
+            {detailsBtn}
           </span>
         </div>
         <div style =

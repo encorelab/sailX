@@ -2,6 +2,17 @@ import React from 'react'
 
 export default (state, action) => {
   switch (action.type) {
+    case 'CHANGEROUTE':
+      return {...state, route: action.route}
+    case 'SETBOARD':
+      return {...state, board: action.group}
+    case 'SETOBSERVATIONFIELDS':
+      return {...state, fields: action.fields}
+    case 'SETNAME':
+      return {...state, user: action.name}
+    case 'LOGGEDIN':
+      return {...state, loggedIn: true}
+
     case 'OPENINFO':
       return {...state, infoOpen: action.id}
     case 'CLOSEINFO':
@@ -14,16 +25,7 @@ export default (state, action) => {
       }
     case 'CLOSEADD':
       return {...state, addOpen: false}
-    case 'CHANGEROUTE':
-      return {...state, route: action.route}
-    case 'SETBOARD':
-      return {...state, board: action.group}
-    case 'SETOBSERVATIONFIELDS':
-      return {...state, fields: action.fields}
-    case 'SETNAME':
-      return {...state, user: action.name}
-    case 'LOGGEDIN':
-      return {...state, loggedIn: true}
+
     default:
       return state
   }

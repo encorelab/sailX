@@ -12,23 +12,23 @@ import { StudentReadView } from './components/StudentReadView.jsx'        // loo
 import { BoardView } from './components/BoardView.jsx'
 
 const navigated = () => {
-  const newroute = window.location.hash.slice(2)
+  const newroute = window.location.hash.slice(2);
   //  dispatch: is not used anywhere just for debug
   window.store.dispatch({
     type: 'CHANGEROUTE_UI',
     route: newroute,
     dispatch: 'hashchange'
-  })
+  });
 }
 
 export const initialize = () => {
-  window.addEventListener('hashchange', navigated, false)
-  window.location.hash = '/'
-  navigated()
+  window.addEventListener('hashchange', navigated, false);
+  window.location.hash = '/';
+  navigated();
 }
 
 export const changeRoute = (route) => {
-  window.setTimeout( () => window.location.hash = '/' + route, 0)
+  window.setTimeout( () => window.location.hash = '/' + route, 0);
 }
 
 const selectFn = (callback) => {
@@ -36,31 +36,30 @@ const selectFn = (callback) => {
   window.store.dispatch({
     type: 'SETNAME_UI',
     name: callback.name
-  })
+  });
   window.store.dispatch({
     type: 'LOGGEDIN_UI'
-  })
+  });
 
   horizonSync(horizon, store, '/boxes', callback.CO.collection, 'BOXES')
 
   store.dispatch({
     type: 'SETBOARD_UI',
     group: callback.CO.collection,
-  })
-
+  });
   store.dispatch({
     type: 'SETOBSERVATIONFIELDS_UI',
     fields: JSON.parse(callback.CO.prompt).prompt
-  })
+  });
 
-  changeRoute('student')
+  changeRoute('student');
 }
 
 // --------------------------------------
 const Route = ({ route }) => {
   // force login if not yet logged in
   if (!window.store.getState().ui.loggedIn) {
-    route = 'login'
+    route = 'login';
   }
   switch (route) {
     case 'state':
@@ -78,5 +77,5 @@ const Route = ({ route }) => {
   }
 }
 
-export const CurrentRoute = connect(e => ({route: e.ui.route}))(Route)
+export const CurrentRoute = connect(e => ({route: e.ui.route}))(Route);
 

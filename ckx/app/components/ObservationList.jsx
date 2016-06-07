@@ -5,7 +5,7 @@ import Delete from 'react-icons/lib/md/delete';
 import { shorten } from '../lib/utils';
 import { ObservationContainer, ObservationDetails } from './ObservationElements';
 
-export default ( { boxes, ui, dispatch } ) => {
+export default ( { boxes, ui, dispatch, openEditFn } ) => {
 
   const observationList = boxes.map(e => {
     const deleteFn = () => { dispatch({type: 'DELETE_BOX', id: e.id}) }
@@ -18,8 +18,9 @@ export default ( { boxes, ui, dispatch } ) => {
           <li>
             <ObservationContainer
               key = {e.id}
-              deleteFn = {deleteFn}
               openInfoFn = {openInfoFn}
+              openEditFn = {openEditFn}
+              deleteFn = {deleteFn}
               {...e}
             />
             <ObservationDetails

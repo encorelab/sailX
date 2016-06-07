@@ -11,6 +11,7 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
     closeAddFn()
     dispatch({type: 'ADD_BOX', doc: e})
   }
+  const openEditFn = () => { console.log("TODO"); }
 
   return (
     <div>
@@ -20,6 +21,7 @@ const StudentReadViewEl = ({ ui, boxes, dispatch }) => {
         ui = {ui}
         boxes = {_.orderBy(boxes, ['created_at'], ['desc'])}
         dispatch = {dispatch}
+        openEditFn = {openEditFn}
       />
       <AddObservation
         isOpen = {ui.addOpen}
