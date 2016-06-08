@@ -26,7 +26,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('dev')
       }
     })
-  
+
   ], module: {
     loaders: [
   { test: /\.css$/, loader: "style-loader!css-loader" },

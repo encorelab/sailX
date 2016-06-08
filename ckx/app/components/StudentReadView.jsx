@@ -16,9 +16,18 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   // talk to Stian about these if/elses - feel like there's a cleaner way of doing this
   let boardEl;
   if (ui.tabletsLocked) {
-    boardEl = <div>LOCKED</div>
+    boardEl = <div
+      style = {
+        {
+          height: '100%',
+          background: 'black',
+          paddingLeft: '50%',
+          paddingTop: '27%'
+        }
+      }>
+      {/* <img src={'../img/lock-icon.png'} /> */}
+    </div>
   } else {
-    //boardEl = <div>UNLOCKED</div>
     boardEl = <div>
       <h1>{ui.board}</h1>
       <h1>{ui.user}</h1>
