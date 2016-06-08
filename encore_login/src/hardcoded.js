@@ -22,13 +22,14 @@ const COs = [
 ]
 
 export default [
-  {name: 'Cole', CO: COs[0]},
-  {name: 'Peter', CO: COs[0]},
-  {name: 'Paul', CO: COs[0]},
-  {name: 'Marianne', CO: COs[0]},
-  {name: 'Stian', CO: COs[1]},
-  {name: 'Andreas', CO: COs[1]},
-  {name: 'Janne', CO: COs[1]},
-  {name: 'Andrea', CO: COs[2]},
-  {name: 'Agnete', CO: COs[2]}
+  {name: 'Cole', role: 'student', CO: COs[0]},
+  {name: 'Peter', role: 'student', CO: COs[0]},
+  {name: 'Paul', role: 'student', CO: COs[0]},
+  {name: 'Marianne', role: 'student', CO: COs[0]},
+  {name: 'Board', role: 'board', CO: COs[0]},
+  {name: 'Stian', role: 'student', CO: COs[1]},
+  {name: 'Andreas', role: 'student', CO: COs[1]},
+  {name: 'Janne', role: 'student', CO: COs[1]},
+  {name: 'Andrea', role: 'student', CO: COs[2]},
+  {name: 'Agnete', role: 'student', CO: COs[2]}
 ]

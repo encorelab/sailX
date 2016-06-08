@@ -38,6 +38,10 @@ const selectFn = (callback) => {
     name: callback.name
   });
   window.store.dispatch({
+    type: 'SETROLE_UI',
+    role: callback.role
+  });
+  window.store.dispatch({
     type: 'LOGGEDIN_UI'
   });
 
@@ -52,7 +56,11 @@ const selectFn = (callback) => {
     fields: JSON.parse(callback.CO.prompt).prompt
   });
 
-  changeRoute('student');
+  if (window.store.getState().ui.role === "board") {
+    changeRoute('board');
+  } else {
+    changeRoute('student');
+  }
 }
 
 // --------------------------------------
@@ -70,7 +78,11 @@ const Route = ({ route }) => {
       return <BoardView />
     default:
       if (window.store.getState().ui.loggedIn) {
-        return <StudentReadView />
+        if (window.store.getState().ui.role === "board") {
+          return <BoardView />
+        } else {
+          return <StudentReadView />
+        }
       } else {
         return <EncoreLogin onSelect={selectFn} />
       }
