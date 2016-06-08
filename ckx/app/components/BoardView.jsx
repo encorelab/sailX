@@ -21,4 +21,5 @@ const BoardViewEl = ({ ui, observations, dispatch }) => {
 }
 
 // connect is a curried component that maps the state from redux (first call) to a presentational component (second call, in this case List)
-export const BoardView = connect(e => ({ui: e.ui, observations: e.observations}))(BoardViewEl)
+const BoardView = connect(e => ({ui: e.ui, observations: e.observations}))(BoardViewEl)
+export default BoardView
