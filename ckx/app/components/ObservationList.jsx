@@ -17,6 +17,7 @@ export default ( { key, observations, ui, dispatch, openEditFn } ) => {
         <ul>
           <li>
             <ObservationContainer
+              ui = {ui}
               key = {e.id+'info'}
               openInfoFn = {openInfoFn}
               openEditFn = {openEditFn}

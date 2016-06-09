@@ -12,6 +12,7 @@ export default ( {ui, dispatch} ) => {
   let lockBtn;
   if (ui.tabletsLocked) {
     lockBtn = <button onClick = {lockFn}>RESUME</button>
+    // lockBtn = <button onClick = {() => dispatch({type: 'LOCKTABLETS_UI'})}>RESUME</button>
   } else {
     lockBtn = <button onClick = {lockFn}>PAUSE</button>
   }

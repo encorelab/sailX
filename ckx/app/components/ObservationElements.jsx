@@ -20,9 +20,9 @@ const format = (observation) => {
 }
 
 
-export const ObservationContainer = ( { openInfoFn, openEditFn, deleteFn, ...observation } ) => {
+export const ObservationContainer = ( { ui, openInfoFn, openEditFn, deleteFn, ...observation } ) => {
   let deleteBtn, editBtn, detailsBtn;
-  if (observation.owner === window.store.getState().ui.user) {
+  if (observation.owner === ui.user) {
     deleteBtn = <Delete onClick = {deleteFn} />;
     editBtn = <Create
       onClick = {openEditFn}
