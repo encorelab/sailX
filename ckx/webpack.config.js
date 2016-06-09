@@ -33,7 +33,7 @@ module.exports = {
 
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'url?limit=8192&name=[name]-[hash].[ext]'
+        loader: 'url-loader?limit=8192&name=[name]-[hash].[ext]'
       },
 
       {
