@@ -13,7 +13,6 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   }
   const openEditFn = () => { console.log("TODO"); }
 
-  // talk to Stian about these if/elses - feel like there's a cleaner way of doing this
   let boardEl;
   if (ui.tabletsLocked) {
     boardEl = <div
@@ -41,7 +40,7 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
       <AddObservation
         dispatch = {dispatch}
         ui = {ui}
-        isOpen = {ui.addOpen}         // wait, how is this right?
+        isOpen = {ui.addOpen}         // wait, how is this right? - figure out the naming here
         openFn = {openAddFn}
         closeFn = {closeAddFn}
         submitFn = {submitAdd}

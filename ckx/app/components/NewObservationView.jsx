@@ -30,10 +30,11 @@ const NewObservationFields = (e) => {
   }
 }
 
-const attachMedia = (dispatch) => {
+const attachMedia = (context, dispatch) => {
   const MAX_FILE_SIZE = 20971520;
-  var file = jQuery("#relationship-photo-file")[0].files.item(0);
+  //var file = jQuery("#relationship-photo-file")[0].files.item(0);
   var formData = new FormData();
+  //formData.append( 'file', context.refs.file.getDOMNode().files[0] );
   formData.append('file', file);
 
   if (file.size < MAX_FILE_SIZE) {
@@ -81,13 +82,15 @@ class NewObservationView extends React.Component {
   invalid = () => this.setState({valid: false});
   fields = () => this.props.fields.map( e => NewObservationFields(e) );
 
-  attachMediaFn = () => attachMedia(this.props.dispatch)
+  attachMediaFn = () => attachMedia(this, this.props.dispatch)
 
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {
   //   //<i class="fa fa-spinner fa-pulse"></i>
   //   uploadSpinner = '<div>Working</div>'
   // }
+
+  // react file input component?
 
   render() {
     return (
