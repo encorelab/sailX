@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ObservationList from './ObservationList'
 import AddObservation from './AddObservation'
 import _ from 'lodash'
+const lockedImg = require('../img/lock-icon.png')
 
 const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   const openAddFn = () => { dispatch({type: 'OPENADD_UI'}) }
@@ -25,7 +26,7 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
           paddingTop: '27%'
         }
       }>
-      {/* <img src={'../img/lock-icon.png'} /> */}
+      <img src={lockedImg} /> 
     </div>
   } else {
     boardEl = <div>
