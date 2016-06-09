@@ -16,6 +16,7 @@ localStorage.removeItem('horizon-jwt');
 const store = configStore({
   observations: observationlist,
   ui: {
+    tabletsLocked: false,
     infoOpen: false,
     addOpen: false,
     route: 'login'

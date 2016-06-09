@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import ObservationList from './ObservationList'
 import AddObservation from './AddObservation'
 import _ from 'lodash'
-const lockedImg = require('../img/lock-icon.png')
 
 const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   const openAddFn = () => { dispatch({type: 'OPENADD_UI'}) }
@@ -14,21 +13,8 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
   }
   const openEditFn = () => { console.log("TODO"); }
 
-  let boardEl;
-  if (ui.tabletsLocked) {
-    boardEl = <div
-      style = {
-        {
-          height: '100%',
-          background: 'black',
-          paddingLeft: '50%',
-          paddingTop: '27%'
-        }
-      }>
-      <img src={lockedImg} /> 
-    </div>
-  } else {
-    boardEl = <div>
+  return (
+    <div>
       <h1>{ui.board}</h1>
       <h1>{ui.user}</h1>
       <ObservationList
@@ -41,17 +27,11 @@ const StudentReadViewEl = ({ ui, observations, dispatch }) => {
       <AddObservation
         dispatch = {dispatch}
         ui = {ui}
-        isOpen = {ui.addOpen}         // wait, how is this right? - figure out the naming here
+        isOpen = {ui.addOpen}
         openFn = {openAddFn}
         closeFn = {closeAddFn}
         submitFn = {submitAdd}
       />
-    </div>
-  }
-
-  return (
-    <div>
-      {boardEl}
     </div>
   )
 }

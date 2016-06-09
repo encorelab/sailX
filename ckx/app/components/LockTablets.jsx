@@ -10,5 +10,3 @@ export default ( {ui, dispatch} ) => {
     </div>
   )
 }
-
-

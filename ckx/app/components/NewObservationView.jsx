@@ -87,8 +87,6 @@ class NewObservationView extends React.Component {
   //   uploadSpinner = '<div>Working</div>'
   // }
 
-  // react file input component?
-
 
   render() {
     return (
@@ -111,13 +109,12 @@ class NewObservationView extends React.Component {
 
         </Formsy.Form>
         <button onClick = {() => attachMedia(NewObservationView.context, this.props.dispatch)}>Attach Media</button>
-
-
-        {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
-        <button onClick = {this.props.onClose}>Cancel</button>
         <br />
         <input id="relationship-photo-file" ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" />
         {/* {uploadSpinner} */}
+        <br />
+        {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
+        <button onClick = {this.props.onClose}>Cancel</button>
       </div>
     )
   }
