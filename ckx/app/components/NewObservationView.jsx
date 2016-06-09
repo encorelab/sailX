@@ -32,10 +32,9 @@ const NewObservationFields = (e) => {
 
 const attachMedia = (context, dispatch) => {
   const MAX_FILE_SIZE = 20971520;
-  //var file = jQuery("#relationship-photo-file")[0].files.item(0);
   var formData = new FormData();
-  //formData.append( 'file', context.refs.file.getDOMNode().files[0] );
-  formData.append('file', file);
+  var file = context.refs.file.files[0];
+  formData.append( 'file', file );
 
   if (file.size < MAX_FILE_SIZE) {
     dispatch({type: 'STARTUPLOADMEDIA_UI'});
@@ -82,8 +81,6 @@ class NewObservationView extends React.Component {
   invalid = () => this.setState({valid: false});
   fields = () => this.props.fields.map( e => NewObservationFields(e) );
 
-  attachMediaFn = () => attachMedia(this, this.props.dispatch)
-
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {
   //   //<i class="fa fa-spinner fa-pulse"></i>
@@ -91,6 +88,7 @@ class NewObservationView extends React.Component {
   // }
 
   // react file input component?
+
 
   render() {
     return (
@@ -112,11 +110,13 @@ class NewObservationView extends React.Component {
           />
 
         </Formsy.Form>
-        <button onClick = {this.attachMediaFn}>Attach Media</button>
+        <button onClick = {() => attachMedia(NewObservationView.context, this.props.dispatch)}>Attach Media</button>
+
+
         {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
         <button onClick = {this.props.onClose}>Cancel</button>
         <br />
-        <input id="relationship-photo-file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" />
+        <input id="relationship-photo-file" ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" />
         {/* {uploadSpinner} */}
       </div>
     )

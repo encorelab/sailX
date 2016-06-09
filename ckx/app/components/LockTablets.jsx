@@ -1,25 +1,14 @@
 import React from 'react'
 
 export default ( {ui, dispatch} ) => {
-  const lockFn = () => {
-    if (ui.tabletsLocked) {
-      dispatch({type: 'UNLOCKTABLETS_UI'});
-    } else {
-      dispatch({type: 'LOCKTABLETS_UI'});
-    }
-  };
-
-  let lockBtn;
-  if (ui.tabletsLocked) {
-    lockBtn = <button onClick = {lockFn}>RESUME</button>
-    // lockBtn = <button onClick = {() => dispatch({type: 'LOCKTABLETS_UI'})}>RESUME</button>
-  } else {
-    lockBtn = <button onClick = {lockFn}>PAUSE</button>
-  }
-
   return (
     <div>
-      {lockBtn}
+      {ui.tabletsLocked ?
+        <button onClick = {() => dispatch({type: 'UNLOCKTABLETS_UI'}) }>RESUME</button> :
+        <button onClick = {() => dispatch({type: 'LOCKTABLETS_UI'}) }>PAUSE</button>
+      }
     </div>
   )
 }
+
+
