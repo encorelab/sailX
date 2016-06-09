@@ -8,8 +8,8 @@ import EncoreLogin from 'encore_login'
 import { horizon } from './index'
 import horizonSync from 'horizon-redux-sync'
 
-import StudentReadView from './components/StudentReadView.jsx'
-import BoardView from './components/BoardView.jsx'
+import StudentReadView from './components/Student/StudentReadView.jsx'
+import BoardView from './components/Board/BoardView.jsx'
 
 const navigated = () => {
   const newroute = window.location.hash.slice(2);
