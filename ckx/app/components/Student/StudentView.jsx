@@ -6,6 +6,7 @@ import LockedView from './LockedView'
 import _ from 'lodash'
 
 const StudentViewEl = ({ ui, observations, dispatch }) => {
+  // need to standardize where the functionality resides (eg submit cancel is here, but 'add obs' is one down)
   const cancelNewObservation = () => { dispatch({type: 'SWITCHVIEW_UI', view: 'read'}) };
   const submitNewObservation = (e) => {
     dispatch({type: 'ADD_OBSERVATION', doc: e});

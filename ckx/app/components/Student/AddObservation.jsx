@@ -1,7 +1,7 @@
 import React from 'react'
 import Create from 'react-icons/lib/md/create'
 
-export default ( { addNewObservation } ) => {
+export default ( { onClick } ) => {
   const style = {
     position: 'fixed',
     left: '50%',
@@ -14,7 +14,7 @@ export default ( { addNewObservation } ) => {
     <Create
       style = {style}
       size = '4em'
-      onClick = {addNewObservation}
+      onClick = {onClick}
     />
   )
 }

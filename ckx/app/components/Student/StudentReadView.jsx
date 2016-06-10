@@ -5,9 +5,10 @@ import AddObservation from './AddObservation'
 import _ from 'lodash'
 
 export default ({ ui, observations, dispatch }) => {
-  const addNewObservation = () => { dispatch({type: 'SWITCHVIEW_UI', view: 'write'}) }
+  const openEditFn = () => {
 
-  const openEditFn = () => { console.log("TODO"); }
+    dispatch({type: 'SWITCHVIEW_UI', view: 'write'});
+  }
 
   return (
     <div>
@@ -20,7 +21,7 @@ export default ({ ui, observations, dispatch }) => {
         openEditFn = {openEditFn}
       />
       <AddObservation
-        addNewObservation = {addNewObservation}
+        onClick = {() => dispatch({type: 'SWITCHVIEW_UI', view: 'write'})}
       />
     </div>
   )
