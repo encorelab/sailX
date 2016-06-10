@@ -39,6 +39,8 @@ export default (kind, restfn, initstate = [], deffields) => {
             )
 
           // CRUD
+
+          // fix window store nonsense here
           case 'ADD':
             return [
               ...state,

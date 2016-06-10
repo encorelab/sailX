@@ -9,7 +9,7 @@ export default ({ ui, observations, dispatch }) => {
 
 
   const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
-  const submitAdd = (e) => {
+  const submitObservation = (e) => {
     closeAddFn()
     dispatch({type: 'ADD_OBSERVATION', doc: e})
   }
@@ -32,7 +32,7 @@ export default ({ ui, observations, dispatch }) => {
         isOpen = {ui.addOpen}
         openFn = {openAddFn}
         closeFn = {closeAddFn}
-        submitFn = {submitAdd}
+        submitFn = {submitObservation}
       />
     </div>
   )

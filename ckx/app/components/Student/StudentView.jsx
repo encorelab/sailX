@@ -6,6 +6,14 @@ import LockedView from './LockedView'
 import _ from 'lodash'
 
 const StudentViewEl = ({ ui, observations, dispatch }) => {
+  const cancelNewObservation = () => { dispatch({type: 'SWITCHVIEW_UI', view: 'read'}) };
+  const submitNewObservation = (e) => {
+    dispatch({type: 'ADD_OBSERVATION', doc: e});
+    dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
+  };
+
+
+
   let boardEl;
   if (ui.tabletsLocked) {
     boardEl = <LockedView />
@@ -15,6 +23,8 @@ const StudentViewEl = ({ ui, observations, dispatch }) => {
         ui = {ui}
         observations = {observations}
         dispatch = {dispatch}
+        submitNewObservation = {submitNewObservation}
+        cancelNewObservation = {cancelNewObservation}
       />
     } else {
       boardEl = <StudentReadView

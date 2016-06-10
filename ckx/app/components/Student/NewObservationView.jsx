@@ -87,7 +87,6 @@ class NewObservationView extends React.Component {
   //   uploadSpinner = '<div>Working</div>'
   // }
 
-
   render() {
     return (
       <div>
@@ -114,7 +113,7 @@ class NewObservationView extends React.Component {
         {/* {uploadSpinner} */}
         <br />
         {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
-        <button onClick = {this.props.onClose}>Cancel</button>
+        <button onClick = {this.props.onCancel}>Cancel</button>
       </div>
     )
   }
