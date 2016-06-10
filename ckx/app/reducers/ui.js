@@ -21,7 +21,11 @@ export default (state, action) => {
       return {...state, tabletsLocked: true}
     case 'UNLOCKTABLETS':
       return {...state, tabletsLocked: false}
+
     /***** TABLETS *****/
+
+    case 'SWITCHVIEW':
+      return {...state, activeView: action.view}
 
     case 'OPENINFO':
       return {...state, infoOpen: action.id}

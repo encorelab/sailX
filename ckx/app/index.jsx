@@ -17,6 +17,7 @@ const store = configStore({
   observations: observationlist,
   ui: {
     tabletsLocked: false,
+    activeView: 'read',
     infoOpen: false,
     addOpen: false,
     route: 'login'

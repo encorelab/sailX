@@ -5,7 +5,9 @@ import AddObservation from './AddObservation'
 import _ from 'lodash'
 
 export default ({ ui, observations, dispatch }) => {
-  const openAddFn = () => { dispatch({type: 'OPENADD_UI'}) }
+  const openAddFn = () => { dispatch({type: 'SWITCHVIEW_UI', view: 'write'}) }
+
+
   const closeAddFn = () => { dispatch({type: 'CLOSEADD_UI'}) }
   const submitAdd = (e) => {
     closeAddFn()
