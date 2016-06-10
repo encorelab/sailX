@@ -12,8 +12,6 @@ const StudentViewEl = ({ ui, observations, dispatch }) => {
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
 
-
-
   let boardEl;
   if (ui.tabletsLocked) {
     boardEl = <LockedView />
@@ -23,8 +21,8 @@ const StudentViewEl = ({ ui, observations, dispatch }) => {
         ui = {ui}
         observations = {observations}
         dispatch = {dispatch}
-        submitNewObservation = {submitNewObservation}
-        cancelNewObservation = {cancelNewObservation}
+        onSubmit = {submitNewObservation}
+        onCancel = {cancelNewObservation}
       />
     } else {
       boardEl = <StudentReadView

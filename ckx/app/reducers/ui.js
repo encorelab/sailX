@@ -31,14 +31,6 @@ export default (state, action) => {
       return {...state, infoOpen: action.id}
     case 'CLOSEINFO':
       return {...state, infoOpen: false}
-    case 'OPENADD':
-      if (!state.infoOpen) {
-        return {...state, addOpen: true}
-      } else {
-        return state
-      }
-    case 'CLOSEADD':
-      return {...state, addOpen: false}
 
     case 'STARTUPLOADMEDIA':
       return {...state, isUploading: true}
