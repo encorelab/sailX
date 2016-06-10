@@ -6,7 +6,6 @@ import _ from 'lodash'
 
 export default ({ ui, observations, dispatch }) => {
   const openEditFn = () => {
-
     dispatch({type: 'SWITCHVIEW_UI', view: 'write'});
   }
 
