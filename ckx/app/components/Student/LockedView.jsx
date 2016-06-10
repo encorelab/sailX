@@ -1,5 +1,5 @@
 import React from 'react';
-const lockedImg = require('../img/lock-icon.png')
+const lockedImg = require('../../img/lock-icon.png')
 
 export default () => {
   return (

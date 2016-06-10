@@ -8,7 +8,7 @@ import EncoreLogin from 'encore_login'
 import { horizon } from './index'
 import horizonSync from 'horizon-redux-sync'
 
-import StudentReadView from './components/Student/StudentReadView.jsx'
+import StudentView from './components/Student/StudentView.jsx'
 import BoardView from './components/Board/BoardView.jsx'
 
 const navigated = () => {
@@ -73,7 +73,7 @@ const Route = ({ route }) => {
     case 'state':
       return <State />
     case 'student':
-      return <StudentReadView />
+      return <StudentView />
     case 'board':
       return <BoardView />
     default:
