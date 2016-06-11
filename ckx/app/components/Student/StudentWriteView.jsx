@@ -79,9 +79,7 @@ class StudentWriteView extends React.Component {
   }
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
-  fields = () => {
-    this.props.ui.fields.map( e => NewObservationFields(e) );
-  }
+  fields = () => this.props.ui.fields.map( e => NewObservationFields(e) );
 
   // start here - need to pass in the observation, include it in the map
 
