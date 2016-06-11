@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import Formsy from 'formsy-react'
 import FRC from 'formsy-react-components'
 
-const NewObservationFields = (e) => {
+const NewObservationFields = (e, observation) => {
   let { id, ...rest } = e
   switch (e.kind) {
     case 'INPUT':
@@ -13,9 +13,10 @@ const NewObservationFields = (e) => {
           id = {id}
           key = {id}
           type = 'text'
-          value = ''
+          value = {observation.title || ''}
           {...rest}
-        />
+        >
+        </FRC.Input>
       )
     case 'TEXTAREA':
       return (
@@ -23,12 +24,15 @@ const NewObservationFields = (e) => {
           name = {id}
           id = {id}
           key = {id}
-          value = {e.value || ''}
+          value = {observation.content || ''}
           {...rest}
         />
       )
   }
 }
+
+// start here, do the obs structure dynamically
+
 
 const attachMedia = (context, dispatch) => {
   const MAX_FILE_SIZE = 20971520;
@@ -79,9 +83,8 @@ class StudentWriteView extends React.Component {
   }
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
-  fields = () => this.props.ui.fields.map( e => NewObservationFields(e) );
 
-  // start here - need to pass in the observation, include it in the map
+  fields = () => this.props.ui.fields.map( e => NewObservationFields(e, this.props.studentState.observation) );
 
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {

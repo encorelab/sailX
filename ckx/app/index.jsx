@@ -21,6 +21,12 @@ const store = configStore({
     infoOpen: false,
     addOpen: false,
     route: 'login'
+  },
+  studentState: {
+    observation: {
+      title: 'This is a title',
+      content: 'This is some note content'
+    }
   }
 })
 
