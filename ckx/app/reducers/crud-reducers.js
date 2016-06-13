@@ -1,4 +1,4 @@
-import { uuid, createdAt } from '../lib/utils'
+import { uuid, currentDate } from '../lib/utils'
 
 // returns a function that contains normal CRUD + DB sync reducers, with
 // kind attached to end of reducer names (like INSERT_kind). Non-matching
@@ -46,7 +46,7 @@ export default (kind, restfn, initstate = [], deffields) => {
               ...state,
               {
                 id: uuid(),
-                created_at: createdAt(),
+                created_at: currentDate(),
                 owner: window.store.getState().ui.user,
                 media: [],
                 ...deffields,
@@ -55,14 +55,11 @@ export default (kind, restfn, initstate = [], deffields) => {
             ]
 
           case 'EDIT':
-
             return state.map(doc => {
-                debugger
                 doc.id === action.doc.id ?
                   {...doc, ...action.doc} :
                   doc
               }
-
             )
 
           case 'DELETE':

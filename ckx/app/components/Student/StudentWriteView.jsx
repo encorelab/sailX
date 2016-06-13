@@ -15,8 +15,7 @@ const NewObservationFields = (e, observation) => {
           type = 'text'
           value = {observation[e.id] || ''}
           {...rest}
-        >
-        </FRC.Input>
+        />
       )
     case 'TEXTAREA':
       return (
@@ -80,7 +79,6 @@ const checkWriteMode = (context) => {
   }
 };
 
-
 class StudentWriteView extends React.Component {
   constructor() {
     super();
@@ -95,7 +93,8 @@ class StudentWriteView extends React.Component {
   // if (this.props.isUploading == true) {
   //   //<i class="fa fa-spinner fa-pulse"></i>
   //   uploadSpinner = '<div>Working</div>'
-  // }
+  // }<FRC.Input type="text" name="id" value={this.props.ui.observationToEdit.id} style={{visibility: 'hidden'}}/>
+
 
   render() {
     return (
@@ -120,6 +119,8 @@ class StudentWriteView extends React.Component {
           />
 
         </Formsy.Form>
+
+
         <button onClick = {() => attachMedia(StudentWriteView.context, this.props.dispatch)}>Attach Media</button>
         <br />
         <input id="relationship-photo-file" ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" />

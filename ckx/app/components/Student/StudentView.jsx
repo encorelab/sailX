@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import StudentReadView from './StudentReadView'
 import StudentWriteView from './StudentWriteView'
 import LockedView from './LockedView'
+import { currentDate } from '../../lib/utils'
 
 
 const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
@@ -12,13 +13,18 @@ const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const submitNewObservation = (e) => {
+    debugger
     dispatch({type: 'ADD_OBSERVATION', doc: e});
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const submitEditObservation = (e) => {
+    let editedObs = window.store.getState().ui.observationToEdit
+    editedObs.title = e.title
+    editedObs.content = e.content
+    editedObs.modified_at = currentDate()
     debugger
-    dispatch({type: 'EDIT_OBSERVATION', doc: e});
+    dispatch({type: 'EDIT_OBSERVATION', doc: editedObs});
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
