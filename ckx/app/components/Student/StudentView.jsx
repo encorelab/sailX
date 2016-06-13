@@ -13,7 +13,6 @@ const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const submitNewObservation = (e) => {
-    debugger
     dispatch({type: 'ADD_OBSERVATION', doc: e});
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
@@ -23,7 +22,6 @@ const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
     editedObs.title = e.title
     editedObs.content = e.content
     editedObs.modified_at = currentDate()
-    debugger
     dispatch({type: 'EDIT_OBSERVATION', doc: editedObs});
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
