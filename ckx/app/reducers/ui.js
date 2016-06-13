@@ -27,6 +27,11 @@ export default (state, action) => {
     case 'SWITCHVIEW':
       return {...state, activeView: action.view}
 
+    case 'SETEDIT':
+      return {...state, editMode: true, observationToEdit: action.doc}
+    case 'UNSETEDIT':
+      return {...state, editMode: false, observationToEdit: {}}
+
     case 'OPENINFO':
       return {...state, infoOpen: action.id}
     case 'CLOSEINFO':

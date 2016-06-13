@@ -3,13 +3,23 @@ import { connect } from 'react-redux';
 import StudentReadView from './StudentReadView'
 import StudentWriteView from './StudentWriteView'
 import LockedView from './LockedView'
-import _ from 'lodash'
+
 
 const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
   // need to standardize where the functionality resides (eg submit cancel is here, but 'add obs' is one down)
-  const cancelNewObservation = () => { dispatch({type: 'SWITCHVIEW_UI', view: 'read'}) };
+  const cancelNewObservation = () => {
+    dispatch({type: 'UNSETEDIT_UI'});
+    dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
+  };
   const submitNewObservation = (e) => {
     dispatch({type: 'ADD_OBSERVATION', doc: e});
+    dispatch({type: 'UNSETEDIT_UI'});
+    dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
+  };
+  const submitEditObservation = (e) => {
+    debugger
+    dispatch({type: 'EDIT_OBSERVATION', doc: e});
+    dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
 
@@ -25,6 +35,7 @@ const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
         dispatch = {dispatch}
         onSubmit = {submitNewObservation}
         onCancel = {cancelNewObservation}
+        onSubmitEdit = {submitEditObservation}
       />
     } else {
       boardEl = <StudentReadView

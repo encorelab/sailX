@@ -5,10 +5,13 @@ import Delete from 'react-icons/lib/md/delete';
 import { shorten } from '../../lib/utils';
 import { ObservationContainer, ObservationDetails } from '../ObservationElements';
 
-export default ( { observations, ui, dispatch, openEditFn } ) => {
-
+export default ( { observations, ui, dispatch } ) => {
   const observationList = observations.map(e => {
     const deleteFn = () => { dispatch({type: 'DELETE_OBSERVATION', id: e.id}) }
+    const openEditFn = () => {
+      dispatch({type: 'SWITCHVIEW_UI', view: 'write'});
+      dispatch({type: 'SETEDIT_UI', doc: e});
+    }
     const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
     const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
 

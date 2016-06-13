@@ -13,7 +13,7 @@ const NewObservationFields = (e, observation) => {
           id = {id}
           key = {id}
           type = 'text'
-          value = {observation.title || ''}
+          value = {observation[e.id] || ''}
           {...rest}
         >
         </FRC.Input>
@@ -24,14 +24,12 @@ const NewObservationFields = (e, observation) => {
           name = {id}
           id = {id}
           key = {id}
-          value = {observation.content || ''}
+          value = {observation[e.id] || ''}
           {...rest}
         />
       )
   }
 }
-
-// start here, do the obs structure dynamically
 
 
 const attachMedia = (context, dispatch) => {
@@ -72,8 +70,16 @@ const attachMedia = (context, dispatch) => {
     // update the observation - actually, there is no observation. Maybe this should all be one level lower, as a form field
     // dispatch({type: 'ADDMEDIA_OBSERVATION', doc: data.url});
   }
-
 };
+
+const checkWriteMode = (context) => {
+  if (context.props.ui.editMode) {
+    return context.props.ui.observationToEdit;
+  } else {
+    return context.props.studentState.observation;
+  }
+};
+
 
 class StudentWriteView extends React.Component {
   constructor() {
@@ -83,8 +89,7 @@ class StudentWriteView extends React.Component {
   }
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
-
-  fields = () => this.props.ui.fields.map( e => NewObservationFields(e, this.props.studentState.observation) );
+  fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
 
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {
@@ -96,7 +101,10 @@ class StudentWriteView extends React.Component {
     return (
       <div>
         <Formsy.Form
-          onSubmit = {this.props.onSubmit}
+          onSubmit = {this.props.ui.editMode ?
+            this.props.onSubmitEdit :
+            this.props.onSubmit
+          }
           onValid = {this.valid}
           onInvalid = {this.invalid}
         >

@@ -55,10 +55,14 @@ export default (kind, restfn, initstate = [], deffields) => {
             ]
 
           case 'EDIT':
-            return state.map(doc =>
-              doc.id === action.doc.id ?
-                {...doc, ...action.doc} :
-                doc
+
+            return state.map(doc => {
+                debugger
+                doc.id === action.doc.id ?
+                  {...doc, ...action.doc} :
+                  doc
+              }
+
             )
 
           case 'DELETE':
