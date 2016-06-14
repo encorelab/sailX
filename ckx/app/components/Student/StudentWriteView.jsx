@@ -88,6 +88,7 @@ class StudentWriteView extends React.Component {
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
   fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
+  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id);
 
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {
@@ -100,10 +101,7 @@ class StudentWriteView extends React.Component {
     return (
       <div>
         <Formsy.Form
-          onSubmit = {this.props.ui.editMode ?
-            this.props.onSubmitEdit :
-            this.props.onSubmit
-          }
+          onSubmit = {this.onSubmitWithId}
           onValid = {this.valid}
           onInvalid = {this.invalid}
         >

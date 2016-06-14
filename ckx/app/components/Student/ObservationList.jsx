@@ -9,8 +9,8 @@ export default ( { observations, ui, dispatch } ) => {
   const observationList = observations.map(e => {
     const deleteFn = () => { dispatch({type: 'DELETE_OBSERVATION', id: e.id}) }
     const openEditFn = () => {
-      dispatch({type: 'SWITCHVIEW_UI', view: 'write'});
       dispatch({type: 'SETEDIT_UI', doc: e});
+      dispatch({type: 'SWITCHVIEW_UI', view: 'write'});
     }
     const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
     const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
