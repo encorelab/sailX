@@ -8,14 +8,16 @@ import { omit, sortBy, difference, intersection } from 'lodash'
 // pathStr: string, like "/users" to sync (JPath)
 // dbname: pouchDb name to sync with (local and external)
 // actionPrefix: will emit redux actions INSERT_ENTRY, UPDATE_ENTRY, DELETE_ENTRY and INITIALIZE_ENTRY
-export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY') => {
+// filter: object to use when filtering subscriptions, for example {studentid: 1}
+export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter) => {
   const pathObj = {
     path: pathStr,
     dbname: dbname,
     actionPrefix: actionPrefix,
     docs: [],
     db: horizon(dbname),
-    store: store
+    store: store,
+    filter: filter
   }
 
   listenHorizon(pathObj)
@@ -27,7 +29,8 @@ export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY') => {
 
 // begins listening to a specific database, returns object with cancel function
 const listenHorizon = (path) => {
-  path.db.watch().subscribe( (e) => { dbChange(path, e) } )
+  const watchFn = path.filter ? path.db.findAll(path.filter) : path.db
+  watchFn.watch().subscribe( (e) => { dbChange(path, e) } )
 }
 
 // take a full state, extract subtree and sort

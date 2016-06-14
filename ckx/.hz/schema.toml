@@ -3,6 +3,8 @@
 [collections.group2ck]
 
 [collections.group3ck]
+[collections.student_state]
+[collections.class_state]
 
 [groups.default.rules.read]
 template = "collection(any()).anyRead()"
