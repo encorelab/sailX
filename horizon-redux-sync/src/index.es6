@@ -62,8 +62,12 @@ function reduxChange(path, state) {
   if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
 
     const updated = diffs.new.concat(diffs.updated)
+    const filter = path.filter
     if (updated.length > 0) {
-      path.db.upsert(updated)
+      const updatedFilter = filter ? 
+        updated.map(e => ({...e, ...filter})) : // add metadata for filtered collection
+        updated
+      path.db.upsert(updatedFilter)
     }
 
     diffs.deletedIds.forEach(id => path.db.remove({id: id}))
