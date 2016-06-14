@@ -12,20 +12,15 @@ const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
-  const submitNewObservation = (e) => {
-    debugger
-    dispatch({type: 'ADD_OBSERVATION', doc: e});
-    dispatch({type: 'UNSETEDIT_UI'});
-    dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
-  };
-  const submitEditObservation = (e) => {
-    let editedObs = window.store.getState().ui.observationToEdit
-    editedObs.title = e.title
-    editedObs.content = e.content
-    editedObs.modified_at = currentDate()
-    debugger
-    dispatch({type: 'EDIT_OBSERVATION', doc: editedObs});
-    dispatch({type: 'UNSETEDIT_UI'});
+  const submitObservation = (obs, id) => {
+    if (id) {
+      // we are editing an existing observation
+      const fullObs = {...obs, id: id}
+      dispatch({type: 'EDIT_OBSERVATION', doc: fullObs});
+      dispatch({type: 'UNSETEDIT_UI'});
+    } else {
+      dispatch({type: 'ADD_OBSERVATION', doc: obs});
+    }
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
 
@@ -39,9 +34,8 @@ const StudentViewEl = ({ ui, observations, studentState, dispatch }) => {
         observations = {observations}
         studentState = {studentState}
         dispatch = {dispatch}
-        onSubmit = {submitNewObservation}
+        onSubmit = {submitObservation}
         onCancel = {cancelNewObservation}
-        onSubmitEdit = {submitEditObservation}
       />
     } else {
       boardEl = <StudentReadView
