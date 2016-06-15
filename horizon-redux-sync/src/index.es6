@@ -9,7 +9,8 @@ import { omit, sortBy, difference, intersection } from 'lodash'
 // dbname: pouchDb name to sync with (local and external)
 // actionPrefix: will emit redux actions INSERT_ENTRY, UPDATE_ENTRY, DELETE_ENTRY and INITIALIZE_ENTRY
 // filter: object to use when filtering subscriptions, for example {studentid: 1}
-export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter) => {
+// options: object, {readOnly: true} means that it only subscribes to Horizon, and not to Redux
+export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter, options) => {
   const pathObj = {
     path: pathStr,
     dbname: dbname,
@@ -21,7 +22,9 @@ export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter)
   }
 
   listenHorizon(pathObj)
-  store.subscribe(e => reduxChange(pathObj, store.getState()))
+  if (!options || !options.readOnly) { 
+    store.subscribe(e => reduxChange(pathObj, store.getState())) 
+  }
   return pathObj
 }
 

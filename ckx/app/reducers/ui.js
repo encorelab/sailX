@@ -10,17 +10,12 @@ export default (state, action) => {
       return {...state, fields: action.fields}
     case 'SETNAME':
       return {...state, user: action.name}
+    case 'SETCLASS':
+      return {...state, class: action.class}
     case 'SETROLE':
       return {...state, role: action.role}
     case 'LOGGEDIN':
       return {...state, loggedIn: true}
-
-    /***** BOARDS *****/
-
-    case 'LOCKTABLETS':
-      return {...state, tabletsLocked: true}
-    case 'UNLOCKTABLETS':
-      return {...state, tabletsLocked: false}
 
     /***** TABLETS *****/
 

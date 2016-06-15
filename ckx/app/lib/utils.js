@@ -14,3 +14,15 @@ export const shorten = (text, length) => {
     return t.slice(0, length-3)+'...'
   }
 }
+
+export const identity = (e) => e
+
+// for classState and studentState, we are getting an array from Horizon, but
+// we will only have one element of each type with a given class/student ID
+// this let's us easily pick that element out and switch on it
+// for example getKey('tablet_locked', classState) will return the value if
+// the element exists, and undefined if it does not
+export const getKey = (key, array) => {
+  const elem = array.filter(e => e.type == key)[0]
+  return elem ? elem.value : undefined
+}

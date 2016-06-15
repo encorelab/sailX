@@ -32,20 +32,24 @@ export const changeRoute = (route) => {
 }
 
 const selectFn = (callback) => {
-  console.log("User selected, info passed from callback function: ", callback)
   window.store.dispatch({
     type: 'SETNAME_UI',
-    name: callback.name
+    name: callback.student.name
+  });
+  window.store.dispatch({
+    type: 'SETCLASS_UI',
+    class: callback.student.class
   });
   window.store.dispatch({
     type: 'SETROLE_UI',
-    role: callback.role
+    role: callback.student.role
   });
   window.store.dispatch({
     type: 'LOGGEDIN_UI'
   });
 
   horizonSync(horizon, store, '/observations', callback.CO.collection, 'OBSERVATIONS')
+  horizonSync(horizon, store, '/class_state', 'class_state', 'CLASS_STATE', {class: callback.student.class}, {readOnly: true})
 
   store.dispatch({
     type: 'SETBOARD_UI',
@@ -56,7 +60,7 @@ const selectFn = (callback) => {
     fields: JSON.parse(callback.CO.prompt).prompt
   });
 
-  if (window.store.getState().ui.role === "board") {
+  if (callback.student.role === "board") {
     changeRoute('board');
   } else {
     changeRoute('student');

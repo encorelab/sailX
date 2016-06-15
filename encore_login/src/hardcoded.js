@@ -22,14 +22,14 @@ const COs = [
 ]
 
 export default [
-  {name: 'Cole', role: 'student', CO: COs[0]},
-  {name: 'Peter', role: 'student', CO: COs[0]},
-  {name: 'Paul', role: 'student', CO: COs[0]},
-  {name: 'Marianne', role: 'student', CO: COs[0]},
-  {name: 'Board', role: 'board', CO: COs[0]},
-  {name: 'Stian', role: 'student', CO: COs[1]},
-  {name: 'Andreas', role: 'student', CO: COs[1]},
-  {name: 'Janne', role: 'student', CO: COs[1]},
-  {name: 'Andrea', role: 'student', CO: COs[2]},
-  {name: 'Agnete', role: 'student', CO: COs[2]}
+  {student: {name: 'Cole', role: 'student', class: 1}, CO: COs[0]},
+  {student: {name: 'Peter', role: 'student', class: 1}, CO: COs[0]},
+  {student: {name: 'Paul', role: 'student', class: 1}, CO: COs[0]},
+  {student: {name: 'Marianne', role: 'student', class: 1}, CO: COs[0]},
+  {student: {name: 'Board', role: 'board', class: 1}, CO: COs[0]},
+  {student: {name: 'Stian', role: 'student', class: 2}, CO: COs[1]},
+  {student: {name: 'Andreas', role: 'student', class: 2}, CO: COs[1]},
+  {student: {name: 'Janne', role: 'student', class: 2}, CO: COs[1]},
+  {student: {name: 'Andrea', role: 'student', class: 2}, CO: COs[2]},
+  {student: {name: 'Agnete', role: 'student', class: 2}, CO: COs[2]}
 ]
