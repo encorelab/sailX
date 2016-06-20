@@ -1,12 +1,13 @@
 import React from 'react'
 import Hardcoded from './hardcoded'
 
-const Student = ( {student, onClick} ) => <li><a href="#" onClick={onClick}>{student.name}</a> <i>{student.CO.name}</i></li>
+const Student = ( {selection, onClick} ) => <li><a href="#" onClick={onClick}>{selection.student.name}</a> <i>{selection.CO.name}</i> Class: {selection.student.class} <b>{selection.student.role}</b></li>
 
 const StudentList = ( {list, selectFn} ) => { return(
-  <div>{list.map(e => {
+  <div>
+  {list.map(e => {
     const clickFn = () => selectFn(e) 
-    return(<Student student={e} onClick={ clickFn }/>)
+    return(<Student selection={e} onClick={ clickFn }/>)
   })}
   </div>
 )}
