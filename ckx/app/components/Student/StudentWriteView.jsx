@@ -5,6 +5,7 @@ import FRC from 'formsy-react-components'
 
 const NewObservationFields = (e, observation) => {
   let { id, ...rest } = e
+
   switch (e.kind) {
     case 'INPUT':
       return (
@@ -74,8 +75,10 @@ const attachMedia = (context, dispatch) => {
 const checkWriteMode = (context) => {
   if (context.props.ui.editMode) {
     return context.props.ui.observationToEdit;
+  } else if (context.props.studentState.length > 0) {
+    return context.props.studentState[0];
   } else {
-    return context.props.studentState.observation;
+    return {};
   }
 };
 

@@ -23,13 +23,13 @@ const store = configStore({
     infoOpen: false,
     route: 'login'
   },
-  studentState: {
-    observation: {
-      // id: '123456789',
-      // title: 'This is a draft title',
-      // content: 'This is some draft note content'
-    }
-  }
+  // studentState: {
+  //   observation: {
+  //     // id: '123456789',
+  //     // title: 'This is a draft title',
+  //     // content: 'This is some draft note content'
+  //   }
+  // }
 })
 
 window.store = store
