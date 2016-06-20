@@ -75,8 +75,8 @@ const attachMedia = (context, dispatch) => {
 const checkWriteMode = (context) => {
   if (context.props.ui.editMode) {
     return context.props.ui.observationToEdit;
-  } else if (context.props.studentState.length > 0) {
-    return context.props.studentState[0];
+  } else if (context.props.drafts && context.props.drafts.length > 0) {
+    return context.props.drafts[0];
   } else {
     return {};
   }
@@ -92,6 +92,7 @@ class StudentWriteView extends React.Component {
   invalid = () => this.setState({valid: false});
   fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
   onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id);
+  onChange = (doc) => this.props.updateDraft(doc, this.props.drafts[0].id);
 
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {
@@ -107,6 +108,7 @@ class StudentWriteView extends React.Component {
           onSubmit = {this.onSubmitWithId}
           onValid = {this.valid}
           onInvalid = {this.invalid}
+          onChange = {this.onChange}
         >
           <fieldset>
             {this.fields()}

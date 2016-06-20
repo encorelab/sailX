@@ -5,7 +5,7 @@ import StudentWriteView from './StudentWriteView'
 import LockedView from './LockedView'
 import { currentDate, getKey } from '../../lib/utils'
 
-const StudentViewEl = ({ ui, classState, observations, studentState, dispatch }) => {
+const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
   // need to standardize where the functionality resides (eg submit cancel is here, but 'add obs' is one down)
   const cancelNewObservation = () => {
     dispatch({type: 'UNSETEDIT_UI'});
@@ -22,6 +22,10 @@ const StudentViewEl = ({ ui, classState, observations, studentState, dispatch })
     }
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
+  const updateDraft = (obs, id) => {
+    const fullObs = {...obs, id: id}
+    dispatch({type: 'EDIT_DRAFT', doc: fullObs});
+  };
 
   let boardEl;
   if (getKey('tablets_locked', classState)) {
@@ -31,10 +35,11 @@ const StudentViewEl = ({ ui, classState, observations, studentState, dispatch })
       boardEl = <StudentWriteView
         ui = {ui}
         observations = {observations}
-        studentState = {studentState}
+        drafts = {drafts}
         dispatch = {dispatch}
         onSubmit = {submitObservation}
         onCancel = {cancelNewObservation}
+        updateDraft = {updateDraft}
       />
     } else {
       boardEl = <StudentReadView
@@ -54,6 +59,6 @@ const StudentViewEl = ({ ui, classState, observations, studentState, dispatch })
 
 
 // connect is a curried component that maps the state from redux (first call) to a presentational component (second call, in this case List)
-const StudentView = connect(e => ({ui: e.ui, classState: e.classState, observations: e.observations, studentState: e.studentState}))(StudentViewEl)
+const StudentView = connect(e => ({ui: e.ui, classState: e.classState, observations: e.observations, drafts: e.drafts}))(StudentViewEl)
 // thinking about moving the orderBy to here? Need to understand/unpack this connect thing more...
 export default StudentView
