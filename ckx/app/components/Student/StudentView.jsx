@@ -11,20 +11,22 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
-  const submitObservation = (obs, id) => {
+  const submitObservation = (obs, id, owner) => {
     if (id) {
       // we are editing an existing observation
-      const fullObs = {...obs, id: id}
-      dispatch({type: 'EDIT_OBSERVATION', doc: fullObs});
+      const obsWithId = {...obs, id: id}
+      dispatch({type: 'EDIT_OBSERVATION', doc: obsWithId});
       dispatch({type: 'UNSETEDIT_UI'});
     } else {
-      dispatch({type: 'ADD_OBSERVATION', doc: obs});
+      debugger
+      const obsWithOwner = {...obs, owner: owner}
+      dispatch({type: 'ADD_OBSERVATION', doc: obsWithOwner});
     }
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const updateDraft = (obs, id) => {
-    const fullObs = {...obs, id: id}
-    dispatch({type: 'EDIT_DRAFT', doc: fullObs});
+    const obsWithId = {...obs, id: id}
+    dispatch({type: 'EDIT_DRAFT', doc: obsWithId});
   };
 
   let boardEl;

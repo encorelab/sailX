@@ -42,12 +42,12 @@ export default (kind, restfn, initstate = [], deffields) => {
 
           // fix window store nonsense here
           case 'ADD':
+            debugger
             return [
               ...state,
               {
                 id: uuid(),
                 created_at: currentDate(),
-                owner: window.store.getState().ui.user,
                 media: [],
                 ...deffields,
                 ...action.doc
