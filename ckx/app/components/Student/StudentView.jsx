@@ -6,7 +6,6 @@ import LockedView from './LockedView'
 import { currentDate, getKey } from '../../lib/utils'
 
 const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
-  // need to standardize where the functionality resides (eg submit cancel is here, but 'add obs' is one down)
   const cancelNewObservation = () => {
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
@@ -18,7 +17,6 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
       dispatch({type: 'EDIT_OBSERVATION', doc: obsWithId});
       dispatch({type: 'UNSETEDIT_UI'});
     } else {
-      debugger
       const obsWithOwner = {...obs, owner: owner}
       dispatch({type: 'ADD_OBSERVATION', doc: obsWithOwner});
     }

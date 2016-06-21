@@ -42,7 +42,6 @@ export default (kind, restfn, initstate = [], deffields) => {
 
           // fix window store nonsense here
           case 'ADD':
-            debugger
             return [
               ...state,
               {
