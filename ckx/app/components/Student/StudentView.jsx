@@ -6,11 +6,14 @@ import LockedView from './LockedView'
 import { currentDate, getKey } from '../../lib/utils'
 
 const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
-  const cancelNewObservation = () => {
+  const cancelObservation = (obs, draftId) => {
+    if (draftId) {
+      dispatch({type: 'DELETE_DRAFT', id: draftId});
+    }
     dispatch({type: 'UNSETEDIT_UI'});
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
-  const submitObservation = (obs, id, owner) => {
+  const submitObservation = (obs, id, owner, draftId) => {
     if (id) {
       // we are editing an existing observation
       const obsWithId = {...obs, id: id}
@@ -19,6 +22,9 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
     } else {
       const obsWithOwner = {...obs, owner: owner}
       dispatch({type: 'ADD_OBSERVATION', doc: obsWithOwner});
+    }
+    if (draftId) {
+      dispatch({type: 'DELETE_DRAFT', id: draftId});
     }
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
@@ -38,7 +44,7 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
         drafts = {drafts}
         dispatch = {dispatch}
         onSubmit = {submitObservation}
-        onCancel = {cancelNewObservation}
+        onCancel = {cancelObservation}
         updateDraft = {updateDraft}
       />
     } else {

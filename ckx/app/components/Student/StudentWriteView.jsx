@@ -91,8 +91,13 @@ class StudentWriteView extends React.Component {
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
   fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
-  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user);
-  onChange = (doc) => this.props.updateDraft(doc, this.props.drafts[0].id);
+  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.drafts.length > 0 && this.props.drafts[0].id);
+  onChange = (doc) => {
+    if (this.props.drafts.length > 0 && this.props.drafts[0].id) {
+      this.props.updateDraft(doc, this.props.drafts[0].id);
+    }
+  }
+  onCancelWithId = (doc) => this.props.onCancel(doc, this.props.drafts.length > 0 && this.props.drafts[0].id);
 
   //let uploadSpinner = '<div>Nope</div>';
   // if (this.props.isUploading == true) {
@@ -130,7 +135,7 @@ class StudentWriteView extends React.Component {
         {/* {uploadSpinner} */}
         <br />
         {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
-        <button onClick = {this.props.onCancel}>Cancel</button>
+        <button onClick = {this.onCancelWithId}>Cancel</button>
       </div>
     )
   }
