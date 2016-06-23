@@ -93,7 +93,8 @@ class StudentWriteView extends React.Component {
   fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
   onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.drafts.length > 0 && this.props.drafts[0].id);
   onChange = (doc) => {
-    if (this.props.drafts.length > 0 && this.props.drafts[0].id) {
+    // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
+    if (event.type !== 'react-change' && this.props.drafts.length > 0 && this.props.drafts[0].id) {
       this.props.updateDraft(doc, this.props.drafts[0].id);
     }
   }
@@ -127,7 +128,6 @@ class StudentWriteView extends React.Component {
           />
 
         </Formsy.Form>
-
 
         <button onClick = {() => attachMedia(StudentWriteView.context, this.props.dispatch)}>Attach Media</button>
         <br />
