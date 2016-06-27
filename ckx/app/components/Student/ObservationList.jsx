@@ -7,7 +7,11 @@ import { ObservationContainer, ObservationDetails } from '../ObservationElements
 
 export default ( { observations, ui, dispatch } ) => {
   const observationList = observations.map(e => {
-    const deleteFn = () => { dispatch({type: 'DELETE_OBSERVATION', id: e.id}) }
+    const deleteFn = () => {
+      if (confirm('Are you sure you want to delete this observation?')) {
+        dispatch({type: 'DELETE_OBSERVATION', id: e.id})
+      }
+    }
     const openEditFn = () => {
       dispatch({type: 'SETEDIT_UI', doc: e});
       dispatch({type: 'SWITCHVIEW_UI', view: 'write'});
