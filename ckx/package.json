@@ -28,22 +28,23 @@
   "author": "Stian Håklev, Colin McCann, EncoreLab",
   "license": "MIT",
   "dependencies": {
-    "rethinkdb": "2.2.3",
-    "horizon-redux-sync": "^1.0.0",
+    "encore_login": "0.0.1",
     "formsy-react": "^0.17.0",
     "formsy-react-components": "^0.6.6",
+    "horizon": "^1.0.3",
+    "horizon-redux-sync": "^1.0.0",
     "jsxstyle": "0.0.18",
     "material-ui": "^0.14.4",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-draggable": "houshuang/react-draggable",
-    "react-tap-event-plugin": "^0.2.2",
+    "react-dropzone": "^3.5.1",
     "react-icons": "^1.0.3",
     "react-json-inspector": "^6.1.2",
     "react-redux": "^4.2.1",
+    "react-tap-event-plugin": "^0.2.2",
     "redux": "^3.2.1",
-    "horizon": "^1.0.3",
-    "encore_login": "0.0.1"
+    "rethinkdb": "2.2.3"
   },
   "devDependencies": {
     "babel-core": "^6.3.19",

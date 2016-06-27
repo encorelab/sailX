@@ -14,15 +14,15 @@ export const horizon = Horizon({ host: window.location.hostname + ':8181', insec
 localStorage.removeItem('horizon-jwt');
 
 const store = configStore({
-  observations: observationlist,
-  ui: {
-    tabletsLocked: false,
-    activeView: 'read',
-    editMode: false,
-    observationToEdit: {},
-    infoOpen: false,
-    route: 'login'
-  },
+  //observations: observationlist,
+  // ui: {
+  //   tabletsLocked: false,
+  //   activeView: 'read',
+  //   editMode: false,
+  //   observationToEdit: {},
+  //   infoOpen: false,
+  //   route: 'login'
+  // },
   // studentState: {
   //   observation: {
   //     // id: '123456789',

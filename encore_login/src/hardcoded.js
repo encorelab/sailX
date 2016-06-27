@@ -2,13 +2,13 @@ const defPrompt = `{
   "prompt": [
     {
       "id": "title",
-      "label": "Title",
+      "placeholder": "Headline",
       "kind": "INPUT",
       "required": true
     },
     {
       "id": "content",
-      "label": "Idea",
+      "placeholder": "Give more details",
       "kind": "TEXTAREA",
       "required": true
     }

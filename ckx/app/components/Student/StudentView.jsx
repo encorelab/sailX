@@ -14,6 +14,7 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const submitObservation = (obs, id, owner, draftId) => {
+    debugger
     if (id) {
       // we are editing an existing observation
       const obsWithId = {...obs, id: id}
@@ -29,6 +30,7 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const updateDraft = (obs, id) => {
+
     const obsWithId = {...obs, id: id}
     dispatch({type: 'EDIT_DRAFT', doc: obsWithId});
   };
