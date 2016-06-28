@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { render } from 'react-dom'
 import JsonTable from 'react-json-table'
-import { filter } from 'lodash'
+import { filter, mapValues } from 'lodash'
 import ResizableAndMovable from 'react-resizable-and-movable'
 require('./index.css')
 
@@ -13,7 +13,10 @@ const subscribe = (db, onchange) => {
 }
 
 const procHorizon = (e) => {
-  return e.map(row => ({...row, ...{id: row.id.slice(0,4) + "..." } }))
+  return e.map(row => {
+    const nrow = mapValues(row, val => val instanceof Object ? JSON.stringify(val) : val)
+    return {...nrow, ...{id: row.id.slice(0,4) + "..." } }
+  })
 }
 
 class DbBox extends React.Component {
@@ -150,7 +153,7 @@ class BoxList extends React.Component {
     <div>
       {this.getBoxes()}
       <button 
-        style={{position: 'absolute', bottom: '33px', fontSize: '24px'}}
+        style={{position: 'absolute', bottom: '33px', fontSize: '24px', zIndex: 999}}
         onClick={() => this.setState({boxes: [...this.state.boxes, [(new Date).getTime(), undefined]]})}>+</button>
     </div>
   )}
