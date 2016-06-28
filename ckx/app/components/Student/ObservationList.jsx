@@ -8,6 +8,7 @@ import { ObservationContainer, ObservationDetails } from '../ObservationElements
 export default ( { observations, ui, dispatch } ) => {
   const observationList = observations.map(e => {
     const deleteFn = () => {
+      // we could try this if we wanted to style the ugly ass confirm dialog https://github.com/gregthebusker/react-confirm-bootstrap
       if (confirm('Are you sure you want to delete this observation?')) {
         dispatch({type: 'DELETE_OBSERVATION', id: e.id})
       }

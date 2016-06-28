@@ -9,15 +9,15 @@ import Draggable from 'react-draggable'
 import { shorten } from '../lib/utils';
 
 
-const format = (observation) => {
-  let c = []
-  for (var key in observation) {
-    if (observation.hasOwnProperty(key)) {
-      c.push([key, observation[key]])
-    }
-  }
-  return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
-}
+// const format = (observation) => {
+//   let c = []
+//   for (var key in observation) {
+//     if (observation.hasOwnProperty(key)) {
+//       c.push([key, observation[key]])
+//     }
+//   }
+//   return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
+// }
 
 
 export const ObservationContainer = ( { ui, openInfoFn, openEditFn, deleteFn, ...observation } ) => {
@@ -120,7 +120,6 @@ export const MovableObservationContainer = ( { x, y, setXY, openInfoFn, ...obser
           <div>
             {shorten(observation.title, 20)}
             <span style = {{float:'right'}} >
-              {/* <Delete onClick = {clickFn} /> */}
               <AspectRatio onClick = {openInfoFn} />
             </span>
           </div>
@@ -161,7 +160,13 @@ export const ObservationDetails = ( { key, open, closeInfoFn, observation } ) =>
       open = {open}
       onRequestClose = {closeInfoFn}
     >
-      {format(observation)}
+      <div>
+        {observation.content}
+      </div>
+      <br />
+      <div>
+        Media goes here eventually
+      </div>
     </Dialog>
   )
 }
