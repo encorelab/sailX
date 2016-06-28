@@ -17,8 +17,13 @@ const subscribe = (db, onchange) => {
 
 const procHorizon = (e) => {
   return e.map(row => {
-    const nrow = mapValues(row, val => val instanceof Object ? JSON.stringify(val) : val)
-    return {...nrow, ...{id: row.id.slice(0,4) + "..." } }
+    return mapValues(row, val => val instanceof Object ? JSON.stringify(val) : val)
+  })
+}
+
+const procDisplay = (e) => {
+  return e.map(row => {
+    return {...row, ...{id: row.id.slice(0,4) + "..." } }
   })
 }
 
@@ -61,6 +66,7 @@ class DbBox extends React.Component {
       thisconn = this.state.input
     }
 
+    this.setState({conn: thisconn})
     const sub = horizon(thisconn).watch().
       subscribe(this.dbSuccess, this.dbError)
 
@@ -83,6 +89,13 @@ class DbBox extends React.Component {
 
   componentDidMount = () => {
     ReactDOM.findDOMNode(this.refs.input).focus()
+  }
+
+  deleteAll = () => {
+    if(this.state.conn && confirm("Really delete all rows?")) {
+      horizon(this.state.conn).removeAll(this.state.obj.map(e => e.id))
+      this.setState({msg: "Deleted all"})
+    }
   }
 
   render = () => {return (
@@ -108,6 +121,10 @@ class DbBox extends React.Component {
         onClick={this.connect}
       >Connect</button>
     <span style={{color: 'red'}}>{this.state.msg}</span>
+    <button 
+      type='button'
+      onClick={this.deleteAll}
+      >⌫</button>
     <button
       style={{position: 'absolute', right: '5px'}} 
       onClick={this.props.closeFn}>X</button>
@@ -121,7 +138,7 @@ const ObjTable = ({ obj }) => { return(
   <div>
     <JsonTable
       className = 'table'
-      rows = {obj} />
+      rows = {procDisplay(obj)} />
   </div>
 )}
 
