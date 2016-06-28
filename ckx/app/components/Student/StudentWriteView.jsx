@@ -102,7 +102,6 @@ class StudentWriteView extends React.Component {
   onCancelWithId = (doc) => this.props.onCancel(doc, this.props.drafts.length > 0 && this.props.drafts[0].id);
   // WARNING: this kind of multiline function has bitten us in the past
   onChange = (doc) => {
-    debugger
     // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
     if (event.type !== 'react-change') {
       //if (this.props.drafts.length > 0 && this.props.drafts[0].id) {
