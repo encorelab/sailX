@@ -3,3 +3,8 @@
 .content {
   padding: $unit;
 }
+
+/* to hide the 'required' asterisk that Formsy adds. There is a cleaner way to do this with later versions of Formsy (https://github.com/twisty/formsy-react-components/releases/tag/v0.7.0) */
+.control-label * {
+  display: none;
+}
