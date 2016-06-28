@@ -1,0 +1,51 @@
+{
+  "name": "statemon",
+  "version": "0.1.0",
+  "description": "Easy monitoring of RethinkDB state",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "hz": "./node_modules/.bin/hz serve",
+    "runall": "node server.js & npm run hz"
+  },
+  "author": "Stian Håklev, Colin McCann, EncoreLab",
+  "license": "MIT",
+  "dependencies": {
+    "horizon": "^1.0.3",
+    "lodash": "^4.13.1",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-json-table": "0.0.4",
+    "react-resizable-and-movable": "^2.0.0",
+    "rethinkdb": "2.2.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.19",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.2",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-plugin-transform-runtime": "^6.3.19",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "eslint": "^0.21.2",
+    "eslint-plugin-react": "^2.3.0",
+    "expose-loader": "^0.7.1",
+    "express": "^4.13.4",
+    "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.8.1",
+    "node-sass": "^3.4.2",
+    "react-transform-catch-errors": "^1.0.2",
+    "react-transform-hmr": "^1.0.2",
+    "redbox-react": "^1.2.2",
+    "sass-loader": "^3.1.2",
+    "style-loader": "0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.13",
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-dev-server": "^1.8.0",
+    "webpack-hot-middleware": "^2.6.4",
+    "yargs": "^3.32.0"
+  }
+}
