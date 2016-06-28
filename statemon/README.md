@@ -7,4 +7,5 @@ If you want to open multiple collections, simply type in all the collection name
 `npm start` assumes that the horizon server is already running, use `npm run startall` to start the server, and horizon together.
 
 ## Todo
-Refactor into multiple files :)
+- Refactor into multiple files :)
+- Horizon API has no feature to get list of all collections, however, could run hz schema when starting from NPM script, and generate a file that gets included and parsed?
