@@ -6,6 +6,9 @@ import { filter, mapValues } from 'lodash'
 import ResizableAndMovable from 'react-resizable-and-movable'
 require('./index.css')
 
+export const uuid = () =>
+  ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,a=>(a^Math.random()*16>>a/4).toString(16))
+
 const horizon = Horizon({ host: window.location.hostname + ':8181', insecure: true, authType: 'unauthenticated' })
 
 const subscribe = (db, onchange) => {
@@ -146,7 +149,11 @@ class BoxList extends React.Component {
   }
 
   addCollection = (coll) => {
-    this.setState({boxes: [...this.state.boxes, [(new Date).getTime(), coll]]})
+    this.setState(
+      (prevstate) => {
+        return {boxes: [...prevstate.boxes, [uuid(), coll]]}
+      }
+    )
   }
 
   render() { return(
@@ -154,7 +161,7 @@ class BoxList extends React.Component {
       {this.getBoxes()}
       <button 
         style={{position: 'absolute', bottom: '33px', fontSize: '24px', zIndex: 999}}
-        onClick={() => this.setState({boxes: [...this.state.boxes, [(new Date).getTime(), undefined]]})}>+</button>
+        onClick={() => this.setState({boxes: [...this.state.boxes, [uuid(), undefined]]})}>+</button>
     </div>
   )}
 }
