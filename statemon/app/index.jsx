@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { render } from 'react-dom'
 import JsonTable from 'react-json-table'
 import { filter } from 'lodash'
@@ -16,13 +17,20 @@ const procHorizon = (e) => {
 }
 
 class DbBox extends React.Component {
- constructor() {
+ constructor(props) {
     super()
-    this.state = {obj: [], input: '', subscription: undefined, msg: ''}
-  }
+    this.state = {
+      obj: [], 
+      input: props.collection ? props.collection : '', 
+      subscription: undefined, msg: ''
+    }
+ }
 
   componentWillMount() {
     this.setState({x: Math.random() * 300, y: Math.random() * 300})
+    if(this.props.collection) {
+      this.connect()
+    }
   }
   
   dbSuccess = (e) => { 
@@ -37,7 +45,17 @@ class DbBox extends React.Component {
   // user has clicked on connect, cancel existing watch and set up new
   connect = () => {
     if(this.state.subscription) { this.state.subscription.unsubscribe() }
-    const sub = horizon(this.state.input).watch().
+    let thisconn
+    if(this.state.input.indexOf(",")) { 
+      const splits = this.state.input.split(',')
+      thisconn = splits[0].trim()
+      this.setState({input: thisconn})
+      splits.splice(1).forEach((e) => this.props.addCollectionFn(e.trim()))
+    } else {
+      thisconn = this.state.input
+    }
+
+    const sub = horizon(thisconn).watch().
       subscribe(this.dbSuccess, this.dbError)
 
     this.setState({subscription: sub})
@@ -55,11 +73,10 @@ class DbBox extends React.Component {
     if(target.charCode==13){
       this.connect()
     }
-
   }
 
   componentDidMount = () => {
-    React.findDOMNode(this.refs.input).focus()
+    ReactDOM.findDOMNode(this.refs.input).focus()
   }
 
   render = () => {return (
@@ -105,7 +122,7 @@ const ObjTable = ({ obj }) => { return(
 class BoxList extends React.Component {
  constructor() {
     super()
-    this.state = {boxes: ['aa']}
+    this.state = {boxes: [['aa', undefined]]}
   }
 
   close = (i) => {
@@ -116,11 +133,17 @@ class BoxList extends React.Component {
     let boxholder = []
     for (let i of this.state.boxes) {
       boxholder.push(<DbBox 
-        key={i} 
+        key={i[0]} 
+        collection={i[1]}
         closeFn={() => this.close(i)}
+        addCollectionFn = {this.addCollection}
       />)
     }
     return boxholder
+  }
+
+  addCollection = (coll) => {
+    this.setState({boxes: [...this.state.boxes, [(new Date).getTime(), coll]]})
   }
 
   render() { return(
@@ -128,7 +151,7 @@ class BoxList extends React.Component {
       {this.getBoxes()}
       <button 
         style={{position: 'absolute', bottom: '33px', fontSize: '24px'}}
-        onClick={() => this.setState({boxes: [...this.state.boxes, (new Date).getTime()]})}>+</button>
+        onClick={() => this.setState({boxes: [...this.state.boxes, [(new Date).getTime(), undefined]]})}>+</button>
     </div>
   )}
 }
