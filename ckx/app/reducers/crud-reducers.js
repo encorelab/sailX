@@ -61,7 +61,6 @@ export default (kind, restfn, initstate = [], deffields) => {
               )
 
           case 'DELETE':
-          debugger
             return state.filter(doc =>
               doc.id !== action.id
             )
