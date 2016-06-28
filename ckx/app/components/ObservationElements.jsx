@@ -20,9 +20,9 @@ import { shorten } from '../lib/utils';
 // }
 
 
-export const ObservationContainer = ( { ui, openInfoFn, openEditFn, deleteFn, ...observation } ) => {
+export const ObservationContainer = ( { ui, openInfoFn, openEditFn, deleteFn, ...observation, drafts } ) => {
   let deleteBtn, editBtn, detailsBtn;
-  if (observation.owner === ui.user) {
+  if (observation.owner === ui.user && drafts.length == 0) {
     deleteBtn = <Delete onClick = {deleteFn} />;
     editBtn = <Create
       onClick = {openEditFn}
