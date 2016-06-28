@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom'
 import Formsy from 'formsy-react'
 import FRC from 'formsy-react-components'
-import MediaContainer from './MediaContainer'
 
 const NewObservationFields = (e, observation) => {
   let { id, ...rest } = e
@@ -83,7 +82,6 @@ const checkWriteMode = (context) => {
   }
 };
 
-// this doesn't currently get hit unless we're working with a draft. The whole draft/edit/formsy thing is starting to smell bad
 const populateMediaContainer = (context) => {
   // this is getting straight insane - we need to find a cleaner way to do this
   if (context.props.drafts[0] && context.props.drafts[0].file && context.props.drafts[0].file[0]) {
@@ -104,9 +102,12 @@ class StudentWriteView extends React.Component {
   onCancelWithId = (doc) => this.props.onCancel(doc, this.props.drafts.length > 0 && this.props.drafts[0].id);
   // WARNING: this kind of multiline function has bitten us in the past
   onChange = (doc) => {
+    debugger
     // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
-    if (event.type !== 'react-change' && this.props.drafts.length > 0 && this.props.drafts[0].id) {
-      this.props.updateDraft(doc, this.props.drafts[0].id);
+    if (event.type !== 'react-change') {
+      //if (this.props.drafts.length > 0 && this.props.drafts[0].id) {
+        this.props.updateDraft(doc, this.props.drafts > 0 && this.props.drafts[0].id);
+      //}
     }
   }
 
@@ -122,6 +123,9 @@ class StudentWriteView extends React.Component {
           <fieldset>
             {this.fields()}
             <FRC.File ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple/>
+            <div>
+              {populateMediaContainer(this)}
+            </div>
           </fieldset>
           <input
             className = "btn btn-primary"
@@ -130,17 +134,7 @@ class StudentWriteView extends React.Component {
             disabled = {!this.state.valid}
             {...this.props.submitButton}
           />
-
         </Formsy.Form>
-
-        <div>
-          {populateMediaContainer(this)}
-        </div>
-
-        <MediaContainer />
-        <br />
-        <br />
-        {/* Formsy doesn't seem to have a native cancel... lame. Or maybe I'm out of touch with modern UX practices? :) */}
         <button onClick = {this.onCancelWithId}>Cancel</button>
       </div>
     )
