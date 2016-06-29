@@ -31,7 +31,7 @@ const NewObservationFields = (e, observation) => {
   }
 }
 
-
+// START HERE - move the media stuff to it's own element, upload on add (include multiple) with spinner, then show as thumbnail, then pass the returned url to update draft etc
 // const attachMedia = (context, dispatch) => {
 //   const MAX_FILE_SIZE = 20971520;
 //   var formData = new FormData();
@@ -73,19 +73,25 @@ const NewObservationFields = (e, observation) => {
 // };
 
 const checkWriteMode = (context) => {
+  // start here - context.props.studentState -> context.props.studentState[0].text EVERYWHERE - time to create some utils for this
+  // more relevantly, there are some serious timing issues
   if (context.props.ui.editMode) {
     return context.props.ui.observationToEdit;
-  } else if (context.props.drafts && context.props.drafts.length > 0) {
-    return context.props.drafts[0];
+  } else if (context.props.studentState && context.props.studentState.length > 0) {
+    return context.props.studentState[0].text;
   } else {
     return {};
   }
 };
 
+// only fires for studentState right now - TODO
+// move me into my own element at some point
 const populateMediaContainer = (context) => {
+
   // this is getting straight insane - we need to find a cleaner way to do this
-  if (context.props.drafts[0] && context.props.drafts[0].file && context.props.drafts[0].file[0]) {
-    return context.props.drafts[0].file[0].name
+  if (context.props.studentState[0] && context.props.studentState[0].file && context.props.studentState[0].file[0]) {
+    debugger
+    return context.props.studentState[0].file[0].name
   }
 };
 
@@ -98,14 +104,14 @@ class StudentWriteView extends React.Component {
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
   fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
-  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.drafts.length > 0 && this.props.drafts[0].id);
-  onCancelWithId = (doc) => this.props.onCancel(doc, this.props.drafts.length > 0 && this.props.drafts[0].id);
+  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.studentState.length > 0 && this.props.studentState[0].id);
+  onCancelWithId = (doc) => this.props.onCancel(doc, this.props.studentState.length > 0 && this.props.studentState[0].id);
   // WARNING: this kind of multiline function has bitten us in the past
   onChange = (doc) => {
     // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
     if (event.type !== 'react-change') {
-      //if (this.props.drafts.length > 0 && this.props.drafts[0].id) {
-        this.props.updateDraft(doc, this.props.drafts > 0 && this.props.drafts[0].id);
+      //if (this.props.studentState.length > 0 && this.props.studentState[0].id) {
+        this.props.updateDraft(doc, this.props.studentState.length > 0 && this.props.studentState[0].id);
       //}
     }
   }

@@ -5,7 +5,7 @@ import StudentWriteView from './StudentWriteView'
 import LockedView from './LockedView'
 import { currentDate, getKey } from '../../lib/utils'
 
-const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
+const StudentViewEl = ({ ui, classState, observations, studentState, dispatch }) => {
   const cancelObservation = (obs, draftId) => {
     if (draftId) {
       dispatch({type: 'DELETE_DRAFT', id: draftId});
@@ -31,9 +31,9 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
   const updateDraft = (obs, id) => {
     if (id) {
       const obsWithId = {...obs, id: id};
-      dispatch({type: 'EDIT_DRAFT', doc: obsWithId});
+      dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obsWithId});
     } else {
-      dispatch({type: 'EDIT_DRAFT', doc: {}});                // this should actually be add_draft - update after sync with Stian, since it will require a rewrite anyways
+      dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obs});
     }
   };
 
@@ -45,7 +45,7 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
       boardEl = <StudentWriteView
         ui = {ui}
         observations = {observations}
-        drafts = {drafts}
+        studentState = {studentState}
         dispatch = {dispatch}
         onSubmit = {submitObservation}
         onCancel = {cancelObservation}
@@ -55,7 +55,7 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
       boardEl = <StudentReadView
         ui = {ui}
         observations = {observations}
-        drafts = {drafts}
+        studentState = {studentState}
         dispatch = {dispatch}
       />
     }
@@ -70,6 +70,6 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
 
 
 // connect is a curried component that maps the state from redux (first call) to a presentational component (second call, in this case List)
-const StudentView = connect(e => ({ui: e.ui, classState: e.classState, observations: e.observations, drafts: e.drafts}))(StudentViewEl)
+const StudentView = connect(e => ({ui: e.ui, classState: e.classState, observations: e.observations, studentState: e.studentState}))(StudentViewEl)
 // thinking about moving the orderBy to here? Need to understand/unpack this connect thing more...
 export default StudentView

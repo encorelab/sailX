@@ -4,7 +4,7 @@ import ObservationList from './ObservationList'
 import AddObservation from './AddObservation'
 import _ from 'lodash'
 
-export default ({ ui, observations, drafts, dispatch }) => {
+export default ({ ui, observations, studentState, dispatch }) => {
   return (
     <div>
       <h1>{ui.board}</h1>
@@ -12,7 +12,7 @@ export default ({ ui, observations, drafts, dispatch }) => {
       <ObservationList
         ui = {ui}
         observations = {_.orderBy(observations, ['created_at'], ['desc'])}
-        drafts = {drafts}
+        studentState = {studentState}
         dispatch = {dispatch}
       />
       <AddObservation

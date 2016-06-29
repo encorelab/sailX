@@ -5,7 +5,7 @@ import Delete from 'react-icons/lib/md/delete';
 import { shorten } from '../../lib/utils';
 import { ObservationContainer, ObservationDetails } from '../ObservationElements';
 
-export default ( { ui, observations, drafts, dispatch } ) => {
+export default ( { ui, observations, studentState, dispatch } ) => {
   const observationList = observations.map(e => {
     const deleteFn = () => {
       // we could try this if we wanted to style the ugly ass confirm dialog https://github.com/gregthebusker/react-confirm-bootstrap
@@ -30,7 +30,7 @@ export default ( { ui, observations, drafts, dispatch } ) => {
               openInfoFn = {openInfoFn}
               openEditFn = {openEditFn}
               deleteFn = {deleteFn}
-              drafts = {drafts}
+              studentState = {studentState}
               {...e}
             />
             <ObservationDetails
