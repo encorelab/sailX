@@ -29,8 +29,12 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
     dispatch({type: 'SWITCHVIEW_UI', view: 'read'});
   };
   const updateDraft = (obs, id) => {
-    const obsWithId = {...obs, id: id}
-    dispatch({type: 'EDIT_DRAFT', doc: obsWithId});
+    if (id) {
+      const obsWithId = {...obs, id: id};
+      dispatch({type: 'EDIT_DRAFT', doc: obsWithId});
+    } else {
+      dispatch({type: 'EDIT_DRAFT', doc: {}});                // this should actually be add_draft - update after sync with Stian, since it will require a rewrite anyways
+    }
   };
 
   let boardEl;
@@ -51,6 +55,7 @@ const StudentViewEl = ({ ui, classState, observations, drafts, dispatch }) => {
       boardEl = <StudentReadView
         ui = {ui}
         observations = {observations}
+        drafts = {drafts}
         dispatch = {dispatch}
       />
     }
