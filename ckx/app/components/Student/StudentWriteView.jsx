@@ -1,7 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom'
+import { connect } from 'react-redux';
 import Formsy from 'formsy-react'
 import FRC from 'formsy-react-components'
+import { getKey } from '../../lib/utils'
+
+const getDraft = (props) => getKey('draft', props.studentState)
 
 const NewObservationFields = (e, observation) => {
   let { id, ...rest } = e
@@ -31,119 +35,92 @@ const NewObservationFields = (e, observation) => {
   }
 }
 
-// START HERE - move the media stuff to it's own element, upload on add (include multiple) with spinner, then show as thumbnail, then pass the returned url to update draft etc
-// const attachMedia = (context, dispatch) => {
-//   const MAX_FILE_SIZE = 20971520;
-//   var formData = new FormData();
-//   var file = context.refs.file.files[0];
-//   formData.append( 'file', file );
 
-//   if (file.size < MAX_FILE_SIZE) {
-//     dispatch({type: 'STARTUPLOADMEDIA_UI'});
-//     jQuery.ajax({
-//       url: 'https://pikachu.coati.encorelab.org/',
-//       type: 'POST',
-//       success: success,
-//       error: failure,
-//       data: formData,
-//       cache: false,
-//       contentType: false,
-//       processData: false
-//     });
-//   } else {
-//     jQuery().toastmessage('showErrorToast', "Max file size of 20MB exceeded");
-//   }
-
-//   function failure(err) {
-//     dispatch({type: 'ENDUPLOADMEDIA_UI'});
-//     jQuery().toastmessage('showErrorToast', "Photo could not be uploaded. Please try again");
-//   }
-
-//   function success(data, status, xhr) {
-//     dispatch({type: 'ENDUPLOADMEDIA_UI'});
-//     console.log("UPLOAD SUCCEEDED!" + data);
-//     console.log(xhr.getAllResponseHeaders());
-
-//     // clear out the label value if they for some reason want to upload the same thing...
-//     jQuery('#relationship-photo-file').val('');
-
-//     // update the observation - actually, there is no observation. Maybe this should all be one level lower, as a form field
-//     // dispatch({type: 'ADDMEDIA_OBSERVATION', doc: data.url});
-//   }
-// };
-
-const checkWriteMode = (context) => {
-  // start here - context.props.studentState -> context.props.studentState[0].text EVERYWHERE - time to create some utils for this
-  // more relevantly, there are some serious timing issues
-  if (context.props.ui.editMode) {
-    return context.props.ui.observationToEdit;
-  } else if (context.props.studentState && context.props.studentState.length > 0) {
-    return context.props.studentState[0].text;
-  } else {
-    return {};
-  }
-};
 
 // only fires for studentState right now - TODO
 // move me into my own element at some point
-const populateMediaContainer = (context) => {
-
-  // this is getting straight insane - we need to find a cleaner way to do this
-  if (context.props.studentState[0] && context.props.studentState[0].file && context.props.studentState[0].file[0]) {
-    debugger
-    return context.props.studentState[0].file[0].name
+const populateMediaContainer = (draft) => {
+  if (draft && draft.file && draft.file[0]) {
+    return draft.file[0].name
   }
 };
+      // onSubmit = {this.onSubmitWithId}
+      // onValid = {this.valid}
+      // onInvalid = {this.invalid}
+      // onChange = {this.onChange}
 
-class StudentWriteView extends React.Component {
-  constructor() {
-    super();
-    this.state = {valid: false};
-    StudentWriteView.context = this;
-  }
-  valid = () => this.setState({valid: true});
-  invalid = () => this.setState({valid: false});
-  fields = () => this.props.ui.fields.map( e => NewObservationFields(e, checkWriteMode(StudentWriteView.context)) );
-  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.studentState.length > 0 && this.props.studentState[0].id);
-  onCancelWithId = (doc) => this.props.onCancel(doc, this.props.studentState.length > 0 && this.props.studentState[0].id);
-  // WARNING: this kind of multiline function has bitten us in the past
-  onChange = (doc) => {
-    // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
-    if (event.type !== 'react-change') {
-      //if (this.props.studentState.length > 0 && this.props.studentState[0].id) {
-        this.props.updateDraft(doc, this.props.studentState.length > 0 && this.props.studentState[0].id);
-      //}
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <Formsy.Form
-          onSubmit = {this.onSubmitWithId}
-          onValid = {this.valid}
-          onInvalid = {this.invalid}
-          onChange = {this.onChange}
-        >
-          <fieldset>
-            {this.fields()}
-            <FRC.File ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple/>
-            <div>
-              {populateMediaContainer(this)}
-            </div>
-          </fieldset>
-          <input
-            className = "btn btn-primary"
-            type = "submit"
-            defaultValue = "Submit"
-            disabled = {!this.state.valid}
-            {...this.props.submitButton}
-          />
-        </Formsy.Form>
-        <button onClick = {this.onCancelWithId}>Cancel</button>
-      </div>
-    )
+// return either current note being edited, current draft, or empty object if brand new observation
+const getExistingObs = (draft, ui) => {
+  if (ui.editMode) {
+    return ui.observationToEdit
+  } else if (draft) {
+    return draft.text
+  } else {
+    return {};
   }
 }
 
-export default StudentWriteView
+// merge all fields with existing obs (if exists, either from saved note or draft), and set the right field type
+const getFields = (draft, ui) => {
+  const existingObs = getExistingObs(draft, ui) // check if we're editing an existing note, or if there is a draft
+  return ui.fields.map( e => NewObservationFields(e, existingObs)) 
+}
+
+class StudentWriteViewEl extends React.Component {
+  constructor() {
+    super();
+    this.state = {valid: false};
+  }
+  valid = () => this.setState({valid: true});
+  invalid = () => this.setState({valid: false});
+  fields = () => getFields(this.props.draft, this.props.ui)
+  onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.draft > 0 && draft.id);
+  onCancelWithId = (doc) => this.props.onCancel(doc, draft && draft.id);
+
+  render() { return(
+    <div>
+      <Formsy.Form
+        onSubmit = {this.onSubmitWithId}
+        onValid = {this.valid}
+        onInvalid = {this.invalid}
+        onChange = {this.onChange}
+        >
+        <fieldset>
+          {this.fields()}
+          <FRC.File ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple/>
+          <div>
+            {populateMediaContainer(this.props.draft)}
+          </div>
+        </fieldset>
+        <input
+          className = "btn btn-primary"
+          type = "submit"
+          disabled = {!this.state.valid}
+          defaultValue = "Submit"
+          {...this.props.submitButton}
+        />
+      </Formsy.Form>
+      <button onClick = {this.onCancelWithId}>Cancel</button>
+    </div>
+  )}
+}
+
+//   onSubmitWithId = (doc) => this.props.onSubmit(doc, this.props.ui.observationToEdit && this.props.ui.observationToEdit.id, this.props.ui.user, this.props.studentState.length > 0 && draft.id);
+//   onCancelWithId = (doc) => this.props.onCancel(doc, draft && draft.id);
+//   // WARNING: this kind of multiline function has bitten us in the past
+//   onChange = (doc) => {
+//     // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
+//     if (event.type !== 'react-change') {
+//       //if (this.props.studentState.length > 0 && this.props.studentState[0].id) {
+//         this.props.updateDraft(doc, draft && draft.id)
+//       //}
+//     }
+//   }
+
+//  render() {
+//     return (
+//     )
+//   }
+// }
+
+export default connect(e => ({ui: e.ui, observations: e.observations, draft: getDraft(e)}))(StudentWriteViewEl)

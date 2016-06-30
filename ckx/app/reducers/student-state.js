@@ -7,8 +7,11 @@ export default (state, action) => {
       const draft = {
           type: 'draft',
           id: uuid(),
-          text: action.doc,
-          created_at: currentDate}
+          value: {
+            text: action.doc,
+            created_at: currentDate
+          }
+    }
       return [
         ...state.filter(e => e.type != 'draft'),
         draft
