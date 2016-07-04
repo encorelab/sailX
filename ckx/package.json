@@ -13,7 +13,9 @@
     "lint": "./node_modules/.bin/eslint .",
     "hz": "./node_modules/.bin/hz serve",
     "admin": "open http://localhost:8080",
-    "deploy": "npm run build && docker build -t houshuang/rethink . && docker push houshuang/rethink && docker $(docker-machine config prod) pull houshuang/rethink && docker $(docker-machine config prod) stop $(docker $(docker-machine config prod) ps -a -q) && docker $(docker-machine config prod) run -d -p 80:8181 houshuang/rethink"
+    "dockerbuild": "docker build -t houshuang/rethink . && docker push houshuang/rethink",
+    "dockerrun": "docker $(docker-machine config prod) pull houshuang/rethink && docker $(docker-machine config prod) stop $(docker $(docker-machine config prod) ps -a -q) && docker $(docker-machine config prod) run -d -p 80:8181 houshuang/rethink",
+    "deploy": "npm run build && npm run dockerbuild && npm run dockerrun"
   },
   "repository": {
     "type": "git",
