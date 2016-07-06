@@ -29,13 +29,13 @@ module.exports = {
 
   ], module: {
     loaders: [
-  { test: /\.css$/, loader: "style-loader!css-loader" },
-
+      {
+        test: /\.css$/, loader: "style-loader!css-loader"
+      },
       {
         test: /\.(png|jpg|gif)$/,
         loader: 'url-loader?limit=8192&name=[name]-[hash].[ext]'
       },
-
       {
         test: /\.scss$/,
         loaders: [

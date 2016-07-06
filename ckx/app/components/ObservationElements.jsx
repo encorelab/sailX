@@ -8,26 +8,17 @@ import Create from 'react-icons/lib/md/create'
 import Draggable from 'react-draggable'
 import { shorten } from '../lib/utils';
 
-
-// const format = (observation) => {
-//   let c = []
-//   for (var key in observation) {
-//     if (observation.hasOwnProperty(key)) {
-//       c.push([key, observation[key]])
-//     }
-//   }
-//   return c.map(k => <div><b>{k[0]}</b>:{k[1]}<br /></div>)
-// }
-
-
 export const ObservationContainer = ( { ui, openInfoFn, openEditFn, deleteFn, ...observation, studentState } ) => {
   let deleteBtn, editBtn, detailsBtn;
-  if (observation.owner === ui.user && studentState.length == 0) {
+  if (observation.owner === ui.user) {
     deleteBtn = <Delete onClick = {deleteFn} />;
-    editBtn = <Create
+    if (studentState.length == 0) {
+
+      editBtn = <Create
       onClick = {openEditFn}
       size = '1em'
-    />;
+      />;
+    }
   } else {
     detailsBtn = <AspectRatio onClick = {openInfoFn} />;
   }

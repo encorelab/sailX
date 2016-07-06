@@ -5,7 +5,6 @@ import Delete from 'react-icons/lib/md/delete';
 import { shorten } from '../../lib/utils';
 import { MovableObservationContainer, ObservationDetails } from '../ObservationElements';
 
-
 export default ( { observations, ui, dispatch } ) => {
   const observationList = observations.map(e => {
     const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }

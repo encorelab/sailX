@@ -4,6 +4,7 @@ import StudentReadView from './StudentReadView'
 import StudentWriteView from './StudentWriteView'
 import LockedView from './LockedView'
 import { currentDate, getKey } from '../../lib/utils'
+import { orderBy } from 'lodash'
 
 const StudentViewEl = ({ ui, classState, observations, studentState, dispatch }) => {
   const cancelObservation = (obs, draftId) => {
@@ -31,8 +32,9 @@ const StudentViewEl = ({ ui, classState, observations, studentState, dispatch })
   const updateDraft = (obs, id) => {
     if (id) {
       const obsWithId = {...obs, id: id};
-      dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obsWithId});
+      //dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obsWithId});
     } else {
+      //
       dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obs});
     }
   };
@@ -70,6 +72,6 @@ const StudentViewEl = ({ ui, classState, observations, studentState, dispatch })
 
 
 // connect is a curried component that maps the state from redux (first call) to a presentational component (second call, in this case List)
-const StudentView = connect(e => ({ui: e.ui, classState: e.classState, observations: e.observations, studentState: e.studentState}))(StudentViewEl)
+const StudentView = connect(e => ({ui: e.ui, classState: e.classState, observations: orderBy(e.observations, 'created_at'), studentState: e.studentState}))(StudentViewEl)
 // thinking about moving the orderBy to here? Need to understand/unpack this connect thing more...
 export default StudentView

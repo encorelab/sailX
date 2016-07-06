@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ObservationList from './ObservationList'
 import AddObservation from './AddObservation'
-import _ from 'lodash'
 
 export default ({ ui, observations, studentState, dispatch }) => {
   return (
@@ -11,7 +10,8 @@ export default ({ ui, observations, studentState, dispatch }) => {
       <h1>{ui.user}</h1>
       <ObservationList
         ui = {ui}
-        observations = {_.orderBy(observations, ['created_at'], ['desc'])}
+        //observations = {_.orderBy(observations, ['created_at'], ['desc'])}
+        observations = {observations}
         studentState = {studentState}
         dispatch = {dispatch}
       />
