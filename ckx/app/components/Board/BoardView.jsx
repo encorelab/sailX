@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ObservationCluster from './ObservationCluster'
+import BoardObservationCluster from './BoardObservationCluster'
 import LockTablets from './LockTablets'
 
 const BoardViewEl = ({ ui, observations, dispatch }) => {
   return (
     <div>
       <h1>{ui.board}</h1>
-      <ObservationCluster
+      <BoardObservationCluster
         ui = {ui}
         observations = {observations}
         dispatch = {dispatch}
