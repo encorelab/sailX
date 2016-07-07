@@ -50,7 +50,7 @@ const selectFn = (callback) => {
 
   horizonSync(horizon, store, '/observations', callback.CO.collection, 'OBSERVATIONS')
   horizonSync(horizon, store, '/classState', 'class_state', 'CLASS_STATE', {class: callback.student.class}, {readOnly: true})
-  horizonSync(horizon, store, '/studentState', 'student_state', 'STUDENT_STATE', {group: callback.CO.collection, owner: callback.student.name})
+  //horizonSync(horizon, store, '/studentState', 'student_state', 'STUDENT_STATE', {group: callback.CO.collection, owner: callback.student.name})
 
   store.dispatch({
     type: 'SETBOARD_UI',

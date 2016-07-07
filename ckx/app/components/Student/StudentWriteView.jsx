@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom'
 import Formsy from 'formsy-react'
 import FRC from 'formsy-react-components'
+import StudentMediaContainer from './StudentMediaContainer'
 
 const NewObservationFields = (e, observation) => {
   let { id, ...rest } = e
@@ -78,20 +79,10 @@ const checkWriteMode = (context) => {
   if (context.props.ui.editMode) {
     return context.props.ui.observationToEdit;
   } else if (context.props.studentState && context.props.studentState.length > 0) {
-    return context.props.studentState[0].text;
+    //return context.props.studentState[0].text;
+    return context.props.studentState[0];
   } else {
     return {};
-  }
-};
-
-// only fires for studentState right now - TODO
-// move me into my own element at some point
-const populateMediaContainer = (context) => {
-
-  // this is getting straight insane - we need to find a cleaner way to do this
-  if (context.props.studentState[0] && context.props.studentState[0].file && context.props.studentState[0].file[0]) {
-    debugger
-    return context.props.studentState[0].file[0].name
   }
 };
 
@@ -110,9 +101,9 @@ class StudentWriteView extends React.Component {
   onChange = (doc) => {
     // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
     if (event.type !== 'react-change') {
-      //if (this.props.studentState.length > 0 && this.props.studentState[0].id) {
+      if (this.props.studentState.length > 0 && this.props.studentState[0].id) {
         this.props.updateDraft(doc, this.props.studentState.length > 0 && this.props.studentState[0].id);
-      //}
+      }
     }
   }
 
@@ -129,7 +120,10 @@ class StudentWriteView extends React.Component {
             {this.fields()}
             <FRC.File ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple/>
             <div>
-              {populateMediaContainer(this)}
+              {this.props.studentState[0] && this.props.studentState[0].file ?
+                <StudentMediaContainer files = {this.props.studentState[0].file} /> :
+                <div />
+              }
             </div>
           </fieldset>
           <input
@@ -147,3 +141,10 @@ class StudentWriteView extends React.Component {
 }
 
 export default StudentWriteView
+
+
+// {this.props.studentState[0] && context.props.studentState[0].file ?
+//   <button onClick = {() => dispatch({type: 'UNLOCKTABLETS_UI'}) }>RESUME</button> :
+//   <button onClick = {() => dispatch({type: 'LOCKTABLETS_UI'}) }>PAUSE</button>
+// }
+// {populateMediaContainer(this)}

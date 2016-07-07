@@ -8,7 +8,8 @@ import { identity } from './lib/utils'
 
 export default combineReducers({
   observations: crud('OBSERVATION', observations, [], {x: 0, y: 0}),
-  studentState: crud('STUDENT_STATE', studentState, []),
+  //studentState: crud('STUDENT_STATE', studentState, []),
+  studentState: crud('DRAFT', studentState, []),
   classState: crud('CLASS_STATE', identity, []),
   ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false, tabletsLocked: false}, ui),
 })

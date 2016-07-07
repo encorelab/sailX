@@ -33,9 +33,10 @@ const StudentViewEl = ({ ui, classState, observations, studentState, dispatch })
     if (id) {
       const obsWithId = {...obs, id: id};
       //dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obsWithId});
+      dispatch({type: 'EDIT_DRAFT', doc: obsWithId});
     } else {
-      //
-      dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obs});
+      //dispatch({type: 'STORE-DRAFT_STUDENT_STATE', doc: obs});
+      dispatch({type: 'ADD_DRAFT', doc: obs});
     }
   };
 
