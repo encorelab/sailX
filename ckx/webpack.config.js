@@ -13,7 +13,6 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
-
   resolve: {
     extensions: ['', '.jsx', '.js']
   },
@@ -26,8 +25,8 @@ module.exports = {
         'NODE_ENV': JSON.stringify('dev')
       }
     })
-
-  ], module: {
+  ],
+  module: {
     loaders: [
       {
         test: /\.css$/, loader: "style-loader!css-loader"
@@ -52,33 +51,34 @@ module.exports = {
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
       {
         loader: "babel",
-
-      // Only run `.js` and `.jsx` files through Babel
-      test: /\.jsx?$/,
-
-      // Skip any files outside of your project's `src` directory
-      include: [
-        path.resolve(__dirname, "app"),
-      ],
-      exclude: /node_modules/,
-      // Options to configure babel with
-      query: {
-        "presets": ["es2015", "stage-0", "react"],
-        "env": {
-          "development": {
-            "plugins": [
-              ["react-transform", {
-                "transforms": [{
-                  "transform": "react-transform-hmr",
-                  "imports": ["react"],
-                  "locals": ["module"]
-                }]
-              }]
-            ]
+        // Only run `.js` and `.jsx` files through Babel
+        test: /\.jsx?$/,
+        // Skip any files outside of your project's `src` directory
+        include: [
+          path.resolve(__dirname, "app"),
+        ],
+        exclude: /node_modules/,
+        // Options to configure babel with
+        query: {
+          "presets": ["es2015", "stage-0", "react"],
+          "env": {
+            "development": {
+              "plugins": [
+                [
+                  "react-transform",
+                  {
+                    "transforms": [{
+                      "transform": "react-transform-hmr",
+                      "imports": ["react"],
+                      "locals": ["module"]
+                    }]
+                  }
+                ]
+              ]
+            }
           }
         }
-      }
-    },
+      },
     ]
   },
 };
