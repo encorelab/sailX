@@ -1,6 +1,6 @@
 import React from 'react'
 import Create from 'react-icons/lib/md/create'
-import './AddObservation.css'
+import './AddObservation.scss'
 
 export default ( { onClick } ) => {
   // const style = {
