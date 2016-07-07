@@ -3,8 +3,8 @@ import Paper from 'material-ui/lib/paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio';
 import Delete from 'react-icons/lib/md/delete';
 import { shorten } from '../../lib/utils';
-import ObservationContainer from './ObservationContainer';
-import ObservationDetails  from './ObservationDetails';
+import StudentObservationContainer from './StudentObservationContainer';
+import StudentObservationDetails  from './StudentObservationDetails';
 
 export default ( { ui, observations, studentState, dispatch } ) => {
   const observationList = observations.map(e => {
@@ -25,7 +25,7 @@ export default ( { ui, observations, studentState, dispatch } ) => {
       <div>
         <ul>
           <li>
-            <ObservationContainer
+            <StudentObservationContainer
               ui = {ui}
               key = {e.id+'info'}
               openInfoFn = {openInfoFn}
@@ -34,7 +34,7 @@ export default ( { ui, observations, studentState, dispatch } ) => {
               studentState = {studentState}
               {...e}
             />
-            <ObservationDetails
+            <StudentObservationDetails
               key = {e.id}
               observation = {e}
               closeInfoFn = {closeInfoFn}
