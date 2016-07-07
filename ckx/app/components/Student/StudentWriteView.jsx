@@ -29,49 +29,17 @@ const NewObservationFields = (e, observation) => {
           {...rest}
         />
       )
+    case 'FILE':
+      return (
+        <FRC.File
+          ref = "file"
+          type = "file"
+          name = "file"
+          accept = ".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple
+        />
+      )
   }
 }
-
-// START HERE - move the media stuff to it's own element, upload on add (include multiple) with spinner, then show as thumbnail, then pass the returned url to update draft etc
-// const attachMedia = (context, dispatch) => {
-//   const MAX_FILE_SIZE = 20971520;
-//   var formData = new FormData();
-//   var file = context.refs.file.files[0];
-//   formData.append( 'file', file );
-
-//   if (file.size < MAX_FILE_SIZE) {
-//     dispatch({type: 'STARTUPLOADMEDIA_UI'});
-//     jQuery.ajax({
-//       url: 'https://pikachu.coati.encorelab.org/',
-//       type: 'POST',
-//       success: success,
-//       error: failure,
-//       data: formData,
-//       cache: false,
-//       contentType: false,
-//       processData: false
-//     });
-//   } else {
-//     jQuery().toastmessage('showErrorToast', "Max file size of 20MB exceeded");
-//   }
-
-//   function failure(err) {
-//     dispatch({type: 'ENDUPLOADMEDIA_UI'});
-//     jQuery().toastmessage('showErrorToast', "Photo could not be uploaded. Please try again");
-//   }
-
-//   function success(data, status, xhr) {
-//     dispatch({type: 'ENDUPLOADMEDIA_UI'});
-//     console.log("UPLOAD SUCCEEDED!" + data);
-//     console.log(xhr.getAllResponseHeaders());
-
-//     // clear out the label value if they for some reason want to upload the same thing...
-//     jQuery('#relationship-photo-file').val('');
-
-//     // update the observation - actually, there is no observation. Maybe this should all be one level lower, as a form field
-//     // dispatch({type: 'ADDMEDIA_OBSERVATION', doc: data.url});
-//   }
-// };
 
 const checkWriteMode = (context) => {
   // start here - context.props.studentState -> context.props.studentState[0].text EVERYWHERE - time to create some utils for this
@@ -118,13 +86,10 @@ class StudentWriteView extends React.Component {
         >
           <fieldset>
             {this.fields()}
-            <FRC.File ref="file" type="file" name="file" accept=".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple/>
-            <div>
-              {this.props.studentState[0] && this.props.studentState[0].file ?
-                <StudentMediaContainer files = {this.props.studentState[0].file} /> :
-                <div />
-              }
-            </div>
+            {this.props.studentState[0] && this.props.studentState[0].file ?
+              <StudentMediaContainer files = {this.props.studentState[0].file} /> :
+              <div />
+            }
           </fieldset>
           <input
             className = "btn btn-primary"
@@ -141,10 +106,3 @@ class StudentWriteView extends React.Component {
 }
 
 export default StudentWriteView
-
-
-// {this.props.studentState[0] && context.props.studentState[0].file ?
-//   <button onClick = {() => dispatch({type: 'UNLOCKTABLETS_UI'}) }>RESUME</button> :
-//   <button onClick = {() => dispatch({type: 'LOCKTABLETS_UI'}) }>PAUSE</button>
-// }
-// {populateMediaContainer(this)}

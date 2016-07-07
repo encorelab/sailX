@@ -11,6 +11,10 @@ const defPrompt = `{
       "placeholder": "Give more details",
       "kind": "TEXTAREA",
       "required": true
+    },
+    {
+      "kind": "FILE",
+      "required": false
     }
   ]
 }`
