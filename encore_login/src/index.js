@@ -5,10 +5,9 @@ const Student = ( {selection, onClick} ) => <li><a href="#" onClick={onClick}>{s
 
 const StudentList = ( {list, selectFn} ) => { return(
   <div>
-  {list.map(e => {
-    const clickFn = () => selectFn(e) 
-    return(<Student selection={e} onClick={ clickFn }/>)
-  })}
+  {
+    list.map((e,i) => <Student selection={e} key={i} onClick={ () => selectFn(e) }/> )
+  }
   </div>
 )}
 
