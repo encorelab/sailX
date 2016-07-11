@@ -7,16 +7,15 @@ import stringify from 'fast-stable-stringify'
 // store: redux store object
 // pathStr: key, like "users" to sync
 // dbname: pouchDb name to sync with (local and external)
-// actionPrefix: will emit redux actions INSERT_ENTRY, UPDATE_ENTRY, DELETE_ENTRY and INITIALIZE_ENTRY
 // filter: object to use when filtering subscriptions, for example {studentid: 1}
 // options: object,
 //    {readOnly: true} means that it only subscribes to Horizon, and not to Redux
 //    {keyValue: true} connects to an object (dict) instead of an array. For example, state.name instead of state[0]
-export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter, options = {}) => {
+export default (horizon, store, pathStr, dbname, filter, options = {}) => {
   const pathObj = {
     path: pathStr,
     dbname: dbname,
-    actionPrefix: actionPrefix,
+    actionPrefix: pathStr,
     docs: [],
     db: horizon(dbname),
     store: store,

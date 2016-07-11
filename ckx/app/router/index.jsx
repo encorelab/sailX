@@ -20,8 +20,8 @@ const selectFn = (callback, props) => {
   props.setRole(callback.student.role)
   props.logIn()
 
-  horizonSync(horizon, store, 'observations', callback.CO.collection, 'OBSERVATIONS')
-  horizonSync(horizon, store, 'classState', 'class_state', 'CLASS_STATE', {class: callback.student.class}, {keyValue: true})
+  horizonSync(horizon, store, 'observations', callback.CO.collection, 'observations')
+  horizonSync(horizon, store, 'classstate', 'class_state', 'classstate', {class: callback.student.class}, {keyValue: true})
   // //horizonSync(horizon, store, '/studentState', 'student_state', 'STUDENT_STATE', {group: callback.CO.collection, owner: callback.student.name})
 
   props.setBoard(callback.CO.name)
@@ -35,7 +35,6 @@ const selectFn = (callback, props) => {
 
 // --------------------------------------
 const Route = (props) => {
-  console.log(props)
   let { route, loggedIn, dispatch, role } = props 
   // force login if not yet logged in
   if (!loggedIn) {
@@ -61,8 +60,8 @@ const Route = (props) => {
   }
 }
 
-export const CurrentRoute = connect(
+export default connect(
   e => ({route: e.ui.route, loggedIn: e.ui.loggedIn, role: e.ui.role}),
-  dispatch => bindActionCreators(uiActions, dispatch)
+  uiActions, undefined, {pure: false}
 )(Route)
 

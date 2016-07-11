@@ -23,5 +23,5 @@ export const identity = (e) => e
 // for example getKey('tablet_locked', classState) will return the value if
 // the element exists, and undefined if it does not
 export const getKey = (key, array) => {
-  return array[key]
+  return false
 }

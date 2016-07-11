@@ -1,6 +1,6 @@
 export const changeRoute = (route) => ({
   type: 'CHANGEROUTE/UI',
-  url: route
+  route: route
 })
   
 export const setBoard = (group) => ({

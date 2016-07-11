@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
 import configStore from './store'
-import { CurrentRoute } from './router'
+import CurrentRoute  from './router'
 import horizonSync from 'horizon-redux-sync'
 
 const observationlist = []

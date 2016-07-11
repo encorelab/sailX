@@ -1,7 +1,18 @@
 import React from 'react'
 
+export const defaultUI = ({
+  route: 'login',
+  loggedIn: false,
+  tablets_locked: false,
+  activeView: 'read',
+  editMode: false,
+  observationToEdit: {},
+  infoOpen: false,
+  route: 'login'
+})
+
 export default (state, action) => {
-  switch (action.type) {
+  switch (action.type.toUpperCase()) {
     case 'CHANGEROUTE':
       return {...state, route: action.route}
     case 'SETBOARD':
