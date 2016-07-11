@@ -32,12 +32,11 @@ export default (reducerDictAry) => {
         break
 
       case 2: 
-        if(reducerDict[parts[1]]) { 
-          const newAction = {...action, type: parts[0]}
-          const partState = reducerDict[parts[1]](state[parts[1]], newAction)
-          let newState = state
-          newState[parts[1]] = partState
-          return newState
+        const [ type, key ] = parts
+        if(reducerDict[key]) { 
+          const newAction = {...action, type: type}
+          const partState = reducerDict[key](state[key], newAction)
+          return {...state, [key]: partState}
         } else {
           console.error('Missing reducer for selector ' + parts[1])
           return state

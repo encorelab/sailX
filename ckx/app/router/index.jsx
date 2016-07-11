@@ -62,6 +62,6 @@ const Route = (props) => {
 
 export default connect(
   e => ({route: e.ui.route, loggedIn: e.ui.loggedIn, role: e.ui.role}),
-  uiActions, undefined, {pure: false}
+  uiActions 
 )(Route)
 
