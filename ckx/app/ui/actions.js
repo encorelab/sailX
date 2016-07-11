@@ -15,7 +15,7 @@ export const setObservationFields = (fields) => ({
 
 export const setName = (name) => ({
   type: 'SETNAME/UI',
-  user: name
+  name: name
 })
 
 export const setClass = (cls) => ({

@@ -14,12 +14,11 @@ const StudentList = ( {list, selectFn} ) => { return(
 
 const LoginWrapper = ({ onSelect }) => {
   console.log('Visiting and skipping Encore_login')
-  window.setTimeout(() => onSelect(Hardcoded[0]))
+  onSelect(Hardcoded[0])
   return (
           <div>
             <StudentList list={Hardcoded} selectFn={onSelect}/> 
           </div>
-      
   )
 }
 
