@@ -1,16 +1,18 @@
-import jPath from 'json-path'
 import equal from 'deep-equal'
 import { omit, sortBy, difference, intersection } from 'lodash'
+import stringify from 'fast-stable-stringify'
 
 // begins listening to specific db, returns path object.
 // path object should be passed to all functions
 // store: redux store object
-// pathStr: string, like "/users" to sync (JPath)
+// pathStr: key, like "users" to sync
 // dbname: pouchDb name to sync with (local and external)
 // actionPrefix: will emit redux actions INSERT_ENTRY, UPDATE_ENTRY, DELETE_ENTRY and INITIALIZE_ENTRY
 // filter: object to use when filtering subscriptions, for example {studentid: 1}
-// options: object, {readOnly: true} means that it only subscribes to Horizon, and not to Redux
-export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter, options) => {
+// options: object,
+//    {readOnly: true} means that it only subscribes to Horizon, and not to Redux
+//    {keyValue: true} connects to an object (dict) instead of an array. For example, state.name instead of state[0]
+export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter, options = {}) => {
   const pathObj = {
     path: pathStr,
     dbname: dbname,
@@ -18,17 +20,22 @@ export default (horizon, store, pathStr, dbname, actionPrefix = 'ENTRY', filter,
     docs: [],
     db: horizon(dbname),
     store: store,
-    filter: filter
+    filter: filter,
+    keyValue: options.keyValue,
+    readOnly: options.readOnly
   }
 
-  listenHorizon(pathObj)
-  if (!options || !options.readOnly) { 
-    store.subscribe(e => reduxChange(pathObj, store.getState())) 
-  }
+  if (!options.readOnly) { listenRedux(pathObj) }
+  listenHorizon(pathObj) 
   return pathObj
 }
 
 // ---------------------------
+
+// begins listening to Redux
+const listenRedux = (path) => {
+  store.subscribe(() => reduxChange(path))
+}
 
 // begins listening to a specific database, returns object with cancel function
 const listenHorizon = (path) => {
@@ -36,10 +43,27 @@ const listenHorizon = (path) => {
   watchFn.watch().subscribe( (e) => { dbChange(path, e) } )
 }
 
+// ----------------------------
+// utilities
+
 // take a full state, extract subtree and sort
-const proc_redux_state = (path, state) => {
-  const x0 = jPath.resolve(state, path.path)[0]
-  return idsort(x0)
+const proc_redux_state = (path) => {
+  const subtree = path.store.getState()[path.path]
+  const processed = path.keyValue ? 
+    proc_redux_state_kv(subtree, path.filter) :
+    subtree
+  return idsort(processed)
+}
+
+// take a full state, extract subtree, transform into array
+const proc_redux_state_kv = (subtree, filter) => {
+  return Object.keys(subtree).map(k => proc_kv(filter, k, subtree[k]))
+}
+
+// turn single key-value into object for array
+const proc_kv = (filter, k, v) => {
+  const id = stringify({ key: k, ...filter})
+  return {id: id, key: k, value: v, ...filter}
 }
 
 // take horizon store object, remove version keys and sort
@@ -54,10 +78,10 @@ const idsort = (ary) => sortBy(ary, 'id')
 
 // ---------------------------
 
-// processes updates from Redux store
-function reduxChange(path, state) {
-  var docs = proc_redux_state(path, state)
-  if (equal(idsort(path.docs), docs) || state.length == 0) { // nothing to do
+// processes updates from Redux store (array)
+function reduxChange(path) {
+  var docs = proc_redux_state(path)
+  if (equal(idsort(path.docs), docs) || docs.length == 0) { // nothing to do
     return 
   }
 
@@ -65,6 +89,7 @@ function reduxChange(path, state) {
   if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
 
     const updated = diffs.new.concat(diffs.updated)
+    console.log('diffs', updated, diffs.deletedIds)
     const filter = path.filter
     if (updated.length > 0) {
       const updatedFilter = filter ? 
@@ -74,19 +99,21 @@ function reduxChange(path, state) {
     }
 
     diffs.deletedIds.forEach(id => path.db.remove({id: id}))
+    path.docs = docs
   }
 }
 
-// processes updates from Horizon
+// processes updates from Horizon 
 function dbChange(path, rawdocs) {
   const horizon_docs = proc_horizon_docs(rawdocs)
-  const redux_docs = proc_redux_state(path, path.store.getState())
+  const redux_docs = proc_redux_state(path)
 
   if (equal(redux_docs, horizon_docs)) {  // nothing to do
     return
   }
 
   var diffs = differences(redux_docs, horizon_docs)
+  console.log('redux, redux_orig, horizon, diff', redux_docs, path.store.getState(), horizon_docs, diffs)
   if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
 
     const updated = diffs.new.concat(diffs.updated)
@@ -105,15 +132,28 @@ function dbChange(path, rawdocs) {
 }
 
 function propagateDelete(path, id) {
-  path.store.dispatch({type: "DBDELETE_" + path.actionPrefix, id: id})
+  const toDel = path.keyValue ? 
+    {key: JSON.parse(id).key} :
+    {id: id}
+  const delAction = {type: "DBDELETE/" + path.actionPrefix}
+  console.log('dbdel', toDel, path)
+  path.store.dispatch({...delAction, ...toDel})
 }
 
 function propagateInsert(path, doc) {
-  path.store.dispatch({type: "DBINSERT_" + path.actionPrefix, doc: doc})
-}
-
-function propagateUpdate(path, doc) {
-  path.store.dispatch({type: "DBUPDATE_" + path.actionPrefix, doc: doc})
+  console.log('propagate', doc)
+  let obj
+  if (path.keyValue) {
+    obj = {}
+    obj[doc.key] = doc.value
+  } else {
+    obj = doc
+  }
+  console.log('dbinsert', obj, path)
+  const type = "DBINSERT/" + path.actionPrefix
+  const action = {type: type, doc: obj}
+  console.log('dbinsert action', action)
+  window.setTimeout((e) => path.store.dispatch(action))
 }
 
 function differences(oldDocs, newDocs) {

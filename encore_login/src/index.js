@@ -12,14 +12,15 @@ const StudentList = ( {list, selectFn} ) => { return(
 )}
 
 
-class LoginWrapper extends React.Component {
-  render() {
-      return(
+const LoginWrapper = ({ onSelect }) => {
+  console.log('Visiting and skipping Encore_login')
+  window.setTimeout(() => onSelect(Hardcoded[0]))
+  return (
           <div>
-            <StudentList list={Hardcoded} selectFn={this.props.onSelect}/> 
+            <StudentList list={Hardcoded} selectFn={onSelect}/> 
           </div>
-      )
-  }
+      
+  )
 }
 
 export default LoginWrapper 

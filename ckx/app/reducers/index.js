@@ -1,15 +1,16 @@
 import { combineReducers } from 'redux'
-import crud from './reducers/crud-reducers'
-import observations from './reducers/observations'
-import ui from './reducers/ui'
-import studentState from './reducers/student-state'
-import factory from './reducers/factory'
-import { identity } from './lib/utils'
+import crud from './crud-reducers'
+import crudKV from './crudkv-reducers'
+import observations from './observations'
+import ui from '../ui'
+import studentState from './student-state'
+import factory from './factory'
+import { identity } from '../lib/utils'
 
 export default combineReducers({
   observations: crud('OBSERVATION', observations, [], {x: 0, y: 0}),
   //studentState: crud('STUDENT_STATE', studentState, []),
   studentState: crud('DRAFT', studentState, []),
-  classState: crud('CLASS_STATE', identity, []),
+  classState: crudKV('CLASS_STATE', identity, {}),
   ui: factory('UI', {infoOpen: false, addOpen: false, loggedIn: false, tabletsLocked: false}, ui),
 })

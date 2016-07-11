@@ -12,7 +12,7 @@ export default (kind, restfn, initstate = [], deffields) => {
       } else {
         let action = {
           ...fullaction,
-          type: fullaction.type.split('_')[0]
+          type: fullaction.type.split('/')[0]
         }
 
         switch (action.type) {

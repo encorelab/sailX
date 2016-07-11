@@ -7,7 +7,7 @@ export default (kind, init, reducer) => {
       } else {
         let action = {
           ...fullaction,
-          type: fullaction.type.split('_')[0]
+          type: fullaction.type.split('/')[0]
         }
         return reducer(state, action)
       }

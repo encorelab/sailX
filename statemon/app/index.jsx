@@ -25,9 +25,10 @@ const procHorizon = (e) => {
 }
 
 const procDisplay = (e) => {
-  return e.map(row => {
-    return {...row, ...{id: row.id.slice(0,4) + "..." } }
-  })
+  return e
+  // return e.map(row => {
+  //   return {...row, ...{id: row.id.slice(0,4) + "..." } }
+  // })
 }
 
 class DbBox extends React.Component {

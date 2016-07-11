@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js & npm run hz",
-    "startall": "npm run watch_encore & npm run watch_hz & node server.js & npm run hz",
+    "startall": "npm run watch_encore & npm run statemon & npm run watch_hz & node server.js & npm run hz",
+    "statemon": "cd ../statemon && npm start &",
     "watch_encore": "cd ../encore_login && npm run watch &",
     "watch_hz": "cd ../horizon-redux-sync && npm run watch &",
     "web": "node server.js",
