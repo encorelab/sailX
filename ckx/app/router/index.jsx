@@ -20,9 +20,10 @@ const selectFn = (callback, props) => {
   props.setRole(callback.student.role)
   props.logIn()
 
-  horizonSync(horizon, store, 'observations', callback.CO.collection, 'observations')
-  horizonSync(horizon, store, 'classstate', 'class_state', 'classstate', {class: callback.student.class}, {keyValue: true})
-  // //horizonSync(horizon, store, '/studentState', 'student_state', 'STUDENT_STATE', {group: callback.CO.collection, owner: callback.student.name})
+  horizonSync(horizon, store, 'observations', callback.CO.collection)
+  horizonSync(horizon, store, 'classstate', 'class_state', {class: callback.student.class}, {keyValue: true})
+  horizonSync(horizon, store, 'studentstate', 'student_state', {group: callback.CO.collection, owner: callback.student.name},
+              {keyValue: true})
 
   props.setBoard(callback.CO.name)
   props.setObservationFields(callback.CO.prompt)

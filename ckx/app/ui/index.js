@@ -52,15 +52,3 @@ export default (state, action) => {
       return state
   }
 }
-
-// sort this out at some point
-
-// const P = React.PropTypes
-// export const uiDefinition = P.shape({
-//       infoOpen: P.boolean, //oneOfType([P.number, P.boolean]), // which info box is currently open, or false if none are open
-//       addOpen: P.boolean,
-//       route: P.boolean,
-//       name: P.string,
-//       loggedIn: P.boolean
-// })
-// console.log(uiDefinition)

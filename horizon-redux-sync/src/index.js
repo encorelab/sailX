@@ -2,12 +2,19 @@ import equal from 'deep-equal'
 import { omit, sortBy, difference, intersection } from 'lodash'
 import stringify from 'fast-stable-stringify'
 
+// re-exporting
+export { hrsReducer, hrsReducerHOF } from './reducer'
+
 // begins listening to specific db, returns path object.
 // path object should be passed to all functions
+//
+// arguments:
+// horizon: horizon object
 // store: redux store object
-// pathStr: key, like "users" to sync
-// dbname: pouchDb name to sync with (local and external)
-// filter: object to use when filtering subscriptions, for example {studentid: 1}
+// pathStr: store selector, like "users" to sync
+// dbname: horizon collection to sync with
+// filter: object to use when filtering subscriptions, for example {studentid: 1}, optional, also merged with all new
+//    objects, set as undefined if you need to add option without filter
 // options: object,
 //    {readOnly: true} means that it only subscribes to Horizon, and not to Redux
 //    {keyValue: true} connects to an object (dict) instead of an array. For example, state.name instead of state[0]
@@ -24,6 +31,7 @@ export default (horizon, store, pathStr, dbname, filter, options = {}) => {
     readOnly: options.readOnly
   }
 
+  // setup subscriptions
   if (!options.readOnly) { listenRedux(pathObj) }
   listenHorizon(pathObj) 
   return pathObj
@@ -79,8 +87,8 @@ const idsort = (ary) => sortBy(ary, 'id')
 
 // processes updates from Redux store (array)
 function reduxChange(path) {
-  var docs = proc_redux_state(path)
-  if (equal(idsort(path.docs), docs) || docs.length == 0) { // nothing to do
+  const docs = proc_redux_state(path)
+  if (equal(idsort(path.docs), docs)) { // nothing to do
     return 
   }
 
@@ -88,7 +96,6 @@ function reduxChange(path) {
   if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
 
     const updated = diffs.new.concat(diffs.updated)
-    console.log('diffs', updated, diffs.deletedIds)
     const filter = path.filter
     if (updated.length > 0) {
       const updatedFilter = filter ? 
@@ -98,7 +105,6 @@ function reduxChange(path) {
     }
 
     diffs.deletedIds.forEach(id => path.db.remove({id: id}))
-    path.docs = docs
   }
 }
 
@@ -112,47 +118,14 @@ function dbChange(path, rawdocs) {
   }
 
   var diffs = differences(redux_docs, horizon_docs)
-  console.log('redux, redux_orig, horizon, diff', redux_docs, path.store.getState(), horizon_docs, diffs)
   if(!(diffs.updated.length == 0 && diffs.new.length == 0 && diffs.deletedIds.length == 0)) {
-
-    const updated = diffs.new.concat(diffs.updated)
-
-    updated.forEach(doc => {
-      path.docs = path.docs.filter(e => e.id != doc.id)
-      path.docs = [...path.docs, doc]
-      propagateInsert(path, doc)
+    const diffType = path.keyValue ? 'dbDiffKV' : 'dbDiff'
+    path.store.dispatch({
+      type: diffType + '/' + path.actionPrefix,
+      diffs: diffs
     })
-
-    diffs.deletedIds.forEach(doc => {
-      path.docs = path.docs.filter(e => e.id != doc.id)
-      propagateDelete(path, doc);
-    })
+    path.docs = horizon_docs
   }
-}
-
-function propagateDelete(path, id) {
-  const toDel = path.keyValue ? 
-    {key: JSON.parse(id).key} :
-    {id: id}
-  const delAction = {type: "DBDELETE/" + path.actionPrefix}
-  console.log('dbdel', toDel, path)
-  path.store.dispatch({...delAction, ...toDel})
-}
-
-function propagateInsert(path, doc) {
-  console.log('propagate', doc)
-  let obj
-  if (path.keyValue) {
-    obj = {}
-    obj[doc.key] = doc.value
-  } else {
-    obj = doc
-  }
-  console.log('dbinsert', obj, path)
-  const type = "DBINSERT/" + path.actionPrefix
-  const action = {type: type, doc: obj}
-  console.log('dbinsert action', action)
-  window.setTimeout((e) => path.store.dispatch(action))
 }
 
 function differences(oldDocs, newDocs) {

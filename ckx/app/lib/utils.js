@@ -15,6 +15,19 @@ export const shorten = (text, length) => {
   }
 }
 
+export const compose = (...args) => initial => args.reduce(
+    (result, fn) => fn(result),
+    initial
+)
+
+export const composeReducers = (...args) => {
+  const ret = (initState, action) => args.reduce(
+    (state, fn) => fn(state, action),
+      initState
+  )
+  return ret
+}
+
 export const identity = (e) => e
 
 // for classState and studentState, we are getting an array from Horizon, but

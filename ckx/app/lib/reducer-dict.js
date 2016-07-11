@@ -26,7 +26,9 @@ export default (reducerDictAry) => {
         if(reducerDict['default']) { 
           return reducerDict.default(state, action)
         } else {
-          console.error('Action without selector supplied, but missing default reducer')
+          if(action.type != '@@INIT') {
+            console.warn('Action ' + action.type + 'without selector supplied, but missing default reducer')
+          }
           return state
         }
         break
@@ -38,7 +40,7 @@ export default (reducerDictAry) => {
           const partState = reducerDict[key](state[key], newAction)
           return {...state, [key]: partState}
         } else {
-          console.error('Missing reducer for selector ' + parts[1])
+          console.error('Missing reducer for selector ' + key)
           return state
         }
         break

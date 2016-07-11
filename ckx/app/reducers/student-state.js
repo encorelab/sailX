@@ -1,6 +1,8 @@
 import { uuid, currentDate } from '../lib/utils'
 import React from 'react'
 
+// needs to be updated to work with new KV structure
+
 export default (state, action) => {
   switch (action.type) {
     case 'STORE-DRAFT':
