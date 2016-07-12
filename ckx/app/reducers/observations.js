@@ -1,3 +1,11 @@
+import { createSelector } from 'reselect'
+
+export const infoSelector = (e) => { return (
+  e.ui.infoOpen ? 
+    e.observations.filter(obs => obs.id == e.ui.infoOpen)[0] : 
+    undefined
+)} 
+
 export default (state, action) => {
   switch (action.type) {
     case 'MOVE':

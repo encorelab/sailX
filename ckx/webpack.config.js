@@ -14,6 +14,9 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
+    alias: {
+      app: path.resolve(__dirname, "app")
+    },
     extensions: ['', '.jsx', '.js']
   },
   devtool: 'eval-source-map',

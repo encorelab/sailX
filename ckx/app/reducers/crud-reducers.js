@@ -26,7 +26,7 @@ export default (state, action) => {
         doc.id !== action.id
       )
 
-    case 'deleteall':
+    case 'deleteAll':
       return([])
       break
 

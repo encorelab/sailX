@@ -13,8 +13,8 @@
   "dependencies": {
     "horizon": "^1.0.3",
     "lodash": "^4.13.1",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8",
     "react-json-table": "0.0.4",
     "react-resizable-and-movable": "^2.0.0",
     "rethinkdb": "2.2.3"

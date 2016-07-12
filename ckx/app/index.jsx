@@ -5,6 +5,7 @@ import { Provider, connect } from 'react-redux'
 import configStore from './store'
 import CurrentRoute  from './router'
 import horizonSync from 'horizon-redux-sync'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const observationlist = []
 // horizon server, on same domain as HTML/JS, different port. 'insecure' should be changed before production.
@@ -25,7 +26,9 @@ store.dispatch({
 
 render(
   <Provider store = {store} >
-    <CurrentRoute />
+    <MuiThemeProvider>    
+      <CurrentRoute />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
 )

@@ -28,29 +28,38 @@ export const setRole = (role) => ({
   role: role
 })
 
-export const logIn = () => ({
+export const setLoggedIn = () => ({
   type: 'LOGGEDIN/UI'
 })
 
-    /***** TABLETS *****/
+/***** TABLETS *****/
+export const switchView = (view) => ({
+  type: 'SWITCHVIEW/UI',
+  view: view
+})
 
+export const setEdit = (doc) => ({
+  type: 'SETEDIT/UI',
+  doc: doc
+})
 
-//     case 'SWITCHVIEW':
-//       return {...state, activeView: action.view}
+export const unsetEdit = () => ({
+  type: 'UNSETEDIT/UI'
+})
 
-//     case 'SETEDIT':
-//       return {...state, editMode: true, observationToEdit: action.doc}
-//     case 'UNSETEDIT':
-//       return {...state, editMode: false, observationToEdit: {}}
+export const openInfo = (id) => ({
+  type: 'OPENINFO/UI',
+  id: id
+})
 
-//     case 'OPENINFO':
-//       return {...state, infoOpen: action.id}
-//     case 'CLOSEINFO':
-//       return {...state, infoOpen: false}
+export const closeInfo = () => ({
+  type: 'CLOSEINFO/UI'
+})
 
-//     case 'STARTUPLOADMEDIA':
-//       return {...state, isUploading: true}
-//     case 'ENDUPLOADMEDIA':
-//       return {...state, isUploading: false}
+export const startUploadMedia = () => ({
+  type: 'STARTUPLOADMEDIA/UI'
+})
 
-
+export const endUploadMedia = () => ({
+  type: 'ENDUPLOADMEDIA/UI'
+})
