@@ -10,31 +10,29 @@ import crudActions from 'app/reducers/crud-actions'
 class WriteView extends React.Component {
   constructor() {
     super();
-    this.state = {valid: false};
+    this.state = {valid: false, doc: {}};
   }
   valid = () => this.setState({valid: true});
   invalid = () => this.setState({valid: false});
-  fields = () => this.props.fields.map( e => observationFields(e) )
-
-  onChange = (doc) => {
-    // this first condition prevents the onChange synthetic event from bubbling up - need to find a cleaner way to do this
-    if (event.type !== 'react-change') {
-      console.log(doc)
-    }
+  formFields = () => this.props.fields.map( e => observationFields(e) )
+  cancel = () => this.props.switchView('read')
+  onChange = (doc) => this.setState({doc: doc}) 
+  onSubmit = () => {
+    this.props.addObservation({...this.state.doc, owner: this.props.user})
+    this.props.switchView('read')
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <Formsy.Form
-          onSubmit = {this.onSubmitWithId}
+          onSubmit = {this.onSubmit}
           onValid = {this.valid}
           onInvalid = {this.invalid}
           onChange = {this.onChange}
         >
           <fieldset>
-            {this.fields()}
+            {this.formFields()}
           </fieldset>
           <input
             className = "btn btn-primary"
@@ -43,14 +41,14 @@ class WriteView extends React.Component {
             disabled = {!this.state.valid}
           />
         </Formsy.Form>
-        <button onClick = {() => this.props.switchView('read')}>Cancel</button>
+        <button onClick = {this.cancel}>Cancel</button>
       </div>
     )
   }
 }
 
 export default connect(
-  e => ({fields: e.ui.fields, observations: e.observations, canCreate: !e.studentstate.draft}),
+  e => ({fields: e.ui.fields, user: e.ui.user}),
   {...uiActions, ...crudActions('Observation')}
 )(WriteView)
 

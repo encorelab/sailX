@@ -25,7 +25,7 @@ const ObservationList = (props) => {
     return (
       <li key = {e.id}>
         <ObservationContainer
-          isOwn = {!props.user == e.owner}
+          isOwn = {props.user == e.owner}
           openInfoFn = {() => props.openInfo(e.id)}
           openEditFn = {openEditFn}
           deleteFn = {deleteFn}
@@ -44,6 +44,6 @@ const ObservationList = (props) => {
 }
 
 export default connect(
-  e => ({user: e.ui.name, observations: e.observations, canCreate: !e.studentstate.draft}),
+  e => ({user: e.ui.user, observations: e.observations, canCreate: !e.studentstate.draft}),
   {...uiActions, ...crudActions('Observation')}
 )(ObservationList)

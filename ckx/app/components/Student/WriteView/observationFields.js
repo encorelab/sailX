@@ -27,10 +27,11 @@ export default (e, observation) => {
     case 'FILE':
       return (
         <FRC.File
-          ref = "file"
-          type = "file"
-          name = "file"
-          accept = ".jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov" multiple
+          id = 'file'
+          ref = 'file'
+          type = 'file'
+          name = 'file'
+          accept = '.jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov' multiple
         />
       )
   }
