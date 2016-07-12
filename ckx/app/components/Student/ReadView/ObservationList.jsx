@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import AspectRatio from 'react-icons/lib/md/aspect-ratio';
 import Delete from 'react-icons/lib/md/delete';
-import { shorten } from '../../lib/utils';
+import { shorten } from 'app/lib/utils';
 import { connect } from 'react-redux';
 import * as uiActions from 'app/ui/actions'
 import crudActions from 'app/reducers/crud-actions'

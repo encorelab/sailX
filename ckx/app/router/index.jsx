@@ -26,7 +26,7 @@ const selectFn = (callback, props) => {
     {group: callback.CO.collection, owner: callback.student.name}, {keyValue: true}) 
 
   props.setBoard(callback.CO.name)
-  props.setObservationFields(callback.CO.prompt)
+  props.setObservationFields(JSON.parse(callback.CO.prompt).prompt)
 
   if (callback.student.role === "board") {
     props.changeRoute('board')

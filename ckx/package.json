@@ -32,8 +32,8 @@
   "license": "MIT",
   "dependencies": {
     "encore_login": "0.0.1",
-    "formsy-react": "^0.17.0",
-    "formsy-react-components": "^0.6.6",
+    "formsy-react": "0.18.1",
+    "formsy-react-components": "0.8.1",
     "horizon": "^1.0.3",
     "horizon-redux-sync": "^1.0.0",
     "jsxstyle": "0.0.18",
