@@ -2,8 +2,9 @@ import { omit } from 'lodash'
 
 const procDbDiff = (state, diffs) => {
   const allChanged = diffs.new.concat(diffs.updated)
-  const added = [...state, ...allChanged]
-  return added.filter(e => diffs.deletedIds.indexOf(e.id) == -1)
+  const allChangedIds = allChanged..map(e => e.id).concat(diffs.deletedIds)
+  const stateWithoutChanged = state.filter(e => allChangedIds.indexOf(e) == -1)
+  return [...stateWithoutChanged, ...allChanged]
 }
 
 const procDbDiffKV = (state, diffs) => {
@@ -21,6 +22,7 @@ export const hrsReducerHOF = (defFn) => {
   return ret
 }
 
+// traditional reducer which can be composed with other reducers using a composer
 export const hrsReducer = (state, action, defFn) => {
   switch (action.type) {
     case 'dbdiff':

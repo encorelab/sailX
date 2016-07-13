@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom'
 import Formsy from 'formsy-react'
 import { isEqual } from 'lodash'
+import { notEmpty } from 'app/lib/utils'
 import { connect } from 'react-redux';
 import MediaContainer from './MediaContainer'
 import observationFields from './observationFields'
@@ -12,7 +13,7 @@ import crudActions from 'app/reducers/crud-actions'
 class WriteView extends React.Component {
   constructor() {
     super();
-    this.state = {valid: false, doc: {}};
+    this.state = {valid: false}
   }
 
   componentDidMount = () => { 
@@ -26,7 +27,7 @@ class WriteView extends React.Component {
   }
 
   postDraftNotice = () => {
-    if(this.props.draft) {
+    if(this.props.draft) { 
       if(this.props.draft.id) {  // continuing on draft of published post
         this.props.postNotice('You are currently continuing editing the draft of an already published note. If you want to abolish this draft, and not change the published note, click on "Cancel"')
       } else { // continuing on draft of unpublished post
@@ -35,14 +36,13 @@ class WriteView extends React.Component {
     }
   }
  
-
-
   componentWillUnmount = () => {
     window.clearInterval(this.state.interval)
   }
 
   periodicSaveDraft = () => { 
-    if(this.state.doc != {} &&
+    debugger
+    if(notEmpty(this.state.doc) &&
       !isEqual(this.state.doc, this.state.prevDoc)) {
         this.props.storeDraft(this.state.doc)
         this.setState({prevDoc: this.state.doc})

@@ -11,6 +11,9 @@ module.exports = {
   },
 
   resolve: {
+    alias: {
+      app: path.resolve(__dirname, "app")
+    },
     extensions: ['', '.jsx', '.js']
   },
   plugins: [

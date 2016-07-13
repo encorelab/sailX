@@ -28,6 +28,12 @@ export const composeReducers = (...args) => {
   return ret
 }
 
+// checks that some of the values in an object are not empty
+export const notEmpty = (obj) => {
+  return Boolean(obj) || Object.keys(obj).reduce(
+    (acc, val) => acc || Boolean(obj[val]), false) 
+}
+
 export const identity = (e) => e
 
 // for classState and studentState, we are getting an array from Horizon, but
