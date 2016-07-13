@@ -14,7 +14,7 @@ export default (state, action) => {
       break
 
     case 'delete':
-      return omit(state, action.key)
+      return omit(state, action.id)
       break
 
     case 'deleteall':
