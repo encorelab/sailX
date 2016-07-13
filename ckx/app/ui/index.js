@@ -1,4 +1,5 @@
 import React from 'react'
+import { omit } from 'lodash'
 
 export const defaultUI = ({
   route: 'login',
@@ -23,6 +24,10 @@ export default (state, action) => {
       return {...state, user: action.name}
     case 'SETCLASS':
       return {...state, class: action.class}
+    case 'POSTNOTICE':
+      return {...state, notice: action.title}
+    case 'CLEARNOTICE':
+      return omit(state, 'notice')
     case 'SETROLE':
       return {...state, role: action.role}
     case 'LOGGEDIN':
@@ -30,8 +35,9 @@ export default (state, action) => {
 
     /***** TABLETS *****/
 
+    // also clear notices on switching view
     case 'SWITCHVIEW':
-      return {...state, activeView: action.view}
+      return omit({...state, activeView: action.view}, 'notice')
 
     case 'SETEDIT':
       return {...state, editMode: true, observationToEdit: action.doc}

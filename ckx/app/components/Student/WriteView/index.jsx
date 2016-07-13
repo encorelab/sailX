@@ -22,7 +22,20 @@ class WriteView extends React.Component {
       interval,
       formFields,
     })
+    this.postDraftNotice()
   }
+
+  postDraftNotice = () => {
+    if(this.props.draft) {
+      if(this.props.draft.id) {  // continuing on draft of published post
+        this.props.postNotice('You are currently continuing editing the draft of an already published note. If you want to abolish this draft, and not change the published note, click on "Cancel"')
+      } else { // continuing on draft of unpublished post
+        this.props.postNotice('You are currently editing a draft of an observation that you began, but never posted. If you want to throw away this draft, click on "Cancel"')
+      }
+    }
+  }
+ 
+
 
   componentWillUnmount = () => {
     window.clearInterval(this.state.interval)

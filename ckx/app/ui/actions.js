@@ -63,3 +63,12 @@ export const startUploadMedia = () => ({
 export const endUploadMedia = () => ({
   type: 'ENDUPLOADMEDIA/UI'
 })
+
+export const postNotice = (notice) => ({
+  type: 'POSTNOTICE/UI',
+  title: notice
+})
+
+export const clearNotice = () => ({
+  type: 'CLEARNOTICE/UI'
+})

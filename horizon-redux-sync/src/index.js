@@ -104,7 +104,7 @@ function reduxChange(path) {
       path.db.upsert(updatedFilter)
     }
 
-    diffs.deletedIds.forEach(id => path.db.remove({id: id}))
+    path.db.removeAll(diffs.deletedIds)
   }
 }
 

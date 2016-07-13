@@ -7,20 +7,18 @@ import WriteView from './WriteView'
 import LockedView from './LockedView'
 
 const Router = ({ locked, activeView }) => { 
-  let component
   if(locked) {
-    component = <LockedView />
+    return <LockedView />
   } else {
     switch(activeView) {
       case 'write':
-        component = <WriteView />
+        return <WriteView />
         break
 
       default: 
-        component = <ReadView />
+        return <ReadView />
     }
   }
-  return component
 }
 
 export default connect(e => ({locked: e.ui.tablets_locked, activeView: e.ui.activeView}))(Router)
