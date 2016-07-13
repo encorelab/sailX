@@ -2,8 +2,8 @@ import { omit } from 'lodash'
 
 const procDbDiff = (state, diffs) => {
   const allChanged = diffs.new.concat(diffs.updated)
-  const allChangedIds = allChanged..map(e => e.id).concat(diffs.deletedIds)
-  const stateWithoutChanged = state.filter(e => allChangedIds.indexOf(e) == -1)
+  const allChangedIds = allChanged.map(e => e.id).concat(diffs.deletedIds)
+  const stateWithoutChanged = state.filter(e => allChangedIds.indexOf(e.id) == -1)
   return [...stateWithoutChanged, ...allChanged]
 }
 

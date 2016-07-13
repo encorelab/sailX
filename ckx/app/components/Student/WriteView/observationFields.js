@@ -1,7 +1,15 @@
 import React from 'react';
 import FRC from 'formsy-react-components'
+import { notEmpty } from 'app/lib/utils'
 
-export default (fields, draft) => {
+export default (fields, toEdit, draftDoc) => {
+  let draft
+  if(notEmpty(toEdit)) { 
+    draft = toEdit
+  } else if(draftDoc && draftDoc.doc) {
+    draft = draftDoc.doc
+  }
+
   const formFields = fields.map( e => {
     const { id, ...rest } = e
     const value = draft ? draft[id] : ''

@@ -13,12 +13,20 @@ import crudActions from 'app/reducers/crud-actions'
 class WriteView extends React.Component {
   constructor() {
     super();
-    this.state = {valid: false}
+    this.state = {valid: false, draft: {doc: {}}}
   }
 
   componentDidMount = () => { 
     const interval = window.setInterval(this.periodicSaveDraft, 1000)
-    const formFields = observationFields(this.props.fields, this.props.draft)
+    
+    if(this.props.obsToEdit) { 
+      this.setState({id: this.props.obsToEdit.id})
+    } 
+    if(this.props.draft && this.props.draft.id) { 
+      this.setState({id: this.props.draft.id})
+    }
+
+    const formFields = observationFields(this.props.fields, this.props.obsToEdit, this.props.draft)
     this.setState({
       interval,
       formFields,
@@ -27,24 +35,25 @@ class WriteView extends React.Component {
   }
 
   postDraftNotice = () => {
-    if(this.props.draft) { 
+    if(notEmpty(this.props.draft)) { 
       if(this.props.draft.id) {  // continuing on draft of published post
         this.props.postNotice('You are currently continuing editing the draft of an already published note. If you want to abolish this draft, and not change the published note, click on "Cancel"')
-      } else { // continuing on draft of unpublished post
+      } else if(notEmpty(this.props.draft.doc)) { // continuing on draft of unpublished post
         this.props.postNotice('You are currently editing a draft of an observation that you began, but never posted. If you want to throw away this draft, click on "Cancel"')
       }
     }
   }
  
   componentWillUnmount = () => {
-    window.clearInterval(this.state.interval)
+    window.clearInterval(this.state.interval) // stop updating drafts
+    this.props.unsetEdit()  
   }
 
+  // save draft if there is text, and has been changed from last save
   periodicSaveDraft = () => { 
-    debugger
-    if(notEmpty(this.state.doc) &&
+    if(notEmpty(this.state.doc) && 
       !isEqual(this.state.doc, this.state.prevDoc)) {
-        this.props.storeDraft(this.state.doc)
+        this.props.storeDraft({id: this.state.id, doc: this.state.doc})
         this.setState({prevDoc: this.state.doc})
     }
   }
@@ -58,7 +67,12 @@ class WriteView extends React.Component {
 
   onChange = (doc) => this.setState({doc: doc}) 
   onSubmit = () => {
-    this.props.addObservation({...this.state.doc, owner: this.props.user})
+    if(this.state.id) {
+      this.props.editObservation({...this.state.doc, id: this.state.id })
+    } else {
+      this.props.addObservation({...this.state.doc, owner: this.props.user })
+    }
+
     this.props.discardDraft()
     this.props.switchView('read')
   }
@@ -89,7 +103,7 @@ class WriteView extends React.Component {
 }
 
 export default connect(
-  e => ({fields: e.ui.fields, user: e.ui.user, draft: e.studentstate.draft}),
+  e => ({fields: e.ui.fields, user: e.ui.user, draft: e.studentstate.draft, obsToEdit: e.ui.observationToEdit}),
     {...uiActions, ...studentStateActions, ...crudActions('Observation')}
 )(WriteView)
 

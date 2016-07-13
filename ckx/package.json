@@ -17,7 +17,8 @@
     "dockerbuild": "docker build -t houshuang/rethink . && docker push houshuang/rethink",
     "dockerrun": "docker $(docker-machine config prod) pull houshuang/rethink && docker $(docker-machine config prod) stop $(docker $(docker-machine config prod) ps -a -q) && docker $(docker-machine config prod) run -d -p 80:8181 houshuang/rethink",
     "deploy": "npm run build && npm run dockerbuild && npm run dockerrun",
-    "test": "npm run build && ./node_modules/.bin/mocha js:babel-core/register"
+    "testwatch": "watch 'npm test' ./app ./test",
+    "test": "./node_modules/.bin/mocha test/**/*.js --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -79,6 +80,7 @@
     "sass-loader": "^3.1.2",
     "style-loader": "0.13.0",
     "url-loader": "^0.5.7",
+    "watch": "^0.19.1",
     "webpack": "^1.12.13",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^1.8.0",

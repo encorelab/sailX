@@ -4,6 +4,7 @@ export default (state, action) => {
   switch (action.type) {
     // db sync actions
     case 'add':
+      if(action.doc.id) { console.error("You used add with a document that already has an ID. Use the edit action instead, or remove the id to create a new object!") }
       return [...state,
         {
           id: uuid(),

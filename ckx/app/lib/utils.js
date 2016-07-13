@@ -29,8 +29,9 @@ export const composeReducers = (...args) => {
 }
 
 // checks that some of the values in an object are not empty
-export const notEmpty = (obj) => {
-  return Boolean(obj) || Object.keys(obj).reduce(
+export const notEmpty = (obj) => { 
+  if(!obj) { return false }
+  return Object.keys(obj).reduce(
     (acc, val) => acc || Boolean(obj[val]), false) 
 }
 

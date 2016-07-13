@@ -5,14 +5,18 @@ import { shorten } from 'app/lib/utils';
 
 export default ({ ui, openInfoFn, openEditFn, deleteFn, ...observation, isOwn, canCreate }) => {
   let deleteBtn, editBtn, detailsBtn;
+
+  // can only delete own posts
   if (isOwn) {
     deleteBtn = <Delete onClick = {deleteFn} />
-    if (canCreate) {
+  }
+
+  // can only edit if own, and no draft available
+  if (isOwn && canCreate) {
       editBtn = <Create
       onClick = {openEditFn}
       size = '1em'
       />
-    }
   } else {
     detailsBtn = <AspectRatio onClick = {openInfoFn} />
   }
