@@ -21,7 +21,6 @@ export default ({ ui, openInfoFn, openEditFn, deleteFn, ...observation, isOwn, c
     detailsBtn = <AspectRatio onClick = {openInfoFn} />
   }
 
-  // we need to have a convo about the concept of a 'style variable' (some of this wants to overlap btw the observations?)
   return (
     <div style = {toplevelStyle}>
       <Paper zDepth = {3} style = {containerStyle} >

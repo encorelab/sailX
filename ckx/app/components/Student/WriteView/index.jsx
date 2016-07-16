@@ -25,6 +25,8 @@ class WriteView extends React.Component {
     if(this.props.draft && this.props.draft.id) { 
       this.setState({id: this.props.draft.id})
     }
+    // maybe an assert or some kind of sanity check - depends on ObsContainer, should never be able
+    // to edit while already having a draft
 
     const formFields = observationFields(this.props.fields, this.props.obsToEdit, this.props.draft)
     this.setState({
@@ -68,7 +70,7 @@ class WriteView extends React.Component {
   onChange = (doc) => this.setState({doc: doc}) 
   onSubmit = () => {
     if(this.state.id) {
-      this.props.editObservation({...this.state.doc, id: this.state.id })
+      this.props.editObservation({...this.state.doc, id: this.state.id, owner: this.props.user })
     } else {
       this.props.addObservation({...this.state.doc, owner: this.props.user })
     }
