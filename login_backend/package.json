@@ -17,7 +17,8 @@
     "express": "^4.14.0",
     "express-jwt": "^3.4.0",
     "express-unless": "^0.3.0",
-    "jsonwebtoken": "^7.1.6"
+    "jsonwebtoken": "^7.1.6",
+    "rethinkdbdash": "^2.3.17"
   },
   "devDependencies": {
     "babel-cli": "^6.8.0",
