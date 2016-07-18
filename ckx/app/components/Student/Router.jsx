@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ReadView from './ReadView'
 import WriteView from './WriteView'
 import LockedView from './LockedView'
+import { tabletsLocked } from 'app/reducers/class-state/selectors'
 
 const Router = ({ locked, activeView }) => {
   if(locked) {
@@ -21,4 +22,4 @@ const Router = ({ locked, activeView }) => {
   }
 }
 
-export default connect(e => ({locked: e.class_state.tabletsLocked, activeView: e.ui.activeView}))(Router)
+export default connect(e => ({locked: tabletsLocked(e), activeView: e.ui.activeView}))(Router)

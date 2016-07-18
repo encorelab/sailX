@@ -105,6 +105,7 @@ function reduxChange(path) {
     }
 
     path.db.removeAll(diffs.deletedIds)
+    path.docs = docs
   }
 }
 

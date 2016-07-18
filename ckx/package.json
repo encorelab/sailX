@@ -12,7 +12,7 @@
     "web": "node server.js",
     "build": "./node_modules/.bin/webpack --config webpack.config.production.js && cp index.html dist",
     "lint": "./node_modules/.bin/eslint .",
-    "hz": "./node_modules/.bin/hz serve",
+    "hz": "./node_modules/.bin/hz serve --auto-create-index",
     "admin": "open http://localhost:8080",
     "dockerbuild": "docker build -t houshuang/rethink . && docker push houshuang/rethink",
     "dockerrun": "docker $(docker-machine config prod) pull houshuang/rethink && docker $(docker-machine config prod) stop $(docker $(docker-machine config prod) ps -a -q) && docker $(docker-machine config prod) run -d -p 80:8181 houshuang/rethink",
