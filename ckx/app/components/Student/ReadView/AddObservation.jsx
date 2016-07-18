@@ -1,7 +1,7 @@
 import React from 'react'
 import { Create, WrapText } from 'app/lib/icons'
 import { connect } from 'react-redux';
-import { switchView } from 'app/ui/actions'
+import { switchView } from 'app/reducers/ui/actions'
 import './AddObservation.scss'
 
 const AddObservation = ( { hasDraft, switchView } ) => {

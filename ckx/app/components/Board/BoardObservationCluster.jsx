@@ -1,15 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { move } from 'app/reducers/observations/actions'
+import * as uiActions from 'app/reducers/ui/actions'
 import BoardObservationContainer from './BoardObservationContainer';
 import BoardObservationDetails from './BoardObservationDetails';
 
-export default ({ observations, ui, dispatch }) => {
+const ObservationCluster = ({ observations, ui, move, openInfo, closeInfo }) => {
   const observationList = observations.map(e => {
-    const openInfoFn = () => { dispatch({type: 'OPENINFO_UI', id: e.id}) }
-    const closeInfoFn = () => { dispatch({type: 'CLOSEINFO_UI', id: e.id}) }
+    const openInfoFn = () => openInfo(e.id)
+    const closeInfoFn = () => closeInfo(e.id)
 
-    const setXY = (a, ui) => {
-      dispatch({ type: 'MOVE_OBSERVATION', id: e.id, delta_x: ui.position.left, delta_y: ui.position.top })
-    }
+    const setXY = (_, draggable) => move(e.id, draggable.position.left, draggable.position.top)
 
     return (
       <div>
@@ -17,12 +18,6 @@ export default ({ observations, ui, dispatch }) => {
           key = {e.id}
           setXY={setXY}
           openInfoFn = {openInfoFn}
-          {...e}
-        />
-        <BoardObservationDetails
-          key = {e.id+'info'}
-          closeInfoFn = {closeInfoFn}
-          open = {ui.infoOpen == e.id}
           {...e}
         />
       </div>
@@ -35,3 +30,8 @@ export default ({ observations, ui, dispatch }) => {
     </div>
   )
 }
+
+export default connect(
+  e => ({observations: e.observations, ui: e.ui}),
+  { move, ...uiActions })
+(ObservationCluster)

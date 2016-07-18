@@ -4,7 +4,7 @@ import AspectRatio from 'react-icons/lib/md/aspect-ratio';
 import Delete from 'react-icons/lib/md/delete';
 import { shorten } from 'app/lib/utils';
 import { connect } from 'react-redux';
-import * as uiActions from 'app/ui/actions'
+import * as uiActions from 'app/reducers/ui/actions'
 import crudActions from 'app/reducers/crud-actions'
 import ObservationContainer from './ObservationContainer';
 

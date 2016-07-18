@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { FlatButton } from 'app/lib/icons'
 import Dialog from 'material-ui/Dialog';
-import { infoSelector } from 'app/reducers/observations'
-import { closeInfo } from 'app/ui/actions'
+import { infoSelector } from 'app/reducers/observations/reducers'
+import { closeInfo } from 'app/reducers/ui/actions'
 
 const ObservationDetail = ( {observation, closeInfo} ) => {
   const actions = [
@@ -34,7 +34,7 @@ const ObservationDetail = ( {observation, closeInfo} ) => {
 }
 
 
-const ObservationCond = (props) => 
+const ObservationCond = (props) =>
   props.observation ? <ObservationDetail {...props} /> : null
 
 export default connect(

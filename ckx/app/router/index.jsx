@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // route components
 import State from 'app/components/State'
 import EncoreLogin from 'encore_login'
-import * as uiActions from 'app/ui/actions'
+import * as uiActions from 'app/reducers/ui/actions'
 
 import { horizon, store } from 'app/index'
 import horizonSync from 'horizon-redux-sync'
@@ -21,9 +21,9 @@ const selectFn = (callback, props) => {
 
   const h = (...vars) => horizonSync(horizon, store, ...vars)
   h('observations', callback.CO.collection)
-  h('classstate', 'class_state', {class: callback.student.class}, {keyValue: true})
-  h('studentstate', 'student_state', 
-    {group: callback.CO.collection, owner: callback.student.name}, {keyValue: true}) 
+  h('class_state', 'class_state', {class: callback.student.class}, {keyValue: true})
+  h('studentstate', 'student_state',
+    {group: callback.CO.collection, owner: callback.student.name}, {keyValue: true})
 
   props.setBoard(callback.CO.name)
   props.setObservationFields(JSON.parse(callback.CO.prompt).prompt)
@@ -37,7 +37,7 @@ const selectFn = (callback, props) => {
 
 // --------------------------------------
 const Route = (props) => {
-  let { route, loggedIn, dispatch, role } = props 
+  let { route, loggedIn, dispatch, role } = props
   // force login if not yet logged in
   if (!loggedIn) {
     route = 'login';
@@ -64,8 +64,8 @@ const Route = (props) => {
 
 export default connect(e => (
   {
-    route: e.ui.route, 
-    loggedIn: e.ui.loggedIn, 
+    route: e.ui.route,
+    loggedIn: e.ui.loggedIn,
     role: e.ui.role,
   }),
   uiActions

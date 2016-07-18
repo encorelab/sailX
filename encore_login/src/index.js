@@ -13,13 +13,12 @@ const StudentList = ( {list, selectFn} ) => { return(
 
 
 const LoginWrapper = ({ onSelect }) => {
-  console.log('Visiting and skipping Encore_login')
-  onSelect(Hardcoded[0])
+  //onSelect(Hardcoded[1])
   return (
           <div>
-            <StudentList list={Hardcoded} selectFn={onSelect}/> 
+            <StudentList list={Hardcoded} selectFn={onSelect}/>
           </div>
   )
 }
 
-export default LoginWrapper 
+export default LoginWrapper

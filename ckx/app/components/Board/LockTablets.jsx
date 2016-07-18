@@ -1,12 +1,18 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import * as classStateActions from 'app/reducers/class-state/actions'
 
-export default ( {ui, dispatch} ) => {
+const LockTablets =  ( {tabletsLocked, unlockTablets, lockTablets} ) => {
   return (
     <div>
-      {ui.tabletsLocked ?
-        <button onClick = {() => dispatch({type: 'UNLOCKTABLETS_UI'}) }>RESUME</button> :
-        <button onClick = {() => dispatch({type: 'LOCKTABLETS_UI'}) }>PAUSE</button>
+      {tabletsLocked ?
+        <button onClick = {lockTablets}>RESUME</button> :
+        <button onClick = {unlockTablets}>PAUSE</button>
       }
     </div>
   )
 }
+
+export default connect(
+  e => ({tabletsLocked : e.class_state.tabletsLocked}),
+  classStateActions)(LockTablets)

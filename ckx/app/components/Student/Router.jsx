@@ -6,7 +6,7 @@ import ReadView from './ReadView'
 import WriteView from './WriteView'
 import LockedView from './LockedView'
 
-const Router = ({ locked, activeView }) => { 
+const Router = ({ locked, activeView }) => {
   if(locked) {
     return <LockedView />
   } else {
@@ -15,10 +15,10 @@ const Router = ({ locked, activeView }) => {
         return <WriteView />
         break
 
-      default: 
+      default:
         return <ReadView />
     }
   }
 }
 
-export default connect(e => ({locked: e.ui.tablets_locked, activeView: e.ui.activeView}))(Router)
+export default connect(e => ({locked: e.class_state.tabletsLocked, activeView: e.ui.activeView}))(Router)
