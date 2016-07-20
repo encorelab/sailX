@@ -1,0 +1,111 @@
+{
+  "_args": [
+    [
+      "react-dropdown@^1.0.2",
+      "/Users/stian/src/wallcology/uidev"
+    ]
+  ],
+  "_from": "react-dropdown@>=1.0.2 <2.0.0",
+  "_id": "react-dropdown@1.0.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-dropdown",
+  "_nodeVersion": "4.2.3",
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/react-dropdown-1.0.2.tgz_1456741828572_0.4813958734739572"
+  },
+  "_npmUser": {
+    "email": "xvfeng123@gmail.com",
+    "name": "fraserxu"
+  },
+  "_npmVersion": "3.7.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "react-dropdown",
+    "raw": "react-dropdown@^1.0.2",
+    "rawSpec": "^1.0.2",
+    "scope": null,
+    "spec": ">=1.0.2 <2.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-dropdown/-/react-dropdown-1.0.2.tgz",
+  "_shasum": "72995c346f3c713925306d824bf8384d4d2f7579",
+  "_shrinkwrap": null,
+  "_spec": "react-dropdown@^1.0.2",
+  "_where": "/Users/stian/src/wallcology/uidev",
+  "author": {
+    "email": "xvfeng123@gmail.com",
+    "name": "Fraser Xu",
+    "url": "https://fraserxu.me"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/fraserxu/react-dropdown/issues"
+  },
+  "dependencies": {
+    "classnames": "^2.2.3",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7"
+  },
+  "description": "React dropdown component",
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify-hmr": "^0.3.1",
+    "ecstatic": "^1.4.0",
+    "standard": "^6.0.7",
+    "watchify": "^3.7.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "72995c346f3c713925306d824bf8384d4d2f7579",
+    "tarball": "http://registry.npmjs.org/react-dropdown/-/react-dropdown-1.0.2.tgz"
+  },
+  "files": [
+    "dist/index.js"
+  ],
+  "gitHead": "80822339a64a4d9a3a36f9d6ceddadf41dbf296d",
+  "homepage": "https://github.com/fraserxu/react-dropdown",
+  "keywords": [
+    "component",
+    "dropdown",
+    "react",
+    "react-component",
+    "select"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "maintainers": [
+    {
+      "name": "fraserxu",
+      "email": "xvfeng123@gmail.com"
+    }
+  ],
+  "name": "react-dropdown",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fraserxu/react-dropdown.git"
+  },
+  "scripts": {
+    "build": "babel -d dist index.js",
+    "prepublish": "npm test && npm run build",
+    "start": "ecstatic -p 8080 example & npm run watch",
+    "test": "standard index.js",
+    "watch": "watchify example/main.js -p browserify-hmr -o example/bundle.js -dv"
+  },
+  "style": "style.css",
+  "version": "1.0.2"
+}
