@@ -81,14 +81,14 @@ class WriteView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style = {formsyContainerStyle}>
         <Formsy.Form
           onSubmit = {this.onSubmit}
           onValid = {this.valid}
           onInvalid = {this.invalid}
           onChange = {this.onChange}
         >
-          <fieldset>
+          <fieldset style = {fieldsetStyle}>
             {this.state.formFields}
           </fieldset>
           <input
@@ -109,3 +109,21 @@ export default connect(
     {...uiActions, ...studentStateActions, ...crudActions('Observation')}
 )(WriteView)
 
+const formsyContainerStyle = {
+  position: 'relative',
+  height: '100%'
+}
+
+const fieldsetStyle = {
+  height: 478,
+  width: 750,
+  background: '#ffffff',
+  boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)',
+  border: 'none',
+  margin: '0 auto',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  margin: '-259px -375px',
+  padding: 20
+}
