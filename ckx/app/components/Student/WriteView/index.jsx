@@ -92,13 +92,14 @@ class WriteView extends React.Component {
             {this.state.formFields}
           </fieldset>
           <input
+            style = {submitStyle}
             className = "btn btn-primary"
             type = "submit"
             defaultValue = "Submit"
             disabled = {!this.state.valid}
           />
         </Formsy.Form>
-        <button onClick = {this.cancel}>Cancel</button>
+        <button style = {cancelStyle} onClick = {this.cancel}>Cancel</button>
       </div>
     )
   }
@@ -111,7 +112,9 @@ export default connect(
 
 const formsyContainerStyle = {
   position: 'relative',
-  height: '100%'
+  height: '100%',
+  width: 750,
+  margin: '0 auto'
 }
 
 const fieldsetStyle = {
@@ -126,4 +129,17 @@ const fieldsetStyle = {
   left: '50%',
   margin: '-259px -375px',
   padding: 20
+}
+
+const submitStyle = {
+  position: 'absolute',
+  top: '50%',
+  margin: '279px 0',
+  right: 0
+}
+
+const cancelStyle = {
+  position: 'absolute',
+  top: '50%',
+  margin: '279px 0'
 }
