@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { move } from 'app/reducers/observations/actions'
 import * as uiActions from 'app/reducers/ui/actions'
-import BoardObservationContainer from './BoardObservationContainer';
-import BoardObservationDetails from './BoardObservationDetails';
+import ObservationContainer from './ObservationContainer';
+import ObservationDetails from './ObservationDetails';
 
 const ObservationCluster = ({ observations, ui, move, openInfo, closeInfo }) => {
   const observationList = observations.map(e => {
@@ -14,7 +14,7 @@ const ObservationCluster = ({ observations, ui, move, openInfo, closeInfo }) => 
 
     return (
       <div>
-        <BoardObservationContainer
+        <ObservationContainer
           key = {e.id}
           setXY={setXY}
           openInfoFn = {openInfoFn}

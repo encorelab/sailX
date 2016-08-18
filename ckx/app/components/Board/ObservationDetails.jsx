@@ -5,7 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import { infoSelector } from 'app/reducers/observations/reducers'
 import { closeInfo } from 'app/reducers/ui/actions'
 
-const ObservationDetail = ( {observation, closeInfo} ) => {
+const ObservationDetails = ( {observation, closeInfo} ) => {
   const actions = [
     <FlatButton
       label = "X"
@@ -35,7 +35,7 @@ const ObservationDetail = ( {observation, closeInfo} ) => {
 
 
 const ObservationCond = (props) =>
-  props.observation ? <ObservationDetail {...props} /> : null
+  props.observation ? <ObservationDetails {...props} /> : null
 
 export default connect(
   e => ({ observation: infoSelector(e) }),

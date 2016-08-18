@@ -8,7 +8,7 @@ const LockTablets =  ( {tabletsLocked, unlockTablets, lockTablets} ) => {
     <div>
       {tabletsLocked ?
         <button onClick = {unlockTablets}>RESUME</button> :
-        <button onClick = {lockTablets}>PAUSE</button> 
+        <button onClick = {lockTablets}>PAUSE</button>
       }
     </div>
   )

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ObservationList from './ObservationList'
-import ObservationDetail from './ObservationDetail'
+import ObservationDetails from './ObservationDetails'
 import AddObservation from './AddObservation'
 
 const Header = ({ board, user }) => {return (
@@ -15,7 +15,7 @@ const ReadView = ({ board, user }) => { return (
   <div>
     <Header board={board} user={user} />
     <ObservationList />
-    <ObservationDetail />
+    <ObservationDetails />
     <AddObservation />
   </div>
 )}
