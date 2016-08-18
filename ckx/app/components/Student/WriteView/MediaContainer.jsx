@@ -1,7 +1,6 @@
 import React from 'react'
 
 const createImg = (file) => {
-  debugger
   const objectURL = URL.createObjectURL(file)
   return <img style={thumbnailStyle} src={objectURL} />
 }

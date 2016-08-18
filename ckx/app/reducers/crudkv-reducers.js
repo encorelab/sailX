@@ -5,7 +5,7 @@ export default (state, action) => {
     // db sync actions
     case 'add':
     case 'edit':
-      const len = Object.keys(action.doc).length 
+      const len = Object.keys(action.doc).length
       if (len != 1) {  // sanity check, because we're mindlessly merging two objects
         console.error('crudKV cannot take doc with more than one key')
       } else {

@@ -39,7 +39,6 @@ export default (fields, toEdit, draftDoc) => {
           />
         )
       case 'FILE':
-      debugger
         return (
           <FRC.File
             style = {fileUploadStyle}

@@ -2,10 +2,10 @@ export const changeRoute = (route) => ({
   type: 'CHANGEROUTE/UI',
   route: route
 })
-  
+
 export const setBoard = (group) => ({
   type: 'SETBOARD/UI',
-  group: group 
+  group: group
 })
 
 export const setObservationFields = (fields) => ({

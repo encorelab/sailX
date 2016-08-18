@@ -8,14 +8,13 @@ import LockedView from './LockedView'
 import { tabletsLocked } from 'app/reducers/class-state/selectors'
 
 const Router = ({ locked, activeView }) => {
-  if(locked) {
+  if (locked) {
     return <LockedView />
   } else {
-    switch(activeView) {
+    switch (activeView) {
       case 'write':
         return <WriteView />
         break
-
       default:
         return <ReadView />
     }

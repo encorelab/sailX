@@ -19,10 +19,10 @@ class WriteView extends React.Component {
   componentDidMount = () => {
     const interval = window.setInterval(this.periodicSaveDraft, 1000)
 
-    if(this.props.obsToEdit) {
+    if (this.props.obsToEdit) {
       this.setState({id: this.props.obsToEdit.id})
     }
-    if(this.props.draft && this.props.draft.id) {
+    if (this.props.draft && this.props.draft.id) {
       this.setState({id: this.props.draft.id})
     }
     // maybe an assert or some kind of sanity check - depends on ObsContainer, should never be able
@@ -37,10 +37,10 @@ class WriteView extends React.Component {
   }
 
   postDraftNotice = () => {
-    if(notEmpty(this.props.draft)) {
-      if(this.props.draft.id) {  // continuing on draft of published post
+    if (notEmpty(this.props.draft)) {
+      if (this.props.draft.id) {  // continuing on draft of published post
         this.props.postNotice('You are currently continuing editing the draft of an already published note. If you want to abolish this draft, and not change the published note, click on "Cancel"')
-      } else if(notEmpty(this.props.draft.doc)) { // continuing on draft of unpublished post
+      } else if (notEmpty(this.props.draft.doc)) { // continuing on draft of unpublished post
         this.props.postNotice('You are currently editing a draft of an observation that you began, but never posted. If you want to throw away this draft, click on "Cancel"')
       }
     }
@@ -53,10 +53,9 @@ class WriteView extends React.Component {
 
   // save draft if there is text, and has been changed from last save
   periodicSaveDraft = () => {
-    if(notEmpty(this.state.doc) &&
-      !isEqual(this.state.doc, this.state.prevDoc)) {
-        this.props.storeDraft({id: this.state.id, doc: this.state.doc})
-        this.setState({prevDoc: this.state.doc})
+    if (notEmpty(this.state.doc) && !isEqual(this.state.doc, this.state.prevDoc)) {
+      this.props.storeDraft({id: this.state.id, doc: this.state.doc})
+      this.setState({prevDoc: this.state.doc})
     }
   }
 
@@ -69,7 +68,7 @@ class WriteView extends React.Component {
 
   onChange = (doc) => this.setState({doc: doc})
   onSubmit = () => {
-    if(this.state.id) {
+    if (this.state.id) {
       this.props.editObservation({...this.state.doc, id: this.state.id, owner: this.props.user })
     } else {
       this.props.addObservation({...this.state.doc, owner: this.props.user })
@@ -91,6 +90,7 @@ class WriteView extends React.Component {
           <fieldset style = {fieldsetStyle}>
             {this.state.formFields}
           </fieldset>
+
           <input
             style = {submitStyle}
             className = "btn btn-primary"
