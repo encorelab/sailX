@@ -6,7 +6,10 @@ const createImg = (file) => {
 }
 
 export default ({ files }) => {
-  let filesAr = files.map(createImg)
+  let filesAr = [];
+  for (var i = 0; i < files.length; i++) {
+    filesAr.push(createImg(files[i]))
+  }
 
   return (
     <div>
