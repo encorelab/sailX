@@ -16,7 +16,7 @@ const StudentList = ( {list, selectFn} ) => {
 
 const LoginWrapper = ({ onSelect }) => {
   // turning on autologin for Cole (choose 4 for board)
-  //onSelect(Hardcoded[0])
+  onSelect(Hardcoded[0])
   return (
     <div>
       <StudentList list={Hardcoded} selectFn={onSelect}/>
