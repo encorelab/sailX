@@ -27,7 +27,7 @@ store.dispatch({
 
 render(
   <Provider store = {store} >
-    <MuiThemeProvider>    
+    <MuiThemeProvider>
       <div>
       <Header />
       <CurrentRoute />

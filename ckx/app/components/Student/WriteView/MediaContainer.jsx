@@ -1,8 +1,9 @@
 import React from 'react'
 
 const createImg = (file) => {
+  debugger
   const objectURL = URL.createObjectURL(file)
-  return <img style={{padding: '5px'}} width="100" height="100" src={objectURL} />
+  return <img style={thumbnailStyle} src={objectURL} />
 }
 
 export default ({ files }) => {
@@ -13,4 +14,10 @@ export default ({ files }) => {
       {filesAr}
     </div>
   )
+}
+
+const thumbnailStyle = {
+  padding: '5px',
+  width: '100px',
+  height: '100px'
 }

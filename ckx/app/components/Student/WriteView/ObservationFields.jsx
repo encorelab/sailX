@@ -26,7 +26,7 @@ export default (fields, toEdit, draftDoc) => {
             value = {value}
             {...rest}
           />
-      )
+        )
       case 'TEXTAREA':
         return (
           <FRC.Textarea
@@ -37,7 +37,7 @@ export default (fields, toEdit, draftDoc) => {
             value = {value}
             {...rest}
           />
-      )
+        )
       case 'FILE':
         return (
           <FRC.File
@@ -48,7 +48,7 @@ export default (fields, toEdit, draftDoc) => {
             accept = '.jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov' multiple
             value = {value}
           />
-      )
+        )
     }
   })
   return formFields

@@ -69,4 +69,4 @@ export default connect(e => (
     role: e.ui.role,
   }),
   uiActions
-  )(Route)
+)(Route)

@@ -5,14 +5,14 @@ import { isEqual } from 'lodash'
 import { notEmpty } from 'app/lib/utils'
 import { connect } from 'react-redux';
 import MediaContainer from './MediaContainer'
-import observationFields from './observationFields'
+import ObservationFields from './ObservationFields'
 import * as uiActions from 'app/reducers/ui/actions'
 import * as studentStateActions from 'app/reducers/student-state-actions'
 import crudActions from 'app/reducers/crud-actions'
 
 class WriteView extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {valid: false, draft: {doc: {}}}
   }
 
@@ -28,7 +28,7 @@ class WriteView extends React.Component {
     // maybe an assert or some kind of sanity check - depends on ObsContainer, should never be able
     // to edit while already having a draft
 
-    const formFields = observationFields(this.props.fields, this.props.obsToEdit, this.props.draft)
+    const formFields = ObservationFields(this.props.fields, this.props.obsToEdit, this.props.draft)
     this.setState({
       interval,
       formFields,
@@ -60,8 +60,8 @@ class WriteView extends React.Component {
     }
   }
 
-  valid = () => this.setState({valid: true});
-  invalid = () => this.setState({valid: false});
+  valid = () => this.setState({valid: true})
+  invalid = () => this.setState({valid: false})
   cancel = () => {
     this.props.discardDraft()
     this.props.switchView('read')
@@ -99,7 +99,7 @@ class WriteView extends React.Component {
             disabled = {!this.state.valid}
           />
         </Formsy.Form>
-        <button style = {cancelStyle} onClick = {this.cancel}>Cancel</button>
+        <button style={cancelStyle} onClick={this.cancel}>Cancel</button>
       </div>
     )
   }
