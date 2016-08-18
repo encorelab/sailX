@@ -4,9 +4,9 @@ import { notEmpty } from 'app/lib/utils'
 
 export default (fields, toEdit, draftDoc) => {
   let draft
-  if(notEmpty(toEdit)) {
+  if (notEmpty(toEdit)) {
     draft = toEdit
-  } else if(draftDoc && draftDoc.doc) {
+  } else if (draftDoc && draftDoc.doc) {
     draft = draftDoc.doc
   }
 
@@ -18,35 +18,35 @@ export default (fields, toEdit, draftDoc) => {
       case 'INPUT':
         return (
           <FRC.Input
-          style = {fieldStyle}
-          name = {id}
-          id = {id}
-          key = {id}
-          type = 'text'
-          value = {value}
-          {...rest}
+            style = {fieldStyle}
+            name = {id}
+            id = {id}
+            key = {id}
+            type = 'text'
+            value = {value}
+            {...rest}
           />
       )
       case 'TEXTAREA':
         return (
           <FRC.Textarea
-          style = {fieldStyle}
-          name = {id}
-          id = {id}
-          key = {id}
-          value = {value}
-          {...rest}
+            style = {fieldStyle}
+            name = {id}
+            id = {id}
+            key = {id}
+            value = {value}
+            {...rest}
           />
       )
       case 'FILE':
         return (
           <FRC.File
-          style = {fileUploadStyle}
-          id = 'file'
-          type = 'file'
-          name = 'file'
-          accept = '.jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov' multiple
-          value = {value}
+            style = {fileUploadStyle}
+            id = 'file'
+            type = 'file'
+            name = 'file'
+            accept = '.jpg,.gif,.jpeg,.png,.mp4,.m4v,.mov' multiple
+            value = {value}
           />
       )
     }
