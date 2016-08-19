@@ -9,6 +9,7 @@ import ObservationFields from './ObservationFields'
 import * as uiActions from 'app/reducers/ui/actions'
 import * as studentStateActions from 'app/reducers/student-state-actions'
 import crudActions from 'app/reducers/crud-actions'
+import { uploadFile } from 'app/lib/utils'
 
 class WriteView extends React.Component {
   constructor() {
@@ -53,7 +54,7 @@ class WriteView extends React.Component {
 
   // save draft if there is text, and has been changed from last save
   periodicSaveDraft = () => {
-    if(notEmpty(this.state.doc) && !isEqual(this.state.doc, this.state.prevDoc)) {
+    if (notEmpty(this.state.doc) && !isEqual(this.state.doc, this.state.prevDoc)) {
       this.props.storeDraft({id: this.state.id, doc: this.state.doc})
       this.setState({prevDoc: this.state.doc})
     }
@@ -66,7 +67,14 @@ class WriteView extends React.Component {
     this.props.switchView('read')
   }
 
-  onChange = (doc) => this.setState({doc: doc})
+  onChange = (doc) => {
+    this.setState({doc: doc})
+    if (doc.file) {
+      // for each
+      let url = uploadFile(doc.file[0])
+    }
+  }
+
   onSubmit = () => {
     if (this.state.id) {
       this.props.editObservation({...this.state.doc, id: this.state.id, owner: this.props.user })
