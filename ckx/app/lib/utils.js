@@ -79,6 +79,5 @@ export const uploadFile = (file) => {
   function success(data, status, xhr) {
     //dispatch({type: 'ENDUPLOADMEDIA_UI'});
     console.log("UPLOAD SUCCEEDED!" + data);
-    console.log(xhr.getAllResponseHeaders());
   }
 }

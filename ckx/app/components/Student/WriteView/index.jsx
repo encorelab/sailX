@@ -70,8 +70,9 @@ class WriteView extends React.Component {
   onChange = (doc) => {
     this.setState({doc: doc})
     if (doc.file) {
-      // for each
-      let url = uploadFile(doc.file[0])
+      for (var i = 0; i < doc.file.length; i++) {
+        uploadFile(doc.file[0])
+      }
     }
   }
 
