@@ -54,8 +54,8 @@ class WriteView extends React.Component {
   // save draft if there is text, and has been changed from last save
   periodicSaveDraft = () => {
     if(notEmpty(this.state.doc) && !isEqual(this.state.doc, this.state.prevDoc)) {
-        this.props.storeDraft({id: this.state.id, doc: this.state.doc})
-        this.setState({prevDoc: this.state.doc})
+      this.props.storeDraft({id: this.state.id, doc: this.state.doc})
+      this.setState({prevDoc: this.state.doc})
     }
   }
 
@@ -68,7 +68,7 @@ class WriteView extends React.Component {
 
   onChange = (doc) => this.setState({doc: doc})
   onSubmit = () => {
-    if(this.state.id) {
+    if (this.state.id) {
       this.props.editObservation({...this.state.doc, id: this.state.id, owner: this.props.user })
     } else {
       this.props.addObservation({...this.state.doc, owner: this.props.user })
@@ -90,7 +90,7 @@ class WriteView extends React.Component {
           <fieldset style = {fieldsetStyle}>
             {this.state.formFields}
           </fieldset>
-          {this.state.doc && this.state.doc.file && this.state.doc.file ?
+          {this.state.doc && this.state.doc.file ?
             <MediaContainer files={this.state.doc.file} /> : null
           }
           <input
