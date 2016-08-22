@@ -9,7 +9,8 @@ import ObservationFields from './ObservationFields'
 import * as uiActions from 'app/reducers/ui/actions'
 import * as studentStateActions from 'app/reducers/student-state-actions'
 import crudActions from 'app/reducers/crud-actions'
-import { uploadFile } from 'app/lib/utils'
+//import { uploadFile } from 'app/lib/utils'
+import $ from 'jquery'
 
 class WriteView extends React.Component {
   constructor() {
@@ -37,6 +38,50 @@ class WriteView extends React.Component {
     this.postDraftNotice()
   }
 
+  componentWillUnmount = () => {
+    window.clearInterval(this.state.interval) // stop updating drafts
+    this.props.unsetEdit()
+  }
+
+  uploadFile = (file, context) => {
+    const writeView = context;
+    const MAX_FILE_SIZE = 20971520;
+    let formData = new FormData();
+    formData.append( 'file', file );
+
+    let result = '';
+
+    if (file.size < MAX_FILE_SIZE) {
+      //dispatch({type: 'STARTUPLOADMEDIA_UI'});
+      $.ajax({
+        url: 'https://pikachu.coati.encorelab.org/',
+        type: 'POST',
+        success: success,
+        error: failure,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+      })
+    } else {
+      //jQuery().toastmessage('showErrorToast', "Max file size of 20MB exceeded");
+      console.log("Max file size");
+    }
+
+    function failure(err) {
+      //dispatch({type: 'ENDUPLOADMEDIA_UI'});
+      //jQuery().toastmessage('showErrorToast', "Photo could not be uploaded. Please try again");
+      console.log('Photo could be uploaded')
+    }
+
+    function success(data, status, xhr) {
+      //dispatch({type: 'ENDUPLOADMEDIA_UI'});
+      debugger
+      writeView.setState({media: data.url})
+      console.log("UPLOAD SUCCEEDED!" + data);
+    }
+  }
+
   postDraftNotice = () => {
     if (notEmpty(this.props.draft)) {
       if (this.props.draft.id) {  // continuing on draft of published post
@@ -45,11 +90,6 @@ class WriteView extends React.Component {
         this.props.postNotice('You are currently editing a draft of an observation that you began, but never posted. If you want to throw away this draft, click on "Cancel"')
       }
     }
-  }
-
-  componentWillUnmount = () => {
-    window.clearInterval(this.state.interval) // stop updating drafts
-    this.props.unsetEdit()
   }
 
   // save draft if there is text, and has been changed from last save
@@ -71,16 +111,16 @@ class WriteView extends React.Component {
     this.setState({doc: doc})
     if (doc.file) {
       for (var i = 0; i < doc.file.length; i++) {
-        uploadFile(doc.file[0])
+        this.uploadFile(doc.file[0], this)
       }
     }
   }
 
   onSubmit = () => {
     if (this.state.id) {
-      this.props.editObservation({...this.state.doc, id: this.state.id, owner: this.props.user })
+      this.props.editObservation({ ...this.state.doc, id: this.state.id, owner: this.props.user, media: this.state.media })
     } else {
-      this.props.addObservation({...this.state.doc, owner: this.props.user })
+      this.props.addObservation({ ...this.state.doc, owner: this.props.user, media: this.state.media })
     }
 
     this.props.discardDraft()
@@ -100,7 +140,7 @@ class WriteView extends React.Component {
             {this.state.formFields}
           </fieldset>
           {this.state.doc && this.state.doc.file ?
-            <MediaContainer files={this.state.doc.file} /> : null
+            <MediaContainer files={this.state.doc.file}>I am here</MediaContainer> : null
           }
           <input
             style = {submitStyle}
