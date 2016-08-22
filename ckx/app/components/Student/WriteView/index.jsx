@@ -15,7 +15,7 @@ import $ from 'jquery'
 class WriteView extends React.Component {
   constructor() {
     super()
-    this.state = {valid: false, draft: {doc: {}}}
+    this.state = {valid: false, draft: {doc: {}}, media: []}
   }
 
   componentDidMount = () => {
@@ -49,8 +49,6 @@ class WriteView extends React.Component {
     let formData = new FormData();
     formData.append( 'file', file );
 
-    let result = '';
-
     if (file.size < MAX_FILE_SIZE) {
       //dispatch({type: 'STARTUPLOADMEDIA_UI'});
       $.ajax({
@@ -65,7 +63,7 @@ class WriteView extends React.Component {
       })
     } else {
       //jQuery().toastmessage('showErrorToast', "Max file size of 20MB exceeded");
-      console.log("Max file size");
+      console.log("Max file size")
     }
 
     function failure(err) {
@@ -76,9 +74,10 @@ class WriteView extends React.Component {
 
     function success(data, status, xhr) {
       //dispatch({type: 'ENDUPLOADMEDIA_UI'});
-      debugger
-      writeView.setState({media: data.url})
-      console.log("UPLOAD SUCCEEDED!" + data);
+      let urls = writeView.state.media
+      urls.push(data.url)
+      writeView.setState({media: urls})
+      console.log("UPLOAD SUCCEEDED!" + data)
     }
   }
 
@@ -139,9 +138,7 @@ class WriteView extends React.Component {
           <fieldset style = {fieldsetStyle}>
             {this.state.formFields}
           </fieldset>
-          {this.state.doc && this.state.doc.file ?
-            <MediaContainer files={this.state.doc.file}>I am here</MediaContainer> : null
-          }
+          <MediaContainer state={this.state} />
           <input
             style = {submitStyle}
             className = "btn btn-primary"

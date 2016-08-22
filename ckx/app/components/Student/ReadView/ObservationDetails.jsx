@@ -27,7 +27,10 @@ const ObservationDetails = ( {observation, closeInfo} ) => {
       </div>
       <br />
       <div>
-        Media goes here eventually
+        {observation.media.map(function(object) {
+          let src = "http://pikachu.coati.encorelab.org/" + object
+          return <img src={src} style={imgBoxStyle} ></img>
+        })}
       </div>
     </Dialog>
   )
@@ -41,3 +44,11 @@ export default connect(
   e => ({ observation: infoSelector(e) }),
   {closeInfo: closeInfo}
 )(ObservationCond)
+
+
+
+const imgBoxStyle = {
+  padding: '5px',
+  width: '100px',
+  height: '100px'
+}

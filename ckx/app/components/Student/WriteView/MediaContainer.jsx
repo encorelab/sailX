@@ -5,10 +5,13 @@ const createImg = (file) => {
   return <img style={thumbnailStyle} src={objectURL} />
 }
 
-export default ({ files }) => {
+export default ({ state }) => {
   let filesAr = [];
-  for (var i = 0; i < files.length; i++) {
-    filesAr.push(createImg(files[i]))
+  if (state.doc && state.doc.file) {
+    let files = state.doc.file
+    for (var i = 0; i < files.length; i++) {
+      filesAr.push(createImg(files[i]))
+    }
   }
 
   return (
