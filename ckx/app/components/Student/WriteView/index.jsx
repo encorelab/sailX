@@ -9,7 +9,6 @@ import ObservationFields from './ObservationFields'
 import * as uiActions from 'app/reducers/ui/actions'
 import * as studentStateActions from 'app/reducers/student-state-actions'
 import crudActions from 'app/reducers/crud-actions'
-//import { uploadFile } from 'app/lib/utils'
 import $ from 'jquery'
 
 class WriteView extends React.Component {
@@ -29,11 +28,10 @@ class WriteView extends React.Component {
     }
     // maybe an assert or some kind of sanity check - depends on ObsContainer, should never be able
     // to edit while already having a draft
-
     const formFields = ObservationFields(this.props.fields, this.props.obsToEdit, this.props.draft)
     this.setState({
       interval,
-      formFields,
+      formFields
     })
     this.postDraftNotice()
   }
@@ -50,7 +48,7 @@ class WriteView extends React.Component {
     formData.append( 'file', file );
 
     if (file.size < MAX_FILE_SIZE) {
-      //dispatch({type: 'STARTUPLOADMEDIA_UI'});
+      this.props.startUploadMedia()
       $.ajax({
         url: 'https://pikachu.coati.encorelab.org/',
         type: 'POST',
@@ -67,18 +65,19 @@ class WriteView extends React.Component {
     }
 
     function failure(err) {
-      //dispatch({type: 'ENDUPLOADMEDIA_UI'});
+      this.props.endUploadMedia()
       //jQuery().toastmessage('showErrorToast', "Photo could not be uploaded. Please try again");
-      console.log('Photo could be uploaded')
+      console.log("Photo could not be uploaded")
     }
 
     function success(data, status, xhr) {
-      //dispatch({type: 'ENDUPLOADMEDIA_UI'});
       let urls = writeView.state.media
       urls.push(data.url)
       writeView.setState({media: urls})
-
+      //jQuery().toastmessage('showSuccessToast', "Photo Uploaded");
       console.log("UPLOAD SUCCEEDED!" + data)
+
+      writeView.props.endUploadMedia()
     }
   }
 
@@ -145,17 +144,21 @@ class WriteView extends React.Component {
             className = "btn btn-primary"
             type = "submit"
             defaultValue = "Submit"
-            disabled = {!this.state.valid}
+            disabled = {!this.state.valid && !this.props.uploading}
           />
         </Formsy.Form>
         <button style={cancelStyle} onClick={this.cancel}>Cancel</button>
+        <div>
+          {this.props.uploading ?
+          <div>UPLOADING...</div> : null}
+        </div>
       </div>
     )
   }
 }
 
 export default connect(
-  e => ({fields: e.ui.fields, user: e.ui.user, draft: e.studentstate.draft, obsToEdit: e.ui.observationToEdit}),
+  e => ({fields: e.ui.fields, user: e.ui.user, draft: e.studentstate.draft, obsToEdit: e.ui.observationToEdit, uploading: e.ui.isUploading}),
     {...uiActions, ...studentStateActions, ...crudActions('Observation')}
 )(WriteView)
 
