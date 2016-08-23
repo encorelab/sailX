@@ -27,8 +27,8 @@ const ObservationDetails = ( {observation, closeInfo} ) => {
       </div>
       <br />
       <div>
-        {observation.media.map(function(object) {
-          let src = "http://pikachu.coati.encorelab.org/" + object
+        {observation.media.map(function(url) {
+          let src = "http://pikachu.coati.encorelab.org/" + url
           return <img src={src} style={imgBoxStyle} ></img>
         })}
       </div>

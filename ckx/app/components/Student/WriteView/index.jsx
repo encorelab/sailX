@@ -77,6 +77,7 @@ class WriteView extends React.Component {
       let urls = writeView.state.media
       urls.push(data.url)
       writeView.setState({media: urls})
+
       console.log("UPLOAD SUCCEEDED!" + data)
     }
   }
@@ -110,7 +111,7 @@ class WriteView extends React.Component {
     this.setState({doc: doc})
     if (doc.file) {
       for (var i = 0; i < doc.file.length; i++) {
-        this.uploadFile(doc.file[0], this)
+        this.uploadFile(doc.file[i], this)
       }
     }
   }
@@ -190,4 +191,10 @@ const cancelStyle = {
   position: 'absolute',
   top: '50%',
   margin: '279px 0'
+}
+
+const imgBoxStyle = {
+  padding: '5px',
+  width: '100px',
+  height: '100px'
 }
