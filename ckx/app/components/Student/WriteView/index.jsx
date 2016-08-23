@@ -138,7 +138,13 @@ class WriteView extends React.Component {
           <fieldset style = {fieldsetStyle}>
             {this.state.formFields}
           </fieldset>
-          <MediaContainer state={this.state} />
+          <div style = {mediaContainerStyle}>
+            <MediaContainer state={this.state}/>
+            <div>
+              {this.props.uploading ?
+              <div>UPLOADING...</div> : null}
+            </div>
+          </div>
           <input
             style = {submitStyle}
             className = "btn btn-primary"
@@ -148,10 +154,6 @@ class WriteView extends React.Component {
           />
         </Formsy.Form>
         <button style={cancelStyle} onClick={this.cancel}>Cancel</button>
-        <div>
-          {this.props.uploading ?
-          <div>UPLOADING...</div> : null}
-        </div>
       </div>
     )
   }
@@ -196,8 +198,8 @@ const cancelStyle = {
   margin: '279px 0'
 }
 
-const imgBoxStyle = {
-  padding: '5px',
-  width: '100px',
-  height: '100px'
+const mediaContainerStyle = {
+  position: 'absolute',
+  top: '70%',
+  left: '2%',
 }
